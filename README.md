@@ -26,3 +26,11 @@
  
   * Users 
   * Courses
+  
+  
+  Resources 
+  https://github.com/junaidatique/events_graphql/blob/master/graphql/schema/index.js
+  https://www.sitepoint.com/how-to-build-a-web-app-with-graphql-and-react/
+  https://github.com/dusko-dime/spring-react-graphql/blob/master/demo/src/main/resources/graphql/B.graphqls
+  https://github.com/Blacktoviche/springboot-graphql-jwt-demo/blob/master/src/main/resources/graphql/schema.graphqls
+  
