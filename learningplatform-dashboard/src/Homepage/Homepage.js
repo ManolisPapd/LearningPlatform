@@ -6,7 +6,7 @@ class Homepage extends Component {
       return(
   
         <div className="Login">
-                HERE HOMEPAGE 
+                <h1>HOMEPAGE</h1> 
           
         </div>
   
