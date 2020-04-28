@@ -13,6 +13,7 @@ const mainNavigation = props => {
                         <h1>Learning Platform</h1>
                     </div>
 
+                    
                     <nav className="main-navigation__items">
                         <ul>
                             {(!context.token && !localStorage.getItem('token')) && (

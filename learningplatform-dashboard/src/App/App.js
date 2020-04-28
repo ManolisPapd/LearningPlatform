@@ -37,7 +37,7 @@ class App extends Component {
           id: this.state.id, 
           login: this.login, 
           logout: this.logout}}>
-          <MainNavigation />
+          {(this.state.token || localStorage.getItem('token')) && <MainNavigation />}
           <main className="main-content">
             <Switch>
               
