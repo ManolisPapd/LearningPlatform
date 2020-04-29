@@ -30,6 +30,7 @@ form {
 	background: #fafafa;
 	border: 1px solid #ebebeb;
 	box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+	background-color: rgba(230, 233, 252, 0.5);
 }
 
 .group { 
@@ -48,6 +49,7 @@ input {
 	border: none;
 	border-radius: 0;
 	border-bottom: 1px solid #757575;
+	background-color: rgba(230, 233, 252, 0);
 }
 
 input:focus { outline: none; }

@@ -8,9 +8,11 @@ import './Login.css'
 class Login extends Component {
 
     state = {
-      loading : false
+      loading : false,
+      emailActiveStatus: "",
+      passwordActiveStatus: "",
+      credentialsStatus: true
     }
-
 
     static contextType = AuthContext;
 
@@ -22,7 +24,7 @@ class Login extends Component {
 
     //read email and password and send it to the back
     submitHandler = (event) => {
-      this.setState({loading : true});
+      
       event.preventDefault(); //prevent requests from being sent
       const email = this.emailEl.current.value;
       const password = this.passwordEl.current.value;
@@ -59,12 +61,17 @@ class Login extends Component {
         return res.json();
       })
       .then(resData => {
-        if(resData.data.login.token){
+        if(resData.data.login){
+          this.setState({credentialsStatus: true});
           this.context.login(
             resData.data.login.token, 
             resData.data.login.id, 
             resData.data.login.tokenExpiration
             )
+        }
+        //User gave bad credentials
+        else{
+            this.setState({credentialsStatus: false});
         }
       })
       .catch(err => {
@@ -73,8 +80,32 @@ class Login extends Component {
 
     };
 
+    handleEmailInputChange = (event) =>  {
+      
+      //Keeping email and password on top if it contains a value
+      if(event.target.value){
+        this.setState({activateStatusEmail: "used"});
+      }
+      else{
+        this.setState({activateStatusEmail: ""});
+      }
+
+    }
+
+    handlePasswordInputChange = (event) =>  {
+      
+      //Keeping email and password on top if it contains a value
+      if(event.target.value){
+        this.setState({passwordActiveStatus: "used"});
+      }
+      else{
+        this.setState({passwordActiveStatus: ""});
+      }
+
+    }
+
     render (){
-  
+        
       return(
         <React.Fragment>
 
@@ -84,45 +115,44 @@ class Login extends Component {
           </hgroup>
 
 
-          <form onSubmit={this.submitHandler}>
+          <form className="auth-form" onSubmit={this.submitHandler}>
             <div className="group">
-              <input type="email" id="email" ref={this.emailEl}></input><span class="highlight"></span><span class="bar"></span>
+              {/* Deactivate movement of the inputs */}
+        
+              <input className={`${this.state.activateStatusEmail}`} 
+                          type="email" id="email" ref={this.emailEl} 
+                          required
+                          onChange={this.handleEmailInputChange}></input>
+              <span className="highlight"></span><span className="bar"></span>
               <label htmlFor="email">e-mail</label>
+
+              
             </div>
-            <div class="group">
-              <input type="password" id="password" ref={this.passwordEl}></input><span class="highlight"></span><span class="bar"></span>
-              <label htmlFor="password">password</label>
+            <div className="group">
+              <input className={`${this.state.passwordActiveStatus}`} 
+                          type="password" id="password" 
+                          ref={this.passwordEl} 
+                          required
+                          onChange={this.handlePasswordInputChange}></input>
+              <span className="highlight"></span><span className="bar"></span>
+              <label htmlFor="password">password</label><br />
+              {!this.state.credentialsStatus && 
+                    <div className="alert alert-danger">
+                      <strong>Wrong Credentials!</strong>
+                    </div>}
             </div>
-            <button type="submit" class="button buttonBlue">
+            <button type="submit" className="button buttonBlue">
               Sign In
-              <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
+              <div className="ripples buttonRipples"><span className="ripplesCircle"></span></div>
             </button>
           </form>
+
+
 
           <footer><a href="https://github.com/mpapd/LearningPlatform" target="_blank"><img src="https://i.imgur.com/4Ly6cGy.png"/></a>
             <p>MSc of Computer Science and Technology <a href="http://msc-cse.ice.uniwa.gr/" target="_blank">University of West Attica</a></p>
           </footer>
 
-          {/* <form className="auth-form" onSubmit={this.submitHandler}>
-            <div className="form-control">
-                
-              <label htmlFor="email">e-mail</label>
-              <input type="email" id="email" ref={this.emailEl} />
-
-            </div>
-            <div className="form-control">
-                
-              <label htmlFor="password">password</label>
-              <input type="password" id="password" ref={this.passwordEl}  />
-              
-            </div>
-
-            <div className="form-actions">
-              <button type="submit">Login</button>
-            </div>
-
-          </form> */}
-  
         </React.Fragment>
         
   

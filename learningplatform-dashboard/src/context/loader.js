@@ -2,18 +2,22 @@ import $ from 'jquery';
 
 $(window, document, undefined).ready(function() {
 
-    $('input').blur(function() {
-      var $this = $(this);
-      if ($this.val())
-        $this.addClass('used');
-      else
-        $this.removeClass('used');
-    });
+    // $('input').blur(function() {
+      
+    //   var $this = $(this);
+    //   if ($this.val()){
+    //     $this.addClass('used');
+    //   }
+    //   else{
+    //     $this.removeClass('used');
+    //   }
+        
+    // });
   
     var $ripples = $('.ripples');
   
     $ripples.on('click.Ripples', function(e) {
-  
+      
       var $this = $(this);
       var $offset = $this.parent().offset();
       var $circle = $this.find('.ripplesCircle');
