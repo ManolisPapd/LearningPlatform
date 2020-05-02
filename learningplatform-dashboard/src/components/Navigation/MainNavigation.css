@@ -1,4 +1,4 @@
-.main-navigation {
+/* .main-navigation {
     position: fixed;
     left: 0;
     top: 0;
@@ -55,4 +55,73 @@
     background: #ffffff;
     color: #5101d1;
     border-radius: 5px;
+  } */
+
+.navbar,
+.navbar-default {
+    background-image: linear-gradient(to bottom,#3c5975 0,#314c66 100%) !important; /* override background image gradient w/ flat color */
+}
+
+.navItem{
+  color: rgba(255, 255, 255, 0.514);
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px ;
+  
+  
+}
+
+.navItem:hover{
+  background: #ffffff;
+  border-radius: 5px;
+  color: rgb(0, 0, 0);
+  padding: 10px;
+    
+}
+
+
+h2 {
+  margin:0;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif ;
+  text-align: center;
+  margin-right: 15px;
+
+ 
+}
+
+.courseChild{
+  width: fit-content;
+  cursor: pointer;
+  float:left
+}
+
+.courseParent{
+  width: 310px;
+  display:inline-block;
+background-color: #f8f9fa;
+border: 2px solid rgba(28,110,164,0.1);
+border-radius: 40px;
+  
+}
+.courseParent:hover{
+  
+display:inline-block;
+cursor: pointer;
+background-color: #d7dde2;
+border: 2px solid rgba(28,110,164,0.1);
+border-radius: 40px;
+  
+}
+.courseParent:active{
+  
+  display:inline-block;
+  cursor: pointer;
+  background-color: #c5bebe;
+  border: 2px solid rgba(28,110,164,0.1);
+  border-radius: 40px;
+    
   }
+
+.courseImage{
+  border-radius: 40px;
+}

@@ -1,36 +1,51 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink,Link} from 'react-router-dom';
 import AuthContext from '../../context/auth-context';
+import {Navbar, Nav} from 'react-bootstrap';
+
+
 import './MainNavigation.css'
 
 const mainNavigation = props => {
+  const activeItem = {
+
+    background: '#ffffff',
+    borderRadius: '5px',
+    color: 'rgb(0, 0, 0)',
+    padding: '10px'
+    }
+
+  const homeButton = {
+    textDecoration: 'none',
+    color: 'rgb(255, 255, 255)'
+  }
     return (
         <AuthContext.Consumer>
             {(context) => {
                 return (
-                <header className="main-navigation">
-                    <div className="main-navigation__logo">
-                        <h1>Learning Platform</h1>
-                    </div>
 
+                    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                    <Navbar.Brand>
+                        <Link style={homeButton} to="/homepage">
+                          Learning Platform
+                        </Link>
+                        
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                      <Nav className="mr-auto">
+                        <NavLink  className="navItem" to="/homepage" style={{ textDecoration: 'none' }}>My Courses</NavLink>
+                        <NavLink activeStyle={activeItem} className="navItem" to="/profile" style={{ textDecoration: 'none' }}>Profile</NavLink>
+
+                                                
+                      </Nav>
+                      <Nav>
+                        <Nav.Link onClick={context.logout}>Logout</Nav.Link>
+                      </Nav>
+                    </Navbar.Collapse>
+                  </Navbar>
                     
-                    <nav className="main-navigation__items">
-                        <ul>
-                            {(!context.token && !localStorage.getItem('token')) && (
-                                <li><NavLink to="/auth">Authenticate</NavLink></li>
-                            )}
-                            {(context.token || localStorage.getItem('token')) && (
-                                <React.Fragment>
-                                    <li><NavLink to="/homepage">Homepage</NavLink></li>
-                                    <li>
-                                        <button onClick={context.logout}>Logout</button>
-                                    </li>
-                                </React.Fragment>
-                            )}
-                        </ul>
-                    </nav>
-        
-                </header>
+                
                 )
             }}
         </AuthContext.Consumer>

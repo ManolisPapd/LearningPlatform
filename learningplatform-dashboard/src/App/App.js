@@ -1,29 +1,43 @@
-import React, { Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
-import Login from '../Login/Login'
-import Homepage from '../Homepage/Homepage'
+import Login from '../components/Login/Login'
+// import Homepage from '../components/Homepage/Homepage'
 import MainNavigation from '../components/Navigation/MainNavigation';
+import Profile from '../components/Profile/Profile';
 import AuthContext from '../context/auth-context';
+
 import './App.css';
 
+// const Homepage = lazy(() => import('../components/Homepage/Homepage'));
+const Homepage = lazy(() => {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(import('../components/Homepage/Homepage')), 1000);
+  });
+});
+
 class App extends Component {
-
-
   state = {
     token: null,
     id: null
   }
 
+  componentDidUpdate = () => {
+    window.location.reload();
+  }
+
+
   login = (token, id, tokenExpiration) =>{
     this.setState({token: token, id: id});
-    localStorage.setItem('userId', JSON.stringify(id));
-    localStorage.setItem('token', JSON.stringify(token));
+    localStorage.setItem('userId', id);
+    localStorage.setItem('token', token);
+
   }
 
   logout = () => {
     this.setState({token: null, id: null})
     localStorage.removeItem('userId');
     localStorage.removeItem('token');
+    
   }
 
   render (){
@@ -41,10 +55,17 @@ class App extends Component {
           <main className="main-content">
             <Switch>
               
-              { (this.state.token || localStorage.getItem('token')) &&  <Redirect from="/" to ="/homepage" exact />}
+              {(this.state.token || localStorage.getItem('token')) &&  <Redirect from="/" to ="/homepage" exact />}
               {(this.state.token || localStorage.getItem('token')) &&  <Redirect from="/auth" to ="/homepage" exact />}
               {(!this.state.token || !localStorage.getItem('token')) &&  <Route path="/auth" component={Login} />}
-              {(this.state.token || localStorage.getItem('token')) &&  <Route path="/homepage" component={Homepage} />}
+              {(this.state.token || localStorage.getItem('token')) && 
+              
+                <Suspense fallback={<div>Loading......</div>}>
+                    <Route path="/homepage" component={Homepage} />
+                </Suspense>
+                    
+              }
+              {(this.state.token || localStorage.getItem('token')) &&  <Route path="/profile" component={Profile} />}
               {/* Order is important! You should place this last */}
               {(!this.state.token || !localStorage.getItem('token')) && <Redirect to ="/auth" exact />}
 

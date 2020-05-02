@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import AuthContext from '../context/auth-context';
-import '../context/loader';
+import AuthContext from '../../context/auth-context';
+import '../../context/loader';
 
 
 import './Login.css'
@@ -113,7 +113,6 @@ class Login extends Component {
           <hgroup>
             <h1>Learning Platform</h1>
           </hgroup>
-
 
           <form className="auth-form" onSubmit={this.submitHandler}>
             <div className="group">
