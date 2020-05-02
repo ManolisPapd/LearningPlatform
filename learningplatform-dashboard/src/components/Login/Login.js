@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import AuthContext from '../../context/auth-context';
 import '../../context/loader';
-
-
+import logo from '../../images/logo.png';
 import './Login.css'
 
 class Login extends Component {
@@ -148,7 +147,7 @@ class Login extends Component {
 
 
 
-          <footer><a href="https://github.com/mpapd/LearningPlatform" target="_blank"><img src="https://i.imgur.com/4Ly6cGy.png"/></a>
+          <footer><a href="https://github.com/mpapd/LearningPlatform" target="_blank"><img className="logo" src={logo}/></a>
             <p>MSc of Computer Science and Technology <a href="http://msc-cse.ice.uniwa.gr/" target="_blank">University of West Attica</a></p>
           </footer>
 

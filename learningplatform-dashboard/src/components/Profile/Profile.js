@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
 class Profile extends Component {
+    componentDidMount = () => {
+        console.log("PROFILE")
+    }
 
     render (){
         

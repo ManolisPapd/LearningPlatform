@@ -1,17 +1,34 @@
-import React, { Component } from 'react';
+import React, { Component,lazy, Suspense } from 'react';
+// import Course from '../Course/Course';
+import './Homepage.css';
 
+const Course = lazy(() => {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(import('../Course/Course')), 1200);
+  });
+});
 
 
 class Homepage extends Component {
   
   state = {
-    courses:  {}
+    courses:  {},
+    courseSelected: false,
+    selectedCourse: null
   }
 
-  componentDidUpdate = () => {
-    console.log("UPDATE")
+  componentWillUpdate = () => {
+
+    //Allow reappearance of courses when you want to go home from a course+
+    if(this.state.courseSelected){
+      this.setState({courseSelected: false});
+    }
+    
   }
+  
   componentDidMount = () => {
+    localStorage.setItem('courseState',0);
+    
 
     if(localStorage.getItem('userId')){
       let requestBody = {
@@ -52,27 +69,42 @@ class Homepage extends Component {
     }
   }
     
+  loadCourse = (courseId) =>{
+    this.setState({courseSelected: true});
+    localStorage.setItem('courseState',1);
+    this.setState({selectedCourse: this.state.courses[courseId]});
+    
+  }
     render (){
 
       return(
   
         <div>
           
-            {this.state.courses.length && (
+            {/* Present clickable courses */}
+            {(this.state.courses.length && !this.state.courseSelected) ? (
               
               <div className="courseParent">
+
+                
                 {this.state.courses.map((course,i) => 
-                  <div key={i}>
+                  <div key={i} onClick={() => this.loadCourse(i)}>
                     <h2 className="courseName">{course.name}</h2>
                     <img src={course.image} className="courseImage" alt="Cinque Terre" width="304" height="236"/> 
-                    
-            
                     
                   </div>
                 )}
 
                 
               </div>
+            ) : <div></div>}
+
+            {/* When The course has been clicked it will be rendered */}
+            {this.state.courseSelected && localStorage.getItem('courseState') === '1' && (
+              <Suspense fallback={<div className="loader">Loading...</div>}>
+                  <Course />
+              </Suspense>
+              
             )}
 
             

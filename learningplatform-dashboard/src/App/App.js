@@ -30,6 +30,7 @@ class App extends Component {
     this.setState({token: token, id: id});
     localStorage.setItem('userId', id);
     localStorage.setItem('token', token);
+    localStorage.setItem('courseState',0);
 
   }
 
@@ -37,6 +38,7 @@ class App extends Component {
     this.setState({token: null, id: null})
     localStorage.removeItem('userId');
     localStorage.removeItem('token');
+    localStorage.removeItem('courseState');
     
   }
 
@@ -57,15 +59,16 @@ class App extends Component {
               
               {(this.state.token || localStorage.getItem('token')) &&  <Redirect from="/" to ="/homepage" exact />}
               {(this.state.token || localStorage.getItem('token')) &&  <Redirect from="/auth" to ="/homepage" exact />}
-              {(!this.state.token || !localStorage.getItem('token')) &&  <Route path="/auth" component={Login} />}
+              {(!this.state.token || !localStorage.getItem('token')) &&  <Route exact path="/auth" component={Login} />}
+              {(this.state.token || localStorage.getItem('token')) &&  <Route exact path="/profile" component={Profile} />}
               {(this.state.token || localStorage.getItem('token')) && 
               
-                <Suspense fallback={<div>Loading......</div>}>
+                <Suspense fallback={<div className="loader">Loading...</div>}>
                     <Route path="/homepage" component={Homepage} />
                 </Suspense>
                     
               }
-              {(this.state.token || localStorage.getItem('token')) &&  <Route path="/profile" component={Profile} />}
+              
               {/* Order is important! You should place this last */}
               {(!this.state.token || !localStorage.getItem('token')) && <Redirect to ="/auth" exact />}
 
