@@ -102,7 +102,9 @@ class Homepage extends Component {
             {/* When The course has been clicked it will be rendered */}
             {this.state.courseSelected && localStorage.getItem('courseState') === '1' && (
               <Suspense fallback={<div className="loader">Loading...</div>}>
-                  <Course />
+                  <Course 
+                    course = {this.state.selectedCourse}
+                  />
               </Suspense>
               
             )}

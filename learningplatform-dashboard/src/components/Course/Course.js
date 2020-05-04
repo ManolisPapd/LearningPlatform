@@ -1,8 +1,56 @@
 import React, { Component } from 'react';
 import './Course.css'
 import {Tab, Nav,Row,Col,Accordion, Card, Button } from 'react-bootstrap';
+import CardComponent from '../CardComponent/CardComponent';
 
 class Course extends Component {
+    state = {
+        sections: {}
+    }
+
+    componentDidMount = () => {
+
+        //Retrieve sections
+
+        let requestBody = {
+        
+            query: `
+            query {
+                courseSections(courseId: ${this.props.course.id}){
+                    id
+                    name
+                    courseId
+                    information
+                }
+            }
+            `
+        };
+
+
+        //request to the backend
+        fetch('http://localhost:8080/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+            'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            if(res.status !== 200 && res.status !== 201){
+            throw new Error('Failed!');
+            }
+            return res.json();
+        })
+        .then(resData => {
+            console.log(resData.data.courseSections)
+            this.setState({sections: resData.data.courseSections });
+            
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+    
+    
 
     render (){
         
@@ -10,59 +58,24 @@ class Course extends Component {
 
             <React.Fragment>
 
-                <Accordion>
-                    <Card>
-                        <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                            Section 1: Intro To SQL World
-                        </Accordion.Toggle>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey="0">
-                        <Card.Body>
+                {(this.state.sections.length) && 
+
+                    <Accordion>
+                        {/* Iterate through response with sections */}
+                        {this.state.sections.map((section,i) => 
+                        <div key={i}>
+                            {/* TODO give me tabs for this section and pass it as props */}
+                            <CardComponent 
+                                eventKey = {i}
+                                section = {section}
+                            /> 
                             
-                            {/* Children Sections */}
-                            <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-                                <Row>
-                                <Col sm={3}>
-                                    <Nav variant="pills" className="flex-column">
-                                    <Nav.Item>
-                                        <Nav.Link eventKey="first">Learning Material</Nav.Link>
-                                        
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <Nav.Link eventKey="second">Quiz</Nav.Link>
-                                    </Nav.Item>
-                                    </Nav>
-                                </Col>
-                                <Col sm={9}>
-                                    <Tab.Content>
-                                    <Tab.Pane eventKey="first">
-                                        <div>TEST1TEST1TEST1TEST1TEST1TEST1TEST1TEST1TET1TEST1</div>
-                                    </Tab.Pane>
-                                    <Tab.Pane eventKey="second">
-                                        <div>TEST2</div>
-                                    </Tab.Pane>
-                                    </Tab.Content>
-                                </Col>
-                                </Row>
-                            </Tab.Container>
-                            {/* End of children  */}
-
-
-                        </Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
-                    <Card>
-                        <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                            Click me!
-                        </Accordion.Toggle>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey="1">
-                        <Card.Body>Hello! I'm another body</Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
-                </Accordion>
+                        </div>
+                        )}
+                        
+                        
+                    </Accordion>
+                }
                 
           </React.Fragment>
 
