@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './CardComponent.css'
 import {Tab, Nav,Row,Col,Accordion, Card, Button  } from 'react-bootstrap';
 import Modal from '../Modal/Modal';
+import Quiz from '../Quiz/Quiz';
 
 class CardComponent extends Component {
     state = {
@@ -16,6 +17,7 @@ class CardComponent extends Component {
     }       
 
     render (){
+
         let sectionsAnalyzer = <div></div>;
         if(JSON.parse(this.props.section.information).id === 'overview'){
             sectionsAnalyzer = 
@@ -57,12 +59,12 @@ class CardComponent extends Component {
                                     </button>
                                     
                                     <Modal
-                                    show={this.state.showModal}
-                                    closeCallback={this.toggleModal}
-                                    customClass="custom_modal_class"
+                                        show={this.state.showModal}
+                                        closeCallback={this.toggleModal}
+                                        customClass="custom_modal_class"
                                     >
                                     <React.Fragment>
-                                        <h2>Told Ya!</h2>
+                                        <Quiz />
                                     </React.Fragment>
                                     </Modal>
                                 </div>
@@ -98,12 +100,12 @@ class CardComponent extends Component {
                                     </button>
                                     
                                     <Modal
-                                    show={this.state.showModal}
-                                    closeCallback={this.toggleModal}
-                                    customClass="custom_modal_class"
+                                        show={this.state.showModal}
+                                        closeCallback={this.toggleModal}
+                                        customClass="custom_modal_class"
                                     >
                                     <React.Fragment>
-                                        <h2>Told Ya!</h2>
+                                        <Quiz />
                                     </React.Fragment>
                                     </Modal>
                                 </div>
@@ -121,12 +123,12 @@ class CardComponent extends Component {
                                 </button>
                                 
                                 <Modal
-                                show={this.state.showModal}
-                                closeCallback={this.toggleModal}
-                                customClass="custom_modal_class"
+                                    show={this.state.showModal}
+                                    closeCallback={this.toggleModal}
+                                    customClass="custom_modal_class"
                                 >
                                 <React.Fragment>
-                                    <h2>Told Ya!</h2>
+                                    <Quiz />
                                 </React.Fragment>
                                 </Modal>
                             </div>
