@@ -64,7 +64,10 @@ class CardComponent extends Component {
                                         customClass="custom_modal_class"
                                     >
                                     <React.Fragment>
-                                        <Quiz />
+                                        <Quiz
+                                            sectionId = {this.props.section.id} 
+                                            quizType = "section"
+                                        />
                                     </React.Fragment>
                                     </Modal>
                                 </div>
@@ -105,7 +108,10 @@ class CardComponent extends Component {
                                         customClass="custom_modal_class"
                                     >
                                     <React.Fragment>
-                                        <Quiz />
+                                        <Quiz
+                                            sectionId = {this.props.section.id} 
+                                            quizType = "section"
+                                        />
                                     </React.Fragment>
                                     </Modal>
                                 </div>
@@ -128,7 +134,13 @@ class CardComponent extends Component {
                                     customClass="custom_modal_class"
                                 >
                                 <React.Fragment>
-                                    <Quiz />
+                                    <Quiz
+                                        //pass all sections to get all final quizzes for all sections
+                                        sectionId = {this.props.section.id} 
+                                        quizType = "finalQuiz"
+                                        sectionsLength = {this.props.sectionsLength}
+                                    
+                                    />
                                 </React.Fragment>
                                 </Modal>
                             </div>

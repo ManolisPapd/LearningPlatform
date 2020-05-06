@@ -68,6 +68,7 @@ class Course extends Component {
                             <CardComponent 
                                 eventKey = {i}
                                 section = {section}
+                                sectionsLength = {this.state.sections.length}
                             /> 
                             
                         </div>
