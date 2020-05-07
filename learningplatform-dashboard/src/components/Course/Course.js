@@ -63,15 +63,15 @@ class Course extends Component {
                     <Accordion>
                         {/* Iterate through response with sections */}
                         {this.state.sections.map((section,i) => 
-                        <div key={i}>
-                            {/* TODO give me tabs for this section and pass it as props */}
-                            <CardComponent 
-                                eventKey = {i}
-                                section = {section}
-                                sectionsLength = {this.state.sections.length}
-                            /> 
-                            
-                        </div>
+                            <div key={i}>
+                                {/* TODO give me tabs for this section and pass it as props */}
+                                <CardComponent 
+                                    eventKey = {i}
+                                    section = {section}
+                                    sectionsLength = {this.state.sections.length}
+                                /> 
+                                
+                            </div>
                         )}
                         
                         

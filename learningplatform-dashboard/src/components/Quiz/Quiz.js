@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FinalQuiz from './FinalQuiz/FinalQuiz';
+import QuizComponent from './QuizComponent/QuizComponent';
 import './Quiz.css';
 
 class Quiz extends Component {
@@ -21,6 +22,7 @@ class Quiz extends Component {
                     allQuiz(sectionId: ${this.props.sectionId}, sectionQuiz: true, failed: false){
                         id
                         type
+                        details
                         sectionId
                     }
                 }
@@ -82,7 +84,6 @@ class Quiz extends Component {
                     return res.json();
                 })
                 .then(resData => {
-                    console.log(resData.data.checkUserSectionStatus);
                     let quizAddition = this.state.finalQuizFetched + 1;
                     let sectionFailStatusMapCopy = this.state.sectionFailStatusMap;
                     sectionFailStatusMapCopy.set([i+1], resData.data.checkUserSectionStatus.failed);
@@ -109,7 +110,10 @@ class Quiz extends Component {
                 //Print this.state.quizzes
                 <React.Fragment>
                     {this.state.quizzes.length > 0 && 
-                     <div>Section Quizzes</div>
+                        //Component will handle the presentation of the quizzes on the section
+                        <QuizComponent 
+                            quizzes = {this.state.quizzes}
+                        />
                     } 
                 </React.Fragment>
                   

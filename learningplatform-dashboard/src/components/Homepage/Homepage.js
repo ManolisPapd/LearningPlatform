@@ -90,6 +90,7 @@ class Homepage extends Component {
                 {this.state.courses.map((course,i) => 
                   <div key={i} onClick={() => this.loadCourse(i)}>
                     <h2 className="courseName">{course.name}</h2>
+                    <p className="courseDescription">{course.description}</p>
                     <img src={course.image} className="courseImage" alt="Cinque Terre" width="304" height="236"/> 
                     
                   </div>

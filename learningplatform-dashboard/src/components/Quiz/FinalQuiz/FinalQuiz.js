@@ -16,6 +16,7 @@ class FinalQuiz extends Component {
                     allQuiz(sectionId: ${sectionId}, sectionQuiz: false, failed: ${failedFlag}){
                         id
                         type
+                        details
                         sectionId
                     }
                 }
