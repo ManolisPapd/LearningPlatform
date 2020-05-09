@@ -32,6 +32,12 @@ class App extends Component {
     localStorage.setItem('token', token);
     localStorage.setItem('courseState',0);
 
+    if(JSON.parse(localStorage.getItem('answeredQuizzes')) === null){
+      var quizzesInit = {};
+      localStorage.setItem('answeredQuizzes',JSON.stringify(quizzesInit));
+    }
+    
+
   }
 
   logout = () => {

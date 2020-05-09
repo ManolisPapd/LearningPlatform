@@ -21,9 +21,58 @@
     padding-top: 30px;
     padding-bottom: 30px;
     cursor: pointer;
-
     box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
-    
-    
 }
 
+.optionClassCorrect{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+    background-color: rgba(0, 128, 0, 0.658);
+    color: white;
+}
+
+.optionClassWrong{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+    background-color: rgba(255, 0, 0, 0.562);
+    color: white;
+}
+
+.codeQuestion{
+    color: rgb(10, 10, 141);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 30px;
+}
+
+.pLabel {
+    color: gray;
+
+}
+
+.quizSubmitCode {
+    margin-bottom: 50px;
+}
+
+.xIcon {
+    color: red;
+    font-size: 56px;
+}
+
+.checkIcon {
+    color: green;
+    font-size: 56px;
+}
+
+.suggestedQueryLabel{
+    font-size: 20px;
+}
+
+.suggestedQuery{
+    color: blue;
+}
