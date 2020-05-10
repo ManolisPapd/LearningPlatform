@@ -43,6 +43,7 @@ class Quiz extends Component {
                 return res.json();
             })
             .then(resData => {
+                console.log("Section Quizzes\n");
                 console.log(resData.data.allQuiz);
                 this.setState({quizzes: resData.data.allQuiz });
                 

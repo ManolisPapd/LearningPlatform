@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import QuizComponent from '../QuizComponent/QuizComponent';
 
 class FinalQuiz extends Component {
 
@@ -38,8 +39,14 @@ class FinalQuiz extends Component {
             })
             .then(resData => {
                 var copyQuizzes = this.state.quizzes;
-                copyQuizzes.push(resData.data.allQuiz);
+                copyQuizzes = copyQuizzes.concat(resData.data.allQuiz);
+                //Shuffle quizzes
+                for (let i = copyQuizzes.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [copyQuizzes[i], copyQuizzes[j]] = [copyQuizzes[j], copyQuizzes[i]];
+                }
                 this.setState({quizzes: copyQuizzes});
+                console.log("ALL QUIZZES:" );
                 console.log(this.state.quizzes);
                 
             })
@@ -47,16 +54,20 @@ class FinalQuiz extends Component {
                 console.log(err);
             });
           }
+
+
+
             
 
     }
     render(){
         return(
             <React.Fragment>
-                <div>Final Quiz Component</div>
-
             {this.state.quizzes.length > 0 && 
-                <div>TRUE DAT DOUBLE TRUE</div>
+                
+                <QuizComponent 
+                    quizzes = {this.state.quizzes}
+                />
             }       
             </React.Fragment>
         

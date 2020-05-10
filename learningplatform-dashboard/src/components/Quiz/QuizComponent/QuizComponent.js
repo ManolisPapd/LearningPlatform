@@ -3,6 +3,7 @@ import {Form,Button} from 'react-bootstrap';
 import ReactAce from 'react-ace-editor';
 import Spinner from '../../Spinner/Spinner';
 import globalDB from '../../../context/db.js';
+import QuizResults from './QuizResults/QuizResults';
 import './QuizComponent.css';
 
 
@@ -20,7 +21,8 @@ class QuizComponent extends Component {
         selectedChoiceWasCorrect: false,
         sqlQuery: null,
         selectedQuery: null,
-        correctQuery: null
+        correctQuery: null,
+        resultsPresentation: false
 
     }
 
@@ -206,160 +208,190 @@ class QuizComponent extends Component {
     }
 
 
+    handleEndQuiz = () => {
+        //Will present overall results for this quiz
+        this.setState({resultsPresentation: true});
+    }
+
+    handleViewQuizzesAgain = () => {
+        this.setState({resultsPresentation: false});
+    }
+
+
     render (){
 
         return(
             <React.Fragment>
-            {(this.props.quizzes.map((quiz,i) => 
-                    <div key={i}>
-                        {console.log("SOKOLATA\t" + JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id])}
-                        {/* Present multiple choice quiz */}
-                        { (this.state.currentQuiz === i && quiz.details && quiz.type === 'multiple') &&
-                            <Form>
-                                <Form.Group controlId="exampleForm.ControlSelect2">
-                                    <Form.Label className="parentLabel">Multiple choice question, select only one!<br/><div className="customLabel"></div></Form.Label> 
-                                    <div className="customLabel">{JSON.parse(quiz.details).question}</div><br/>
-                                    {!this.state.loadingAnswer && ! JSON.parse(localStorage.getItem('answeredQuizzes')).hasOwnProperty(quiz.id) ?
-                                        (<Form.Control className="selectOptionsForm"  as="select" multiple onChange={e => this.handleSelection(e,quiz,JSON.parse(quiz.details).correct )}>
-                                            <option value="a" className="optionClass">a - {JSON.parse(quiz.details).a}</option>
-                                            <option value="b" className="optionClass">b - {JSON.parse(quiz.details).b}</option>
-                                            <option value="c" className="optionClass">c - {JSON.parse(quiz.details).c}</option>
-                                            <option value="d" className="optionClass">d - {JSON.parse(quiz.details).d}</option>
-                                        </Form.Control>)
-                                        :(
-                                            <React.Fragment>
-                                                {/* <Spinner /> */}
-
-                                                <Form.Control className="selectOptionsForm" disabled  as="select" multiple>
-                                                    {JSON.parse(quiz.details).correct ==='a' && (<option value="a" className="optionClassCorrect">a - {JSON.parse(quiz.details).a}</option>)
+                {this.state.resultsPresentation ? 
+                    (
+                        <React.Fragment>
+                            <QuizResults 
+                                quizzes = {this.props.quizzes}
+                            />
+                            <Button variant="info" onClick={this.handleViewQuizzesAgain}>Go to quizzes!</Button>
+                        </React.Fragment>
+                    ):
+                    
                 
-                                                    }
-                                                    {(JSON.parse(quiz.details).correct !=='a' && this.state.selectedChoice !=='a' && JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] !== 'a') && (<option value="a" className="optionClass">a - {JSON.parse(quiz.details).a}</option>)
-                
-                                                    }
-                                                    {(( (this.state.selectedChoice ==='a') && (!this.state.selectedChoiceWasCorrect)) || 
-                                                    ((JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] === 'a' ) && (JSON.parse(quiz.details).correct !== 'a')  ))
-                                                    
-                                                        && (<option value="a" className="optionClassWrong">a - {JSON.parse(quiz.details).a}</option>)
-                                                        
-                                                    }
-                                                    {/* End of Handling a */}
+                    <React.Fragment>
+                    {(this.props.quizzes.map((quiz,i) => 
+                            <div key={i}>
+                                {/* Present multiple choice quiz */}
+                                { (this.state.currentQuiz === i && quiz.details && quiz.type === 'multiple') &&
+                                    <Form>
+                                        <Form.Group controlId="exampleForm.ControlSelect2">
+                                            <Form.Label className="parentLabel">Multiple choice question, select only one!<br/><div className="customLabel"></div></Form.Label> 
+                                            <div className="customLabel">{JSON.parse(quiz.details).question}</div><br/>
+                                            {!this.state.loadingAnswer && ! JSON.parse(localStorage.getItem('answeredQuizzes')).hasOwnProperty(quiz.id) ?
+                                                (<Form.Control className="selectOptionsForm"  as="select" multiple onChange={e => this.handleSelection(e,quiz,JSON.parse(quiz.details).correct )}>
+                                                    <option value="a" className="optionClass">a - {JSON.parse(quiz.details).a}</option>
+                                                    <option value="b" className="optionClass">b - {JSON.parse(quiz.details).b}</option>
+                                                    <option value="c" className="optionClass">c - {JSON.parse(quiz.details).c}</option>
+                                                    <option value="d" className="optionClass">d - {JSON.parse(quiz.details).d}</option>
+                                                </Form.Control>)
+                                                :(
+                                                    <React.Fragment>
+                                                        {/* <Spinner /> */}
 
-
-                                                    {JSON.parse(quiz.details).correct ==='b' && (<option value="a" className="optionClassCorrect">b - {JSON.parse(quiz.details).b}</option>)
-                
-                                                    }
-                                                    {(JSON.parse(quiz.details).correct !=='b' && this.state.selectedChoice !=='b' && JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] !== 'b') && (<option value="b" className="optionClass">b - {JSON.parse(quiz.details).b}</option>)
-                
-                                                    }
-                                                    {(( (this.state.selectedChoice ==='b') && (!this.state.selectedChoiceWasCorrect)) || 
-                                                    ((JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] === 'b' ) && (JSON.parse(quiz.details).correct !== 'b')  ))
-                                                    
-                                                        && (<option value="b" className="optionClassWrong">b - {JSON.parse(quiz.details).b}</option>)
-                                                        
-                                                    }
-                                                    {/* End of Handling b */}
-
-
-                                                    {JSON.parse(quiz.details).correct ==='c' && (<option value="c" className="optionClassCorrect">c - {JSON.parse(quiz.details).c}</option>)
-                
-                                                    }
-                                                    {(JSON.parse(quiz.details).correct !=='c' && this.state.selectedChoice !=='c' && JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] !== 'c') && (<option value="c" className="optionClass">c - {JSON.parse(quiz.details).c}</option>)
-                
-                                                    }
-                                                    {(( (this.state.selectedChoice ==='c') && (!this.state.selectedChoiceWasCorrect)) || 
-                                                    ((JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] === 'c' ) && (JSON.parse(quiz.details).correct !== 'c')  ))
-                                                    
-                                                        && (<option value="c" className="optionClassWrong">c - {JSON.parse(quiz.details).c}</option>)
-                                                        
-                                                    }
-                                                    {/* End of Handling c */}
-
-
-                                                    {JSON.parse(quiz.details).correct ==='d' && (<option value="d" className="optionClassCorrect">d - {JSON.parse(quiz.details).d}</option>)
-                
-                                                    }
-                                                    {(JSON.parse(quiz.details).correct !=='d' && this.state.selectedChoice !=='d' && JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] !== 'd') && (<option value="d" className="optionClass">d - {JSON.parse(quiz.details).d}</option>)
-                
-                                                    }
-                                                    {(( (this.state.selectedChoice ==='d') && (!this.state.selectedChoiceWasCorrect)) || 
-                                                    ((JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] === 'd' ) && (JSON.parse(quiz.details).correct !== 'd')  ))
-                                                    
-                                                        && (<option value="d" className="optionClassWrong">d - {JSON.parse(quiz.details).d}</option>)
-                                                        
-                                                    }
-                                                    {/* End of Handling d */}
-                                                </Form.Control>
-                                        </React.Fragment>)
-                                    }
-                                    
-                                    
-                                </Form.Group>
-                                {this.state.multipleQuizSubmitted ? (<Button className="quizSubmit" variant="primary" onClick={this.handleQuizSumbition}>Submit Answer!</Button>) 
-                                    : <div><Button className="quizSubmit" disabled variant="secondary">Submit Answer!</Button></div>}
-                            </Form>
-                        }
-                        {/* Present code quiz */}
-                        { (this.state.currentQuiz === i && quiz.details && quiz.type === 'code') &&
-                            <React.Fragment>
-                                <p className="codeQuestion">{JSON.parse(quiz.details).question}</p>
-                                <img src={JSON.parse(quiz.details).sql} className="sqlImage" alt="Cinque Terre"/> 
-
-                                {(!this.state.codeQuizSubmitted && !JSON.parse(localStorage.getItem('answeredQuizzes')).hasOwnProperty(quiz.id)) &&
-                                    <React.Fragment>
-                                        <p className="pLabel">Write your SQL query below and submit the answer!</p>
-                                    
-                                        <ReactAce
-                                            mode="mysql"
-                                            theme="eclipse"
-                                            setReadOnly={false}
-                                            onChange={this.handleTypedCode}
-                                            style={{ height: '200px' }}
-                                            ref={instance => { this.ace = instance; }} 
-                                        />
-                                        <Button className="quizSubmit" variant="primary" onClick={e=>this.handleCodeSubmition(quiz)}>Submit Answer!</Button>
-                                    </React.Fragment>
-                                    
-                                } 
-
-                                {(this.state.codeQuizSubmitted || JSON.parse(localStorage.getItem('answeredQuizzes')).hasOwnProperty(quiz.id)) &&
-                                    <React.Fragment>
-                                        {JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] === 0 ?
-                                            <React.Fragment>
-                                                <div>Your query wasn't accepted, try to understand the suggested query below</div>
-                                                <div className="xIcon"><i class="fa fa-times"></i></div>
-                                            </React.Fragment>
-                                            :
-                                            <React.Fragment>
-                                                <div>Query accepted!</div>
-                                                <div className="checkIcon"><i class="fa fa-check"></i></div>
-                                            </React.Fragment>
-                                        }
-                                        <div className="suggestedQueryLabel">Suggested query: <br /> <div className="suggestedQuery">{JSON.parse(quiz.details).correctQuery}</div></div>
-                                        <br />
-                                    </React.Fragment>
-                                    
-                                }  
-
-                            </React.Fragment>
-                            
-                            
-                        }
+                                                        <Form.Control className="selectOptionsForm" disabled  as="select" multiple>
+                                                            {JSON.parse(quiz.details).correct ==='a' && (<option value="a" className="optionClassCorrect">a - {JSON.parse(quiz.details).a}</option>)
                         
-                    </div>
-                ))}
+                                                            }
+                                                            {(JSON.parse(quiz.details).correct !=='a' && this.state.selectedChoice !=='a' && JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] !== 'a') && (<option value="a" className="optionClass">a - {JSON.parse(quiz.details).a}</option>)
+                        
+                                                            }
+                                                            {(( (this.state.selectedChoice ==='a') && (!this.state.selectedChoiceWasCorrect)) || 
+                                                            ((JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] === 'a' ) && (JSON.parse(quiz.details).correct !== 'a')  ))
+                                                            
+                                                                && (<option value="a" className="optionClassWrong">a - {JSON.parse(quiz.details).a}</option>)
+                                                                
+                                                            }
+                                                            {/* End of Handling a */}
 
-                <h3>Question: {this.state.currentQuiz + 1} / {this.props.quizzes.length}</h3>
-                {this.state.currentQuiz > 0 ? ( <Button variant="success" onClick={this.handleQuizNavigationPrevious}> <i className="fa fa-angle-left"></i> previous</Button>)
-                    :<Button variant="secondary" disabled><i className="fa fa-angle-left"></i> previous</Button>
-                }
-                {this.state.currentQuiz < this.props.quizzes.length - 1 ? (<Button variant="success"onClick={this.handleQuizNavigationNext}>next <i className="fa fa-angle-right"></i></Button>)
-                    : <Button variant="secondary" disabled>next <i className="fa fa-angle-right"></i></Button>
-                }
-                <br /> <br />
+
+                                                            {JSON.parse(quiz.details).correct ==='b' && (<option value="a" className="optionClassCorrect">b - {JSON.parse(quiz.details).b}</option>)
+                        
+                                                            }
+                                                            {(JSON.parse(quiz.details).correct !=='b' && this.state.selectedChoice !=='b' && JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] !== 'b') && (<option value="b" className="optionClass">b - {JSON.parse(quiz.details).b}</option>)
+                        
+                                                            }
+                                                            {(( (this.state.selectedChoice ==='b') && (!this.state.selectedChoiceWasCorrect)) || 
+                                                            ((JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] === 'b' ) && (JSON.parse(quiz.details).correct !== 'b')  ))
+                                                            
+                                                                && (<option value="b" className="optionClassWrong">b - {JSON.parse(quiz.details).b}</option>)
+                                                                
+                                                            }
+                                                            {/* End of Handling b */}
+
+
+                                                            {JSON.parse(quiz.details).correct ==='c' && (<option value="c" className="optionClassCorrect">c - {JSON.parse(quiz.details).c}</option>)
+                        
+                                                            }
+                                                            {(JSON.parse(quiz.details).correct !=='c' && this.state.selectedChoice !=='c' && JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] !== 'c') && (<option value="c" className="optionClass">c - {JSON.parse(quiz.details).c}</option>)
+                        
+                                                            }
+                                                            {(( (this.state.selectedChoice ==='c') && (!this.state.selectedChoiceWasCorrect)) || 
+                                                            ((JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] === 'c' ) && (JSON.parse(quiz.details).correct !== 'c')  ))
+                                                            
+                                                                && (<option value="c" className="optionClassWrong">c - {JSON.parse(quiz.details).c}</option>)
+                                                                
+                                                            }
+                                                            {/* End of Handling c */}
+
+
+                                                            {JSON.parse(quiz.details).correct ==='d' && (<option value="d" className="optionClassCorrect">d - {JSON.parse(quiz.details).d}</option>)
+                        
+                                                            }
+                                                            {(JSON.parse(quiz.details).correct !=='d' && this.state.selectedChoice !=='d' && JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] !== 'd') && (<option value="d" className="optionClass">d - {JSON.parse(quiz.details).d}</option>)
+                        
+                                                            }
+                                                            {(( (this.state.selectedChoice ==='d') && (!this.state.selectedChoiceWasCorrect)) || 
+                                                            ((JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] === 'd' ) && (JSON.parse(quiz.details).correct !== 'd')  ))
+                                                            
+                                                                && (<option value="d" className="optionClassWrong">d - {JSON.parse(quiz.details).d}</option>)
+                                                                
+                                                            }
+                                                            {/* End of Handling d */}
+                                                        </Form.Control>
+                                                </React.Fragment>)
+                                            }
+                                            
+                                            
+                                        </Form.Group>
+                                        {this.state.multipleQuizSubmitted ? (<Button className="quizSubmit" variant="primary" onClick={this.handleQuizSumbition}>Submit Answer!</Button>) 
+                                            : <div><Button className="quizSubmit" disabled variant="secondary">Submit Answer!</Button></div>}
+                                    </Form>
+                                }
+                                {/* Present code quiz */}
+                                { (this.state.currentQuiz === i && quiz.details && quiz.type === 'code') &&
+                                    <React.Fragment>
+                                        <p className="codeQuestion">{JSON.parse(quiz.details).question}</p>
+                                        <img src={JSON.parse(quiz.details).sql} className="sqlImage" alt="Cinque Terre"/> 
+
+                                        {(!this.state.codeQuizSubmitted && !JSON.parse(localStorage.getItem('answeredQuizzes')).hasOwnProperty(quiz.id)) &&
+                                            <React.Fragment>
+                                                <p className="pLabel">Write your SQL query below and submit the answer!</p>
+                                            
+                                                <ReactAce
+                                                    mode="mysql"
+                                                    theme="eclipse"
+                                                    setReadOnly={false}
+                                                    onChange={this.handleTypedCode}
+                                                    style={{ height: '200px' }}
+                                                    ref={instance => { this.ace = instance; }} 
+                                                />
+                                                <Button className="quizSubmit" variant="primary" onClick={e=>this.handleCodeSubmition(quiz)}>Submit Answer!</Button>
+                                            </React.Fragment>
+                                            
+                                        } 
+
+                                        {(this.state.codeQuizSubmitted || JSON.parse(localStorage.getItem('answeredQuizzes')).hasOwnProperty(quiz.id)) &&
+                                            <React.Fragment>
+                                                {JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] === 0 ?
+                                                    <React.Fragment>
+                                                        <div>Your query wasn't accepted, try to understand the suggested query below</div>
+                                                        <div className="xIcon"><i className="fa fa-times"></i></div>
+                                                    </React.Fragment>
+                                                    :
+                                                    <React.Fragment>
+                                                        <div>Query accepted!</div>
+                                                        <div className="checkIcon"><i className="fa fa-check"></i></div>
+                                                    </React.Fragment>
+                                                }
+                                                <div className="suggestedQueryLabel">Suggested query: <br /> <div className="suggestedQuery">{JSON.parse(quiz.details).correctQuery}</div></div>
+                                                <br />
+                                            </React.Fragment>
+                                            
+                                        }  
+
+                                    </React.Fragment>
+                                    
+                                    
+                                }
+                                
+                            </div>
+                        ))}
+
+                        
+                        <h3>Question: {this.state.currentQuiz + 1} / {this.props.quizzes.length}</h3>
+
+                        {this.state.currentQuiz > 0 ? ( <Button variant="success" onClick={this.handleQuizNavigationPrevious}> <i className="fa fa-angle-left"></i> previous</Button>)
+                            :<Button variant="secondary" disabled><i className="fa fa-angle-left"></i> previous</Button>
+                        }
+                        {this.state.currentQuiz < this.props.quizzes.length - 1 ? (<Button variant="success" onClick={this.handleQuizNavigationNext}>next <i className="fa fa-angle-right"></i></Button>)
+                            : <Button variant="secondary" disabled>next <i className="fa fa-angle-right"></i></Button>
+                        }
+                        {this.state.currentQuiz === this.props.quizzes.length - 1 &&
+                            <Button variant="info" onClick={this.handleEndQuiz}>End Quiz!</Button>
+                        }
+
+                        <br /> <br />
+                    </React.Fragment>
+                    }
 
                 
             </React.Fragment>
+            
         )
     }
     
