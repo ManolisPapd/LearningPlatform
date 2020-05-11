@@ -228,6 +228,8 @@ class QuizComponent extends Component {
                             <QuizResults 
                                 quizzes = {this.props.quizzes}
                             />
+                            <br />
+                            <br />
                             <Button variant="info" onClick={this.handleViewQuizzesAgain}>Go to quizzes!</Button>
                         </React.Fragment>
                     ):

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import {ListGroup} from 'react-bootstrap';
 import './QuizResults.css';
 
 class QuizResults extends Component {
     state = {
         sections: null,
-        resultsPresent: {}
+        resultsPresent: {},
+        resultsEntries: []
     }
 
     componentDidMount = () =>{
@@ -21,7 +23,7 @@ class QuizResults extends Component {
         if(sectionsSet.size > 1){
             forSection = false;
         }
-        sectionsSet.forEach( (sectionId) => {
+        sectionsSet.forEach((sectionId) => {
             //Get user quizzes for given sectionId
             let requestBody = {
                 
@@ -52,9 +54,15 @@ class QuizResults extends Component {
             })
             .then(resData => {
                 var tmpResultsPresent = this.state.resultsPresent;
+                if(!tmpResultsPresent[sectionId]){
+                    tmpResultsPresent[sectionId] = [];
+                    
+                }
+
                 tmpResultsPresent[sectionId] = resData.data.getQuizzesStatus;
-                this.setState({resultsPresent: tmpResultsPresent })
+                this.setState({resultsPresent: tmpResultsPresent });
                 console.log(this.state.resultsPresent);
+
                 
             })
             .catch(err => {
@@ -65,6 +73,7 @@ class QuizResults extends Component {
     }
 
     render (){
+        
 
 
         return(
@@ -72,7 +81,34 @@ class QuizResults extends Component {
                 {this.state.resultsPresent &&
 
                     <React.Fragment>
-                            <div>QuizResults</div>
+                            <div className="quizResultsHeader">Quiz Results</div> <hr />
+                            {
+                                (Object.entries(this.state.resultsPresent).map((sectionResults) => 
+                                    <React.Fragment key = {sectionResults[0]} >
+
+                                        <ListGroup horizontal>
+                                            <ListGroup.Item variant="light">Section {sectionResults[0] - 2}</ListGroup.Item>
+                                            {sectionResults[1].map((quizResults) =>
+                                                <React.Fragment key={quizResults.id}>
+                                                    {quizResults.status ? (<ListGroup.Item className="successLabel" variant="success" key={quizResults.id}>{quizResults.id}</ListGroup.Item>) : 
+                                                        (<ListGroup.Item className="dangerLabel" variant="danger" key={quizResults.id}>{quizResults.id}</ListGroup.Item>)
+                                                    }
+                                                </React.Fragment>
+                                                
+
+                                            )}
+                                            
+                                        </ListGroup> <br />
+                                        {/* <div>{sectionResults[1]}</div> */}
+                                        
+                                    </React.Fragment>
+                                    
+                                    
+                                        
+                                ))
+                                
+                                
+                            }
 
                     </React.Fragment>
                 }
