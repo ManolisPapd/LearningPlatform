@@ -47,7 +47,6 @@ class QuizComponent extends Component {
     
     handleQuizNavigationNext = () => {
         this.setState({currentQuiz: this.state.currentQuiz + 1});
-        console.log("Current quiz: " + this.state.currentQuiz)
         //Clean state for next quiz
         this.setState({selectedChoice:null, selectedQuiz:null, multipleQuizSubmitted: false, codeQuizSubmitted: false, loadingAnswer: false })
 
@@ -227,6 +226,7 @@ class QuizComponent extends Component {
                         <React.Fragment>
                             <QuizResults 
                                 quizzes = {this.props.quizzes}
+                                finalQuiz = {this.props.finalQuiz}
                             />
                             <br />
                             <br />

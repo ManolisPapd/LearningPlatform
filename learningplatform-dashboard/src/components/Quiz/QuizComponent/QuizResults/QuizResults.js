@@ -6,7 +6,8 @@ class QuizResults extends Component {
     state = {
         sections: null,
         resultsPresent: {},
-        resultsEntries: []
+        resultsEntries: [],
+        flagForFinalQuiz: 0
     }
 
     componentDidMount = () =>{
@@ -23,6 +24,8 @@ class QuizResults extends Component {
         if(sectionsSet.size > 1){
             forSection = false;
         }
+        //If this flag is 1 then it means we are in final quiz and we need to reorder the results
+
         sectionsSet.forEach((sectionId) => {
             //Get user quizzes for given sectionId
             let requestBody = {
@@ -59,16 +62,53 @@ class QuizResults extends Component {
                     
                 }
 
-                tmpResultsPresent[sectionId] = resData.data.getQuizzesStatus;
-                this.setState({resultsPresent: tmpResultsPresent });
-                console.log(this.state.resultsPresent);
+
+                if(this.props.finalQuiz){
+    
+                    var intLocalStorageArray = JSON.parse(localStorage.getItem('finalQuizzesOrder')).map(Number);
+
+                    var tmpArray = Object.create(resData.data.getQuizzesStatus);
+                    tmpArray.sort(function(a, b){  
+                        return intLocalStorageArray.indexOf(a.quizId) - intLocalStorageArray.indexOf(b.quizId);
+                    });
+
+
+                    for(var i = 0; i < intLocalStorageArray.length -1; i++){
+                        var attribute = intLocalStorageArray[i];
+                        tmpArray.forEach((quiz) => {
+                            
+                            if(quiz.quizId === attribute){
+                                console.log(quiz.quizId + "\t" + attribute + "\t" + i);
+                                
+                                
+                            }
+                        })
+                    }
+
+                    tmpResultsPresent[sectionId] = tmpArray;
+                    this.setState({resultsPresent: tmpResultsPresent });
+                }
+                else{
+                    tmpResultsPresent[sectionId] = resData.data.getQuizzesStatus;
+                    this.setState({resultsPresent: tmpResultsPresent });
+                }
+                
+                
+                
+                
+                
 
                 
             })
             .catch(err => {
                 console.log(err);
             });
+            
         })
+
+
+        
+
 
     }
 
@@ -90,8 +130,8 @@ class QuizResults extends Component {
                                             <ListGroup.Item variant="light">Section {sectionResults[0] - 2}</ListGroup.Item>
                                             {sectionResults[1].map((quizResults) =>
                                                 <React.Fragment key={quizResults.id}>
-                                                    {quizResults.status ? (<ListGroup.Item className="successLabel" variant="success" key={quizResults.id}>{quizResults.id}</ListGroup.Item>) : 
-                                                        (<ListGroup.Item className="dangerLabel" variant="danger" key={quizResults.id}>{quizResults.id}</ListGroup.Item>)
+                                                    {quizResults.status ? (<ListGroup.Item className="successLabel" variant="success" key={quizResults.quizId}>{quizResults.quizId}</ListGroup.Item>) : 
+                                                        (<ListGroup.Item className="dangerLabel" variant="danger" key={quizResults.quizId}>{quizResults.quizId}</ListGroup.Item>)
                                                     }
                                                 </React.Fragment>
                                                 

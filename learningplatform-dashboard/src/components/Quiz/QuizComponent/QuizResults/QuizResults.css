@@ -5,8 +5,10 @@
 
 .successLabel{
     background-color: rgb(80, 238, 140);
+    width: 60px
 }
 
 .dangerLabel{
     background-color: rgb(247, 125, 125);
+    width: 60px
 }

@@ -45,6 +45,7 @@ class App extends Component {
     localStorage.removeItem('userId');
     localStorage.removeItem('token');
     localStorage.removeItem('courseState');
+    localStorage.removeItem('finalQuizzesOrder');
     
   }
 

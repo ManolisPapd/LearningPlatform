@@ -48,6 +48,15 @@ class FinalQuiz extends Component {
                 this.setState({quizzes: copyQuizzes});
                 console.log("ALL QUIZZES:" );
                 console.log(this.state.quizzes);
+
+                //Save array of all ids that are shuffled
+                var quizOrder = [];
+
+                this.state.quizzes.forEach(quiz => {
+                    quizOrder.push(quiz.id)
+                })
+                
+                localStorage.setItem('finalQuizzesOrder', JSON.stringify(quizOrder));
                 
             })
             .catch(err => {
@@ -67,6 +76,7 @@ class FinalQuiz extends Component {
                 
                 <QuizComponent 
                     quizzes = {this.state.quizzes}
+                    finalQuiz = {true}
                 />
             }       
             </React.Fragment>
