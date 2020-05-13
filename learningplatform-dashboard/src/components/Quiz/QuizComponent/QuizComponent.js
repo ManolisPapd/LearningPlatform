@@ -26,6 +26,8 @@ class QuizComponent extends Component {
 
     }
 
+    
+
     handleSelection(e,quiz,correctChoice) {
         if(correctChoice === e.target.value){
             this.setState({selectedChoice:e.target.value, selectedQuiz:quiz.id, multipleQuizSubmitted: true, selectedChoiceWasCorrect: true })
@@ -216,6 +218,26 @@ class QuizComponent extends Component {
         this.setState({resultsPresentation: false});
     }
 
+    resetFinalQuiz = () => {
+        //Close modal, notify parent component CardComponent
+        localStorage.setItem('finalModal',false);
+        this.props.finalModalCheck(false);
+
+        //Remove final quizzes from answered quizzes on local storage
+        var finalQuizzesId = JSON.parse(localStorage.getItem('finalQuizzesOrder')).map(Number);
+        var answeredQuizzes = JSON.parse(localStorage.getItem('answeredQuizzes'));
+
+        finalQuizzesId.forEach((id) => {
+            delete answeredQuizzes[id];
+
+        })
+        localStorage.setItem('answeredQuizzes', JSON.stringify(answeredQuizzes))
+
+
+
+
+    }
+
 
     render (){
 
@@ -231,6 +253,9 @@ class QuizComponent extends Component {
                             <br />
                             <br />
                             <Button variant="info" onClick={this.handleViewQuizzesAgain}>Go to quizzes!</Button>
+                            {this.props.finalQuiz && <Button variant="danger" 
+                                onClick={this.resetFinalQuiz}
+                             >Submit Final Quiz!</Button>}
                         </React.Fragment>
                     ):
                     

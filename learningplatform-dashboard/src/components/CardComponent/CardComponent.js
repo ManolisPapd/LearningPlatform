@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './CardComponent.css'
 import {Tab, Nav,Row,Col,Accordion, Card, Button  } from 'react-bootstrap';
+import ReactModal from 'react-modal';
 import Modal from '../Modal/Modal';
 import Quiz from '../Quiz/Quiz';
 
@@ -16,6 +17,17 @@ class CardComponent extends Component {
         });
     }       
 
+    toggleFinalModal = () => {
+        this.setState({});
+        localStorage.setItem('finalModal',!JSON.parse(localStorage.getItem('finalModal')));
+    }
+
+    finalModalCheck = (data) => {
+        localStorage.setItem('finalModal',data);
+        this.setState({});
+        
+    }
+
     render (){
 
         let sectionsAnalyzer = <div></div>;
@@ -23,7 +35,15 @@ class CardComponent extends Component {
             sectionsAnalyzer = 
 
                     <Row>
-                        <div>{JSON.parse(this.props.section.information).details}</div>
+                        {JSON.parse(this.props.section.information).details.map((paragraph) => 
+                            <React.Fragment key={Math.random()}>
+                                <h1 key={Math.random()} className="paragraphHeader">{paragraph.header}</h1>
+                                <h2 key={Math.random()}  className="paragraphContext">{paragraph.context}</h2>
+                                
+                            </React.Fragment>
+                            
+
+                        )}
                     </Row>
             
         }
@@ -124,25 +144,32 @@ class CardComponent extends Component {
             sectionsAnalyzer = 
                     <Row>
                             <div className="app">
-                                <button className="modal_opener" onClick={this.toggleModal}>
+                                <button className="modal_opener" onClick={this.toggleFinalModal}>
                                     Begin Final Quiz!
                                 </button>
                                 
-                                <Modal
-                                    show={this.state.showModal}
-                                    closeCallback={this.toggleModal}
-                                    customClass="custom_modal_class"
-                                >
-                                <React.Fragment>
-                                    <Quiz
-                                        //pass all sections to get all final quizzes for all sections
-                                        sectionId = {this.props.section.id} 
-                                        quizType = "finalQuiz"
-                                        sectionsLength = {this.props.sectionsLength}
-                                    
-                                    />
-                                </React.Fragment>
-                                </Modal>
+                                
+                                <ReactModal
+                                    isOpen={JSON.parse(localStorage.getItem('finalModal'))}
+                                    ariaHideApp={false}
+                                    shouldReturnFocusAfterClose={true}
+                                        
+                                >            
+                                    <React.Fragment>
+                                        <div>
+                                            <Quiz
+                                                //pass all sections to get all final quizzes for all sections
+                                                sectionId = {this.props.section.id} 
+                                                quizType = "finalQuiz"
+                                                sectionsLength = {this.props.sectionsLength}
+                                                finalModalCheck = {this.finalModalCheck}
+                                            
+                                            />
+                                        </div>
+    
+                                    </React.Fragment>
+                                </ReactModal>
+                                {/* </Modal> */}
                             </div>
                     </Row>
         }

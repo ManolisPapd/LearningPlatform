@@ -62,13 +62,16 @@ class FinalQuiz extends Component {
             .catch(err => {
                 console.log(err);
             });
-          }
-
-
-
-            
+          }            
 
     }
+
+    finalModalCheck = (data) => {
+        this.props.finalModalCheck(data);
+        this.setState({});
+        
+    }
+
     render(){
         return(
             <React.Fragment>
@@ -77,6 +80,7 @@ class FinalQuiz extends Component {
                 <QuizComponent 
                     quizzes = {this.state.quizzes}
                     finalQuiz = {true}
+                    finalModalCheck = {this.finalModalCheck}
                 />
             }       
             </React.Fragment>

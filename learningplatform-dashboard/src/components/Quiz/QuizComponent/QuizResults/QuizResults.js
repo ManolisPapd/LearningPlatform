@@ -6,7 +6,7 @@ class QuizResults extends Component {
     state = {
         sections: null,
         resultsPresent: {},
-        resultsEntries: [],
+        resultsEntries: {},
         flagForFinalQuiz: 0
     }
 
@@ -73,18 +73,22 @@ class QuizResults extends Component {
                     });
 
 
-                    for(var i = 0; i < intLocalStorageArray.length -1; i++){
+                    for(var i = 0; i < intLocalStorageArray.length; i++){
                         var attribute = intLocalStorageArray[i];
                         tmpArray.forEach((quiz) => {
                             
                             if(quiz.quizId === attribute){
-                                console.log(quiz.quizId + "\t" + attribute + "\t" + i);
+                                console.log(quiz.quizId + "\t Will become \t" + i);
+                                var tmpResultsEntries = this.state.resultsEntries;
+                                tmpResultsEntries[attribute] = i;
+                                this.setState({resultsEntries:tmpResultsEntries});
                                 
                                 
                             }
                         })
                     }
 
+                   
                     tmpResultsPresent[sectionId] = tmpArray;
                     this.setState({resultsPresent: tmpResultsPresent });
                 }
@@ -121,7 +125,7 @@ class QuizResults extends Component {
                 {this.state.resultsPresent &&
 
                     <React.Fragment>
-                            <div className="quizResultsHeader">Quiz Results</div> <hr />
+                            <div className="quizResultsHeader">Final Quiz Results</div> <hr />
                             {
                                 (Object.entries(this.state.resultsPresent).map((sectionResults) => 
                                     <React.Fragment key = {sectionResults[0]} >
@@ -130,8 +134,8 @@ class QuizResults extends Component {
                                             <ListGroup.Item variant="light">Section {sectionResults[0] - 2}</ListGroup.Item>
                                             {sectionResults[1].map((quizResults) =>
                                                 <React.Fragment key={quizResults.id}>
-                                                    {quizResults.status ? (<ListGroup.Item className="successLabel" variant="success" key={quizResults.quizId}>{quizResults.quizId}</ListGroup.Item>) : 
-                                                        (<ListGroup.Item className="dangerLabel" variant="danger" key={quizResults.quizId}>{quizResults.quizId}</ListGroup.Item>)
+                                                    {quizResults.status ? (<ListGroup.Item className="successLabel" variant="success" key={quizResults.quizId}>{this.state.resultsEntries[quizResults.quizId] + 1}</ListGroup.Item>) : 
+                                                        (<ListGroup.Item className="dangerLabel" variant="danger" key={quizResults.quizId}>{this.state.resultsEntries[quizResults.quizId] + 1}</ListGroup.Item>)
                                                     }
                                                 </React.Fragment>
                                                 

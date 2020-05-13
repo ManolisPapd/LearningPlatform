@@ -102,6 +102,11 @@ class Quiz extends Component {
 
         }
     }
+
+    finalModalCheck = (data) => {
+        this.props.finalModalCheck(data);
+    }
+
     render (){
 
         let quizPresenter = <div></div>;
@@ -129,6 +134,7 @@ class Quiz extends Component {
                     {this.state.finalQuizFetched === this.props.sectionsLength -3 &&
                         <FinalQuiz
                             sectionStatusMap = {this.state.sectionFailStatusMap}
+                            finalModalCheck = {this.finalModalCheck}
                         />
                     }
                 </React.Fragment>

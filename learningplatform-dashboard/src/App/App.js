@@ -5,6 +5,8 @@ import Login from '../components/Login/Login'
 import MainNavigation from '../components/Navigation/MainNavigation';
 import Profile from '../components/Profile/Profile';
 import AuthContext from '../context/auth-context';
+import ChatBot from 'react-simple-chatbot';
+
 
 import './App.css';
 
@@ -31,6 +33,7 @@ class App extends Component {
     localStorage.setItem('userId', id);
     localStorage.setItem('token', token);
     localStorage.setItem('courseState',0);
+    localStorage.setItem('finalModal',false);
 
     if(JSON.parse(localStorage.getItem('answeredQuizzes')) === null){
       var quizzesInit = {};
@@ -46,6 +49,7 @@ class App extends Component {
     localStorage.removeItem('token');
     localStorage.removeItem('courseState');
     localStorage.removeItem('finalQuizzesOrder');
+    localStorage.removeItem('finalModal');
     
   }
 
@@ -54,6 +58,7 @@ class App extends Component {
     return(
 
       <BrowserRouter>
+            
         <AuthContext.Provider 
         value={{ 
           token: this.state.token, 
@@ -82,6 +87,43 @@ class App extends Component {
             </Switch>
           </main>
         </AuthContext.Provider>
+
+        <ChatBot
+              floating = {true}
+              headerTitle = "Learning Platform Helper"
+              hideSubmitButton = {true}
+              placeholder = "Choose an option"
+              steps={[
+                {
+                  id: '1',
+                  message: 'Welcome to Learning Platform! How can I help you?',
+                  trigger: '3',
+                },
+                {
+                  id: '2',
+                  message: 'Anything else?',
+                  trigger: '3',
+                },
+                {
+                  id: '3',
+                  options: [
+                    { value: 1, label: 'Login to the platform', trigger: '4' },
+                    { value: 2, label: 'Access a course ', trigger: '5' }
+                  ],
+                },
+                
+                {
+                  id: '4',
+                  message: 'asdasdasdasd.',
+                  trigger: '2',
+                },
+                {
+                  id: '5',
+                  message: 'bbbbbbbbbbbbbbbb',
+                  trigger: '2',
+                },
+              ]}
+            />
         
       </BrowserRouter>
       
