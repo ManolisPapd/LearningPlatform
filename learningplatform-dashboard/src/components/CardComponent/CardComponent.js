@@ -4,6 +4,7 @@ import {Tab, Nav,Row,Col,Accordion, Card, Button  } from 'react-bootstrap';
 import ReactModal from 'react-modal';
 import Modal from '../Modal/Modal';
 import Quiz from '../Quiz/Quiz';
+import Statistics from '../Statistics/Statistics';
 
 class CardComponent extends Component {
     state = {
@@ -50,7 +51,9 @@ class CardComponent extends Component {
         else if(JSON.parse(this.props.section.information).id === 'statistics'){
             sectionsAnalyzer = 
                     <Row>
-                        <div>Statistics will be calculated and presented</div>
+                        <Statistics 
+                            sectionsLength = {this.props.sectionsLength}
+                        />
                     </Row>
         }
         else if(JSON.parse(this.props.section.information).id === 'text_material'){

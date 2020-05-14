@@ -64,7 +64,7 @@ class Quiz extends Component {
             
                     query: `
                     query {
-                        checkUserSectionStatus(userId:${localStorage.getItem('userId')}, sectionId: ${i+1}){
+                        checkUserSectionStatus(userId:${localStorage.getItem('userId')}, sectionId: ${i+1}, sectionQuiz:false){
                             failed
                         }
                     }

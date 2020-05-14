@@ -134,8 +134,12 @@ class QuizResults extends Component {
                                             <ListGroup.Item variant="light">Section {sectionResults[0] - 2}</ListGroup.Item>
                                             {sectionResults[1].map((quizResults) =>
                                                 <React.Fragment key={quizResults.id}>
-                                                    {quizResults.status ? (<ListGroup.Item className="successLabel" variant="success" key={quizResults.quizId}>{this.state.resultsEntries[quizResults.quizId] + 1}</ListGroup.Item>) : 
-                                                        (<ListGroup.Item className="dangerLabel" variant="danger" key={quizResults.quizId}>{this.state.resultsEntries[quizResults.quizId] + 1}</ListGroup.Item>)
+                                                    {( this.props.finalQuiz) ?
+                                                        quizResults.status ? (<ListGroup.Item className="successLabel" variant="success" key={quizResults.quizId}>{this.state.resultsEntries[quizResults.quizId] + 1}</ListGroup.Item>) : 
+                                                            (<ListGroup.Item className="dangerLabel" variant="danger" key={quizResults.quizId}>{this.state.resultsEntries[quizResults.quizId] + 1}</ListGroup.Item>)
+                                                         : quizResults.status ? (<ListGroup.Item className="successLabel" variant="success" key={quizResults.quizId}>{quizResults.quizId}</ListGroup.Item>) : 
+                                                         (<ListGroup.Item className="dangerLabel" variant="danger" key={quizResults.quizId}>{quizResults.quizId}</ListGroup.Item>)
+
                                                     }
                                                 </React.Fragment>
                                                 
