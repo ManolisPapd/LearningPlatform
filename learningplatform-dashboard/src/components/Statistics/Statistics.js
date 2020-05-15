@@ -8,6 +8,13 @@ import './Statistics.css';
 
 class Statistics extends Component {
 
+    state = {
+        sectionStatus: new Map(),
+        finalSectionStatus: new Map(),
+        completedStatus: new Map(),
+        finalCompletedStatus: new Map()
+    }
+
     componentDidMount = () => {
 
 
@@ -21,6 +28,7 @@ class Statistics extends Component {
                 query {
                     checkUserSectionStatus(userId:${localStorage.getItem('userId')}, sectionId: ${i+1}, sectionQuiz:true){
                         failed
+                        completed
                     }
                 }
                 `
@@ -40,8 +48,13 @@ class Statistics extends Component {
                 return res.json();
             })
             .then(resData => {
-                console.log("SECTION STATS")
-                console.log(resData.data)
+                //Want to save for each section the status
+                var tmp = this.state.sectionStatus;
+                var tmpCompleted = this.state.completedStatus;
+
+                tmp.set(i, resData.data.checkUserSectionStatus.failed);
+                tmpCompleted.set(i, resData.data.checkUserSectionStatus.completed);
+                this.setState({sectionStatus:tmp, checkUserSectionStatus:tmpCompleted });
                 
                 
             })
@@ -61,6 +74,7 @@ class Statistics extends Component {
                 query {
                     checkUserSectionStatus(userId:${localStorage.getItem('userId')}, sectionId: ${i+1}, sectionQuiz:false){
                         failed
+                        completed
                     }
                 }
                 `
@@ -80,8 +94,6 @@ class Statistics extends Component {
                 return res.json();
             })
             .then(resData => {
-                console.log("FINAL SECTION STATS")
-                console.log(resData.data)
                 
                 
             })
@@ -100,13 +112,20 @@ class Statistics extends Component {
 
         return(
             <div>
-                <StatisticsComponent 
-                    title = "Section Quizzes Statistics"
-                />
+                {this.state.sectionStatus.size === this.props.sectionsLength -3 &&
+                    <StatisticsComponent 
+                        title = "Section Quizzes Statistics"
+                        statusMap = {this.state.sectionStatus}
+                        completedStatusMap = {this.state.completedStatus}
+                    />
+                }
                 <hr />
-                <StatisticsComponent 
+                {/* <StatisticsComponent 
                     title = "Final Quiz Statistics"
-                />
+                /> */}
+
+                <hr />
+
             </div>
         )
     

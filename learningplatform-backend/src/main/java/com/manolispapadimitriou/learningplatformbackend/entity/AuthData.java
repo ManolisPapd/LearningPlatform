@@ -1,4 +1,4 @@
-package com.manolispapadimitriou.learningplatformbackend.model;
+package com.manolispapadimitriou.learningplatformbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

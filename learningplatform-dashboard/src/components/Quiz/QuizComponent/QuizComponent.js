@@ -386,7 +386,7 @@ class QuizComponent extends Component {
                                                     </React.Fragment>
                                                 }
                                                 <div className="suggestedQueryLabel">Suggested query: <br /> <div className="suggestedQuery">{JSON.parse(quiz.details).correctQuery}</div></div>
-                                                <br />
+
                                             </React.Fragment>
                                             
                                         }  
@@ -400,7 +400,7 @@ class QuizComponent extends Component {
                         ))}
 
                         
-                        <h3>Question: {this.state.currentQuiz + 1} / {this.props.quizzes.length}</h3>
+                        <h3 className="questionHeader">Question: {this.state.currentQuiz + 1} / {this.props.quizzes.length}</h3>
 
                         {this.state.currentQuiz > 0 ? ( <Button variant="success" onClick={this.handleQuizNavigationPrevious}> <i className="fa fa-angle-left"></i> previous</Button>)
                             :<Button variant="secondary" disabled><i className="fa fa-angle-left"></i> previous</Button>

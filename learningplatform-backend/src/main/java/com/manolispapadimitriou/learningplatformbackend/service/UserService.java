@@ -1,6 +1,6 @@
 package com.manolispapadimitriou.learningplatformbackend.service;
 
-import com.manolispapadimitriou.learningplatformbackend.model.User;
+import com.manolispapadimitriou.learningplatformbackend.entity.User;
 import com.manolispapadimitriou.learningplatformbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +20,7 @@ public class UserService {
        if(user.getPassword().equals(password)){
            return user;
        }
-       else{
-           return null;
-       }
+       throw new NullPointerException("Wrong Credentials");
 
     }
 

@@ -6,10 +6,41 @@ import {Table, Container, Row,Col } from 'react-bootstrap';
 
 
 class StatisticsComponent extends Component {
+
+    state = {
+        labels: [],
+        sectionValues: []
+    }
+
+    componentDidMount = () => {
+
+
+        for (let [key, value] of this.props.statusMap) {
+            var tmpLabels = this.state.labels;
+            var sectionId = key - 1;
+            var sectionLabel = 'Section ' + sectionId;
+            tmpLabels.push(sectionLabel);
+            var tmpSectionvalues = this.state.sectionValues
+            //If it's not completed the value will not boolean
+            if(!this.props.completedStatusMap.get(key)){
+                tmpSectionvalues.push("notcompleted");
+            }
+            else{
+                
+                tmpSectionvalues.push(value);
+                
+            }
+
+            this.setState({labels: tmpLabels, sectionValues: tmpSectionvalues})
+            
+        }
+
+        
+    }
     
     render (){
         let data = {
-            labels: ['Section 1', 'Section 2', 'Section 3', 'Section 4', 'Section 5', 'Section 6'],
+            labels: this.state.labels,
             datasets: [
               {
                 
@@ -40,34 +71,34 @@ class StatisticsComponent extends Component {
         
         };
 
+
+
         return(
         <React.Fragment>
             <div className="statisticComponent">
                 <h2>{this.props.title}</h2>
-                    
+
                 <Container>
                         <Row>
                         <Col xs> <Table striped bordered hover>
                     <thead>
                         <tr>
                         <th>Section</th>
-                        <th>Status</th>
+                        <th className="statusHeader">Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                        <td>Section 1</td>
-                        <td>CHECK</td>
+                        {this.state.sectionValues.map((i,j) => 
+                            <tr key = {Math.random()}>
+                                <td><div className="sectionHeaderTable">Section {j+1}</div></td>
+                                <td>{i === "notcompleted" ? <div className="circleIcon"><i className="fa fa-circle"></i></div> :
+                                    !i ? <div className="checkIcon"><i className="fa fa-check"></i></div> : <div className="xIcon"><i className="fa fa-times"></i></div>
+                                }</td>
+                            </tr>
+                        )}
+                        
 
-                        </tr>
-                        <tr>
-                        <td>Section 2</td>
-                        <td>CHECK</td>
-                        </tr>
-                        <tr>
-                        <td>Section 3</td>
-                        <td>X</td>
-                        </tr>
+
                     </tbody>
                     </Table></Col>
 
@@ -98,6 +129,7 @@ class StatisticsComponent extends Component {
 
                     </Row>
                 </Container>
+            
 
             </div>
         </React.Fragment>
