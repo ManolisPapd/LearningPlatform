@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './StatisticsComponent.css';
 import {Bar} from 'react-chartjs-2';
 import {Table, Container, Row,Col } from 'react-bootstrap';
+import ReactTooltip from "react-tooltip";
+
 
 
 
@@ -9,7 +11,11 @@ class StatisticsComponent extends Component {
 
     state = {
         labels: [],
-        sectionValues: []
+        sectionValues: [],
+        answers: [],
+        backgroundColors: [],
+        hoverColors: []
+
     }
 
     componentDidMount = () => {
@@ -21,6 +27,10 @@ class StatisticsComponent extends Component {
             var sectionLabel = 'Section ' + sectionId;
             tmpLabels.push(sectionLabel);
             var tmpSectionvalues = this.state.sectionValues
+            var tmpAnswers = this.state.answers;
+            var tmpBackgroundColors = this.state.backgroundColors;
+            var tmpHoverColors = this.state.hoverColors;
+
             //If it's not completed the value will not boolean
             if(!this.props.completedStatusMap.get(key)){
                 tmpSectionvalues.push("notcompleted");
@@ -29,9 +39,43 @@ class StatisticsComponent extends Component {
                 
                 tmpSectionvalues.push(value);
                 
+                
             }
 
-            this.setState({labels: tmpLabels, sectionValues: tmpSectionvalues})
+            tmpAnswers.push(this.props.answersMap.get(key))
+            if(value){
+                tmpBackgroundColors.push('#ff0000')
+                tmpHoverColors.push('#910303')
+            }
+            else{
+                tmpBackgroundColors.push('#2bff00')
+                tmpHoverColors.push('#1b9103')
+            }
+
+            //Sort tmpLabels, tmpSectionvalues and tmpAnswers
+            for (var i = 1; i < tmpLabels.length; i++)
+                for (var j = 0; j < i; j++)
+                    if (tmpLabels[i] < tmpLabels[j]) {
+                        var x = tmpLabels[i];
+                        tmpLabels[i] = tmpLabels[j];
+                        tmpLabels[j] = x;
+
+                        var y = tmpSectionvalues[i];
+                        tmpSectionvalues[i] = tmpSectionvalues[j];
+                        tmpSectionvalues[j] = y;
+
+                        var z = tmpAnswers[i];
+                        tmpAnswers[i] = tmpAnswers[j];
+                        tmpAnswers[j] = z;
+
+                        var a = tmpBackgroundColors[i];
+                        tmpBackgroundColors[i] = tmpBackgroundColors[j];
+                        tmpBackgroundColors[j] = a;
+                }
+
+
+            this.setState({labels: tmpLabels, sectionValues: tmpSectionvalues, answers: tmpAnswers, backgroundColors: tmpBackgroundColors, hoverColors: tmpHoverColors})
+
             
         }
 
@@ -43,27 +87,10 @@ class StatisticsComponent extends Component {
             labels: this.state.labels,
             datasets: [
               {
-                
-                borderColor: 'rgba(255,99,132,1)',
-                borderWidth: 2,
-                hoverBorderColor: 'rgba(255,99,132,1)',
-                data: [3, 4, 2, 1, 0, 3],
-                backgroundColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56',
-                    '#FFCE56',
-                    '#FFCE56',
-                    '#FFCE56'
-                    ],
-                    hoverBackgroundColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56',
-                    '#FFCE56',
-                    '#FFCE56',
-                    '#FFCE56'
-                    ]
+
+                data: this.state.answers,
+                backgroundColor: this.state.backgroundColors,
+                    hoverBackgroundColor: this.state.hoverColors
                     
               }
               
@@ -71,12 +98,28 @@ class StatisticsComponent extends Component {
         
         };
 
+        let circle = 
+        <div className="example-jsx">
+                
+            <div className="side">
+                <a data-tip data-for="global">
+                <i className="fa fa-circle"></i>
+                </a>
+            </div>
+            <ReactTooltip id="global" aria-haspopup="true">
+                <p>You haven't completed the quiz for this section</p>
+            </ReactTooltip>
+        </div>
 
 
         return(
         <React.Fragment>
             <div className="statisticComponent">
+                
+                
+              
                 <h2>{this.props.title}</h2>
+                
 
                 <Container>
                         <Row>
@@ -91,7 +134,7 @@ class StatisticsComponent extends Component {
                         {this.state.sectionValues.map((i,j) => 
                             <tr key = {Math.random()}>
                                 <td><div className="sectionHeaderTable">Section {j+1}</div></td>
-                                <td>{i === "notcompleted" ? <div className="circleIcon"><i className="fa fa-circle"></i></div> :
+                                <td>{i === "notcompleted" ? <div className="circleIcon">{circle}</div> :
                                     !i ? <div className="checkIcon"><i className="fa fa-check"></i></div> : <div className="xIcon"><i className="fa fa-times"></i></div>
                                 }</td>
                             </tr>
@@ -114,12 +157,23 @@ class StatisticsComponent extends Component {
                                     scaleLabel: {
                                     display: true,
                                     labelString: 'Correct Answers'
+                                    },
+                                    ticks: {
+                                        beginAtZero:true,
+                                        min: 0,
+                                        max: 7    
                                     }
+                                  
                                 }],
                                 xAxes: [{
                                     scaleLabel: {
                                     display: true,
                                     labelString: 'Sections'
+                                    },
+                                    ticks: {
+                                        beginAtZero:true,
+                                        min: 0,
+                                        max: 7  
                                     }
                                 }]
                                 }

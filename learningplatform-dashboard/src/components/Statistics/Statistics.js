@@ -11,8 +11,12 @@ class Statistics extends Component {
     state = {
         sectionStatus: new Map(),
         finalSectionStatus: new Map(),
+
         completedStatus: new Map(),
-        finalCompletedStatus: new Map()
+        finalCompletedStatus: new Map(),
+
+        answersStatus: new Map(),
+        finalAnswersStatus: new Map(),
     }
 
     componentDidMount = () => {
@@ -29,6 +33,7 @@ class Statistics extends Component {
                     checkUserSectionStatus(userId:${localStorage.getItem('userId')}, sectionId: ${i+1}, sectionQuiz:true){
                         failed
                         completed
+                        answers
                     }
                 }
                 `
@@ -51,10 +56,12 @@ class Statistics extends Component {
                 //Want to save for each section the status
                 var tmp = this.state.sectionStatus;
                 var tmpCompleted = this.state.completedStatus;
+                var tmpAnswers = this.state.answersStatus;
 
                 tmp.set(i, resData.data.checkUserSectionStatus.failed);
                 tmpCompleted.set(i, resData.data.checkUserSectionStatus.completed);
-                this.setState({sectionStatus:tmp, checkUserSectionStatus:tmpCompleted });
+                tmpAnswers.set(i, resData.data.checkUserSectionStatus.answers);
+                this.setState({sectionStatus:tmp, completedStatus:tmpCompleted, answersStatus: tmpAnswers });
                 
                 
             })
@@ -75,6 +82,7 @@ class Statistics extends Component {
                     checkUserSectionStatus(userId:${localStorage.getItem('userId')}, sectionId: ${i+1}, sectionQuiz:false){
                         failed
                         completed
+                        answers
                     }
                 }
                 `
@@ -94,7 +102,17 @@ class Statistics extends Component {
                 return res.json();
             })
             .then(resData => {
-                
+                //Want to save for each section the status
+
+                var tmpCore = this.state.finalSectionStatus;
+                var tmpCompletedCore = this.state.finalCompletedStatus;
+                var tmpAnswersCore = this.state.finalAnswersStatus;
+
+                tmpCore.set(i, resData.data.checkUserSectionStatus.failed);
+                tmpCompletedCore.set(i, resData.data.checkUserSectionStatus.completed);
+                tmpAnswersCore.set(i, resData.data.checkUserSectionStatus.answers);
+                this.setState({finalSectionStatus:tmpCore, finalCompletedStatus:tmpCompletedCore, finalAnswersStatus:tmpAnswersCore  });
+  
                 
             })
             .catch(err => {
@@ -117,12 +135,19 @@ class Statistics extends Component {
                         title = "Section Quizzes Statistics"
                         statusMap = {this.state.sectionStatus}
                         completedStatusMap = {this.state.completedStatus}
+                        answersMap = {this.state.answersStatus}
                     />
                 }
                 <hr />
-                {/* <StatisticsComponent 
-                    title = "Final Quiz Statistics"
-                /> */}
+                {this.state.finalSectionStatus.size === this.props.sectionsLength -3 &&
+                    <StatisticsComponent 
+                        title = "Final Quiz Statistics"
+                        statusMap = {this.state.finalSectionStatus}
+                        completedStatusMap = {this.state.finalCompletedStatus}
+                        answersMap = {this.state.finalAnswersStatus}
+                    />
+                }
+                
 
                 <hr />
 
