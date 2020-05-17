@@ -6,10 +6,31 @@ import Modal from '../Modal/Modal';
 import Quiz from '../Quiz/Quiz';
 import Statistics from '../Statistics/Statistics';
 
+// const Statistics = import('../Statistics/Statistics')
+
 class CardComponent extends Component {
     state = {
         parsedObject: null,
-        showModal: false
+        showModal: false,
+        statisticsRerender: false
+    }
+
+    componentDidMount = () => {
+        console.log("CARD MOUNT")
+
+          this.interval = setInterval(
+            () => {
+                if(localStorage.getItem("statisticsCalled") === "1"){
+                    this.setState({statisticsRerender: true})
+                   
+                    
+                }
+                else{
+                    this.setState({statisticsRerender: false})
+                }
+            }
+            ,100);
+
     }
 
     toggleModal = () => {
@@ -51,9 +72,12 @@ class CardComponent extends Component {
         else if(JSON.parse(this.props.section.information).id === 'statistics'){
             sectionsAnalyzer = 
                     <Row>
-                        <Statistics 
-                            sectionsLength = {this.props.sectionsLength}
-                        />
+                        {this.state.statisticsRerender &&
+                            <Statistics 
+                                sectionsLength = {this.props.sectionsLength}
+                            />
+                        }
+                        
                     </Row>
         }
         else if(JSON.parse(this.props.section.information).id === 'text_material'){

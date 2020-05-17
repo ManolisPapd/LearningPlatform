@@ -49,8 +49,33 @@ class Course extends Component {
             console.log(err);
         });
     }
-    
-    
+
+
+
+    elementClickedHanler = (accElementKey) => {
+        if(accElementKey === 1){
+            if (typeof localStorage.getItem("statisticsCalled") !== 'undefined' && localStorage.getItem("statisticsCalled") !== null){
+                
+                if(localStorage.getItem("statisticsCalled") === "1"){
+                    localStorage.setItem("statisticsCalled","0");
+                    
+                }
+                else{
+                    localStorage.setItem("statisticsCalled","1");
+                    
+                    
+                    
+                }
+
+            }
+            else{
+                localStorage.setItem("statisticsCalled","1");
+            }
+            
+            
+
+        }
+    }    
 
     render (){
         
@@ -58,14 +83,15 @@ class Course extends Component {
 
             <React.Fragment>
 
+
                 {(this.state.sections.length) && 
 
                     <Accordion>
                         {/* Iterate through response with sections */}
                         {this.state.sections.map((section,i) => 
-                            <div key={i}>
-                                {/* TODO give me tabs for this section and pass it as props */}
+                            <div key={i} onClick={() => this.elementClickedHanler(i)}>
                                 <CardComponent 
+                                    
                                     eventKey = {i}
                                     section = {section}
                                     sectionsLength = {this.state.sections.length}

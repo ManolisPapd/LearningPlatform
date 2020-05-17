@@ -7,6 +7,7 @@ import './Statistics.css';
 
 
 class Statistics extends Component {
+    intervalID;
 
     state = {
         sectionStatus: new Map(),
@@ -21,8 +22,17 @@ class Statistics extends Component {
 
     componentDidMount = () => {
 
+        console.log("Statistics Mount")
 
-        //Get section quiz status
+        this.getData();
+
+       
+    }
+
+
+
+      getData = () => {
+           //Get section quiz status
         for(let i = 2; i < this.props.sectionsLength -1; i++ ){
             //Check if user has failed this section
             //Don't forget add 1 to i because section counting begins from 1
@@ -123,7 +133,7 @@ class Statistics extends Component {
 
         //Get answers for each section quiz
         //Get answers for each final section quiz
-    }
+      }
 
     render (){
         
