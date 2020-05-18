@@ -12,24 +12,26 @@ class CardComponent extends Component {
     state = {
         parsedObject: null,
         showModal: false,
-        statisticsRerender: false
+        statisticsRerender: true,
+        resetModalStatus: false
     }
 
     componentDidMount = () => {
         console.log("CARD MOUNT")
+        localStorage.setItem("statisticsCalled","0");
 
-          this.interval = setInterval(
-            () => {
-                if(localStorage.getItem("statisticsCalled") === "1"){
-                    this.setState({statisticsRerender: true})
+        //   this.interval = setInterval(
+        //     () => {
+        //         if(localStorage.getItem("statisticsCalled") === "1"){
+        //             this.setState({statisticsRerender: true})
                    
                     
-                }
-                else{
-                    this.setState({statisticsRerender: false})
-                }
-            }
-            ,100);
+        //         }
+        //         else{
+        //             this.setState({statisticsRerender: false})
+        //         }
+        //     }
+        //     ,5000);
 
     }
 
@@ -48,6 +50,50 @@ class CardComponent extends Component {
         localStorage.setItem('finalModal',data);
         this.setState({});
         
+    }
+
+    toggleResetModal = () => {
+        this.setState({resetModalStatus: !this.state.resetModalStatus})
+    }
+
+    resetUserCourseData = () => {
+        
+
+        let requestBody = {
+        
+            query: `
+            mutation {
+                resetData(userId:${localStorage.getItem('userId')})
+            }
+            `
+        };
+
+        //request to the backend
+        fetch('http://localhost:8080/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+            'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            if(res.status !== 200 && res.status !== 201){
+            throw new Error('Failed!');
+            }
+            return res.json();
+        })
+        .then(resData => {
+            
+            this.setState({resetModalStatus: !this.state.resetModalStatus})
+            localStorage.setItem("statisticsCalled","0");
+            localStorage.setItem("answeredQuizzes","{}");
+            window.location.reload(true);
+
+            
+            
+        })
+        .catch(err => {
+            console.log(err);
+        });
     }
 
     render (){
@@ -105,9 +151,10 @@ class CardComponent extends Component {
                                         Begin {this.props.section.name} Quiz!
                                     </button>
                                     
+                                    
                                     <Modal
                                         show={this.state.showModal}
-                                        closeCallback={this.toggleModal}
+                                        // closeCallback={this.toggleModal}
                                         customClass="custom_modal_class"
                                     >
                                     <React.Fragment>
@@ -151,7 +198,7 @@ class CardComponent extends Component {
                                     
                                     <Modal
                                         show={this.state.showModal}
-                                        closeCallback={this.toggleModal}
+             
                                         customClass="custom_modal_class"
                                     >
                                     <React.Fragment>
@@ -200,6 +247,30 @@ class CardComponent extends Component {
                             </div>
                     </Row>
         }
+        else if(JSON.parse(this.props.section.information).id === 'options'){
+            sectionsAnalyzer = 
+                    <Row>
+                        <Button variant="danger" onClick={this.toggleResetModal}>Reset Progress</Button>
+
+
+                        <Modal
+                                        show={this.state.resetModalStatus}
+                                        closeCallback={this.toggleResetModal}
+                                        customClass="custom_modal_class"
+                                    >          
+
+                                <React.Fragment>
+                                    <p>Progress will be reset, are you sure?</p>
+                                    <Button variant="danger" onClick={this.resetUserCourseData}>Delete Everything</Button>
+                                    <Button variant="info" onClick={this.toggleResetModal}>Go Back</Button>
+
+                                </React.Fragment>
+                                    
+                        </Modal>   
+                       
+                        
+                    </Row>
+        }
         
         
 
@@ -218,7 +289,11 @@ class CardComponent extends Component {
                             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
                                 {/* Present Course Overview */}
                                 {sectionsAnalyzer}
+
+
+                                
                             </Tab.Container>
+                            
                             {/* End of children  */}
 
 

@@ -234,8 +234,10 @@ class QuizComponent extends Component {
         localStorage.setItem('answeredQuizzes', JSON.stringify(answeredQuizzes))
 
 
+    }
 
-
+    exitSectionQuiz = () => {
+        window.location.reload(true);
     }
 
 
@@ -253,9 +255,12 @@ class QuizComponent extends Component {
                             <br />
                             <br />
                             <Button variant="info" onClick={this.handleViewQuizzesAgain}>Go to quizzes!</Button>
+                            {!this.props.finalQuiz && <Button variant="danger" 
+                                onClick={this.exitSectionQuiz}
+                             >End Quiz</Button>}
                             {this.props.finalQuiz && <Button variant="danger" 
                                 onClick={this.resetFinalQuiz}
-                             >Submit Final Quiz!</Button>}
+                             >End Final Quiz</Button>}
                         </React.Fragment>
                     ):
                     
@@ -409,7 +414,7 @@ class QuizComponent extends Component {
                             : <Button variant="secondary" disabled>next <i className="fa fa-angle-right"></i></Button>
                         }
                         {this.state.currentQuiz === this.props.quizzes.length - 1 &&
-                            <Button variant="info" onClick={this.handleEndQuiz}>End Quiz!</Button>
+                            <Button variant="info" onClick={this.handleEndQuiz}>Continue</Button>
                         }
 
                         <br /> <br />

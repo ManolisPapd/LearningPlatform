@@ -94,7 +94,7 @@ class Course extends Component {
                                     
                                     eventKey = {i}
                                     section = {section}
-                                    sectionsLength = {this.state.sections.length}
+                                    sectionsLength = {this.state.sections.length -1} //-1 because we don't want options to be on statistics
                                 /> 
                                 
                             </div>

@@ -7,7 +7,7 @@ import './Statistics.css';
 
 
 class Statistics extends Component {
-    intervalID;
+
 
     state = {
         sectionStatus: new Map(),
