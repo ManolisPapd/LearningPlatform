@@ -72,6 +72,7 @@ class Homepage extends Component {
   loadCourse = (courseId) =>{
     this.setState({courseSelected: true});
     localStorage.setItem('courseState',1);
+    
     this.setState({selectedCourse: this.state.courses[courseId]});
     
   }

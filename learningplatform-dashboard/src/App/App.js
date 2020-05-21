@@ -23,6 +23,9 @@ class App extends Component {
     id: null
   }
 
+
+  
+
   componentDidUpdate = () => {
     window.location.reload();
   }

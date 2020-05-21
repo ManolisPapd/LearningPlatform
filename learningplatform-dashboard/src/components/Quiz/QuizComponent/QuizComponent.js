@@ -22,7 +22,8 @@ class QuizComponent extends Component {
         sqlQuery: null,
         selectedQuery: null,
         correctQuery: null,
-        resultsPresentation: false
+        resultsPresentation: false,
+        questionWrong: false
 
     }
 
@@ -105,6 +106,7 @@ class QuizComponent extends Component {
 
     handleTypedCode = (e) => {
         this.setState({selectedQuery: e})
+        
         console.log(e)
     }
 
@@ -158,7 +160,8 @@ class QuizComponent extends Component {
             })
             .then(resData => {
                 console.log(resData.data);
-                this.setState({quizzes: resData.data.allQuiz });
+    
+                this.setState({quizzes: resData.data.allQuiz, selectedQuery: null });
                 
             })
             .catch(err => {
@@ -240,6 +243,11 @@ class QuizComponent extends Component {
         window.location.reload(true);
     }
 
+    handleWrong = () => {
+   
+        console.log("MIESMNTOUMANIKA")
+    }
+
 
     render (){
 
@@ -310,7 +318,12 @@ class QuizComponent extends Component {
                                                             {(( (this.state.selectedChoice ==='b') && (!this.state.selectedChoiceWasCorrect)) || 
                                                             ((JSON.parse(localStorage.getItem('answeredQuizzes'))[quiz.id] === 'b' ) && (JSON.parse(quiz.details).correct !== 'b')  ))
                                                             
-                                                                && (<option value="b" className="optionClassWrong">b - {JSON.parse(quiz.details).b}</option>)
+                                                                && (
+                                                                    <React.Fragment>
+                                                                    <option value="b" className="optionClassWrong">b - {JSON.parse(quiz.details).b}</option>
+                                                                   
+                                                                    </React.Fragment>
+                                                                )
                                                                 
                                                             }
                                                             {/* End of Handling b */}
@@ -345,6 +358,9 @@ class QuizComponent extends Component {
                                                             }
                                                             {/* End of Handling d */}
                                                         </Form.Control>
+                    
+                                                        {( (this.state.selectedChoice ==='b') && (!this.state.selectedChoiceWasCorrect)) &&
+                                                        <div>KOUMPI POU THA TOU DEIXEI THEORIA</div>}
                                                 </React.Fragment>)
                                             }
                                             

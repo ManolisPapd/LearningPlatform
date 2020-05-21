@@ -73,10 +73,6 @@ class StatisticsComponent extends Component {
                         tmpBackgroundColors[j] = a;
                 }
 
-
-            console.log("----------")
-            console.log(tmpLabels);
-            console.log("-----------------")
             this.setState({labels: tmpLabels, sectionValues: tmpSectionvalues, answers: tmpAnswers, backgroundColors: tmpBackgroundColors, hoverColors: tmpHoverColors})
 
             
