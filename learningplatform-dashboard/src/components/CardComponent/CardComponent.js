@@ -154,7 +154,6 @@ class CardComponent extends Component {
                                     
                                     <Modal
                                         show={this.state.showModal}
-                                        // closeCallback={this.toggleModal}
                                         customClass="custom_modal_class"
                                     >
                                     <React.Fragment>
@@ -254,10 +253,10 @@ class CardComponent extends Component {
 
 
                         <Modal
-                                        show={this.state.resetModalStatus}
-                                        closeCallback={this.toggleResetModal}
-                                        customClass="custom_modal_class"
-                                    >          
+                            show={this.state.resetModalStatus}
+                            closeCallback={this.toggleResetModal}
+                            customClass="custom_modal_class"
+                        >          
 
                                 <React.Fragment>
                                     <p>Progress will be reset, are you sure?</p>

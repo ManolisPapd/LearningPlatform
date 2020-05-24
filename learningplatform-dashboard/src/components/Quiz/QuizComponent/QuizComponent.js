@@ -5,6 +5,8 @@ import Spinner from '../../Spinner/Spinner';
 import globalDB from '../../../context/db.js';
 import QuizResults from './QuizResults/QuizResults';
 import './QuizComponent.css';
+import Modal from '../../Modal/Modal';
+import ReactModal from 'react-modal';
 
 
 
@@ -23,11 +25,14 @@ class QuizComponent extends Component {
         selectedQuery: null,
         correctQuery: null,
         resultsPresentation: false,
-        questionWrong: false
+        questionWrong: false,
+        modalSectionA:false,
+        modalSectionB:false,
+        modalSectionC:false,
+        modalSectionD:false
 
     }
 
-    
 
     handleSelection(e,quiz,correctChoice) {
         if(correctChoice === e.target.value){
@@ -242,12 +247,32 @@ class QuizComponent extends Component {
     exitSectionQuiz = () => {
         window.location.reload(true);
     }
-
-    handleWrong = () => {
    
-        console.log("MIESMNTOUMANIKA")
+
+
+    toggleModalSectionA = () => {
+        this.setState({
+            modalSectionA: !this.state.modalSectionA
+          });
     }
 
+    toggleModalSectionB = () => {
+        this.setState({
+            modalSectionB: !this.state.modalSectionB
+          });
+    }
+
+    toggleModalSectionC = () => {
+        this.setState({
+            modalSectionC: !this.state.modalSectionC
+          });
+    }
+
+    toggleModalSectionD = () => {
+        this.setState({
+            modalSectionD: !this.state.modalSectionD
+          });
+    }
 
     render (){
 
@@ -358,9 +383,67 @@ class QuizComponent extends Component {
                                                             }
                                                             {/* End of Handling d */}
                                                         </Form.Control>
-                    
-                                                        {( (this.state.selectedChoice ==='b') && (!this.state.selectedChoiceWasCorrect)) &&
-                                                        <div>KOUMPI POU THA TOU DEIXEI THEORIA</div>}
+                                                        {( (this.state.selectedChoice ==='a') && (!this.state.selectedChoiceWasCorrect)
+                                                            && this.props.finalQuiz
+                                                        ) &&
+                                                        <React.Fragment>
+                                                        <div className="modal_opener" onClick={this.toggleModalSectionA}>
+                                                            Click here to visit the section again!
+                                                        </div>
+                                                            <Modal
+                                                                show={this.state.modalSectionA}
+                                                                closeCallback={this.toggleModalSectionA}
+                                                            >
+                                                                <div>{quiz.sectionId}</div>
+                                                            </Modal>
+                                                        
+                                                        <br/></React.Fragment>}
+                                                        {( (this.state.selectedChoice ==='b') && (!this.state.selectedChoiceWasCorrect)
+                                                            && this.props.finalQuiz
+                                                        ) &&
+                                                        <React.Fragment>
+                                                        <div className="modal_opener" onClick={this.toggleModalSectionB}>
+                                                            Click here to visit the section again!
+                                                        </div>
+                                                            <Modal
+                                                                show={this.state.modalSectionB}
+                                                                closeCallback={this.toggleModalSectionB}
+                                                            >
+                                                                <div>{quiz.sectionId}</div>
+                                                            </Modal>
+                                                        
+                                                        <br/></React.Fragment>}
+                                                         {( (this.state.selectedChoice ==='c') && (!this.state.selectedChoiceWasCorrect)
+                                                            && this.props.finalQuiz
+                                                        ) &&
+                                                        <React.Fragment>
+                                                        <div className="modal_opener" onClick={this.toggleModalSectionC}>
+                                                            Click here to visit the section again!
+                                                        </div>
+                                                            <Modal
+                                                                show={this.state.modalSectionC}
+                                                                closeCallback={this.toggleModalSectionC}
+                                                            >
+                                                                <div>{quiz.sectionId}</div>
+                                                            </Modal>
+                                                        
+                                                        <br/></React.Fragment>}
+                                                        
+                                                         {( (this.state.selectedChoice ==='d') && (!this.state.selectedChoiceWasCorrect)
+                                                            && this.props.finalQuiz
+                                                        ) &&
+                                                        <React.Fragment>
+                                                        <div className="modal_opener" onClick={this.toggleModalSectionD}>
+                                                            Click here to visit the section again!
+                                                        </div>
+                                                            <Modal
+                                                                show={this.state.modalSectionD}
+                                                                closeCallback={this.toggleModalSectionD}
+                                                            >
+                                                                <div>{quiz.sectionId}</div>
+                                                            </Modal>
+                                                        
+                                                        <br/></React.Fragment>}
                                                 </React.Fragment>)
                                             }
                                             
