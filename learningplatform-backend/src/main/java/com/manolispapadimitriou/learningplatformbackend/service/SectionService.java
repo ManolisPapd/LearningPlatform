@@ -28,4 +28,9 @@ public class SectionService {
                 .collect(Collectors.toList());
 
     }
+
+    public SectionDAO getSectionByCourseId(Long courseId, Long sectionId){
+        return sectionRepository.findByIdAndCourseId(sectionId,courseId)._toConvertSectionDAO();
+
+    }
 }

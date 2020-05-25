@@ -38,7 +38,7 @@ public class QuizService {
 
     //Will calculate if user failed the section quiz on final quiz
     public Status calculateSectionStatus(Integer userId, Integer sectionId,Boolean sectionQuiz){
-        Status status = new Status(false,false);
+        Status status = new Status(false,false,0);
         //Get all final quiz for given section and given user
         int forSection = 0;
         if(sectionQuiz){
@@ -66,6 +66,7 @@ public class QuizService {
                 status.setFailed(false);
             }
             status.setCompleted(true);
+            status.setAnswers(sum);
             return status;
         }
 
@@ -108,6 +109,11 @@ public class QuizService {
 
 
 
+    }
+
+
+    public void resetData(Integer userId){
+        userQuizRepository.deleteAllByUserId(userId);
     }
 
 

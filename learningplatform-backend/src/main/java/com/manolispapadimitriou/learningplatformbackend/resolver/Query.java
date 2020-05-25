@@ -4,10 +4,7 @@ import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.manolispapadimitriou.learningplatformbackend.dao.CourseDAO;
 import com.manolispapadimitriou.learningplatformbackend.dao.SectionDAO;
 import com.manolispapadimitriou.learningplatformbackend.dao.Status;
-import com.manolispapadimitriou.learningplatformbackend.entity.AuthData;
-import com.manolispapadimitriou.learningplatformbackend.entity.Quiz;
-import com.manolispapadimitriou.learningplatformbackend.entity.User;
-import com.manolispapadimitriou.learningplatformbackend.entity.UserQuiz;
+import com.manolispapadimitriou.learningplatformbackend.entity.*;
 import com.manolispapadimitriou.learningplatformbackend.service.CourseService;
 import com.manolispapadimitriou.learningplatformbackend.service.QuizService;
 import com.manolispapadimitriou.learningplatformbackend.service.SectionService;
@@ -85,6 +82,11 @@ public class Query implements GraphQLQueryResolver {
     public List<UserQuiz> getQuizzesStatus(Integer userId, Integer sectionId, Boolean sectionFlag ){
         return quizService.getUserQuizzesBySection(userId,sectionId,sectionFlag);
 
+    }
+
+    public SectionDAO getSection(Integer courseId,Integer sectionId){
+
+        return sectionService.getSectionByCourseId(Long.valueOf(courseId), Long.valueOf(sectionId));
     }
 
 }

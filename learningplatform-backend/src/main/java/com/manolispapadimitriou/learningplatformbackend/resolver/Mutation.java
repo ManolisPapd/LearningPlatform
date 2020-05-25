@@ -5,6 +5,7 @@ import com.manolispapadimitriou.learningplatformbackend.service.QuizService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 
 @Component
 public class Mutation implements GraphQLMutationResolver {
@@ -14,6 +15,15 @@ public class Mutation implements GraphQLMutationResolver {
 
     public Boolean saveMultipleChoiceQuiz(Integer userId, Integer quizId, Integer status){
         quizService.saveMultipleChoiceAnswer(userId,quizId,status);
+
+        return true;
+    }
+
+    @Transactional
+    public Boolean resetData(Integer userId){
+
+        quizService.resetData(userId);
+
 
         return true;
     }

@@ -40,6 +40,8 @@ type Quiz {
 type Status{
     failed: Boolean!
     completed: Boolean!
+    answers: Int
+
 }
 
 type UserQuiz {
@@ -57,10 +59,13 @@ type Query {
     allQuiz(sectionId: Int!, sectionQuiz:Boolean!, failed:Boolean!) : [Quiz]
     checkUserSectionStatus(userId: Int!, sectionId: Int!,sectionQuiz:Boolean!) : Status
     getQuizzesStatus(userId: Int!, sectionId: Int!, sectionQuiz:Boolean!):[UserQuiz]
+    getSection(courseId: Int!,sectionId: Int!):Section
+
 }
 
 type Mutation {
     saveMultipleChoiceQuiz(userId: Int!, quizId: Int!, status: Int!) : Boolean
+    resetData(userId:Int!):Boolean
 }
 
 schema {

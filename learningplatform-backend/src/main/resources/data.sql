@@ -47,6 +47,9 @@ values (5,'Section 3: Advanced queries',1,'{"id" : "text_material", "paragraph":
 insert into SECTION(id,name,course_id,information)
 values (6,'Final Quiz',1,'{"id" : "final_quiz"}');
 
+insert into SECTION(id,name,course_id,information)
+values (7,'Options',1,'{"id" : "options"}');
+
 DROP TABLE IF EXISTS QUIZ;
 CREATE TABLE QUIZ(id INT AUTO_INCREMENT PRIMARY KEY ,
 type VARCHAR(255),
@@ -76,43 +79,86 @@ insert into QUIZ(id, type, details, section_id, for_section,when_failed) values 
                                                                                  3,1,0);
 
 
+
+
 insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (5, 'multiple',
+                                                                                 '{"question": "What is this boogy doogy sceletal * from user?", "a" : "Don''t know", "b" : "Something terrible","c" : "Not so babyboy","d" : "I think I am cute, I Know I am sexy","correct" : "d"}',
+                                                                                 4,1,0);
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (6, 'multiple',
+                                                                                 '{"question": "SECOND QUESTION BIG BOY HEHYEHEY", "a" : "DYASNAO", "b" : "Digna i koi","c" : "Lalala al a","d" : "E stou manika na dagarada","correct" : "a"}',
+                                                                                 4,1,0);
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (7, 'code',
+                                                                                 '{
+                                                                                     "question" : "Create a query that will select from runners when person is not on query, you can use triggers",
+                                                                                     "sql" : "https://i.imgur.com/mR2aXuB.png",
+                                                                                     "correctQuery" : "SELECT * FROM person WHERE sex=''F'' AND income > 60000"
+                                                                                 }', 4,1,0);
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (8, 'code',
+                                                                                 '{
+                                                                                 "question" : "Create a query that will select from runners when person is not on query, you can use triggers",
+                                                                                 "sql" : "https://i.imgur.com/wb17Fmy.png",
+                                                                                 "correctQuery" : "SELECT * FROM person WHERE sex=''F'' AND income > 60000"
+                                                                                 }',
+                                                                                 4,1,0);
+
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (9, 'multiple',
+                                                                                 '{"question": "What is this boogy doogy sceletal * from user?", "a" : "Don''t know", "b" : "Something terrible","c" : "Not so babyboy","d" : "I think I am cute, I Know I am sexy","correct" : "d"}',
+                                                                                 5,1,0);
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (10, 'multiple',
+                                                                                 '{"question": "SECOND QUESTION BIG BOY HEHYEHEY", "a" : "DYASNAO", "b" : "Digna i koi","c" : "Lalala al a","d" : "E stou manika na dagarada","correct" : "a"}',
+                                                                                 5,1,0);
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (11, 'code',
+                                                                                 '{
+                                                                                     "question" : "Create a query that will select from runners when person is not on query, you can use triggers",
+                                                                                     "sql" : "https://i.imgur.com/mR2aXuB.png",
+                                                                                     "correctQuery" : "SELECT * FROM person WHERE sex=''F'' AND income > 60000"
+                                                                                 }', 5,1,0);
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (12, 'code',
+                                                                                 '{
+                                                                                 "question" : "Create a query that will select from runners when person is not on query, you can use triggers",
+                                                                                 "sql" : "https://i.imgur.com/wb17Fmy.png",
+                                                                                 "correctQuery" : "SELECT * FROM person WHERE sex=''F'' AND income > 60000"
+                                                                                 }',
+                                                                                 5,1,0);
+
+
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (13, 'multiple',
                                                                                  '{"question": "1What is this boogy doogy sceletal * from user?", "a" : "Don''t know", "b" : "Something terrible","c" : "Not so babyboy","d" : "I think I am cute, I Know I am sexy","correct" : "d"}',
                                                                                  3,0,0);
-insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (6, 'multiple',
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (14, 'multiple',
                                                                                  '{"question": "2What is this boogy doogy sceletal * from user?", "a" : "Don''t know", "b" : "Something terrible","c" : "Not so babyboy","d" : "I think I am cute, I Know I am sexy","correct" : "d"}',
                                                                                  3,0,0);
-insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (7, 'multiple',
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (15, 'multiple',
                                                                                  '{"question": "3What is this boogy doogy sceletal * from user?", "a" : "Don''t know", "b" : "Something terrible","c" : "Not so babyboy","d" : "I think I am cute, I Know I am sexy","correct" : "d"}',
                                                                                  3,0,0);
-insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (8, 'multiple',
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (16, 'multiple',
                                                                                  '{"question": "4What is this boogy doogy sceletal * from user?", "a" : "Don''t know", "b" : "Something terrible","c" : "Not so babyboy","d" : "I think I am cute, I Know I am sexy","correct" : "d"}',
                                                                                  3,0,0);
-insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (9, 'multiple',
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (17, 'multiple',
                                                                                  '{"question": "5What is this boogy doogy sceletal * from user?", "a" : "Don''t know", "b" : "Something terrible","c" : "Not so babyboy","d" : "I think I am cute, I Know I am sexy","correct" : "d"}',
                                                                                  3,0,0);
-insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (10, 'multiple',
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (18, 'multiple',
                                                                                  '{"question": "XFAILEDEDDD What is this boogy doogy sceletal * from user?", "a" : "Don''t know", "b" : "Something terrible","c" : "Not so babyboy","d" : "I think I am cute, I Know I am sexy","correct" : "d"}',
                                                                                  3,0,1);
 
 
-insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (11, 'multiple',
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (19, 'multiple',
                                                                                  '{"question": "6What is this boogy doogy sceletal * from user?", "a" : "Don''t know", "b" : "Something terrible","c" : "Not so babyboy","d" : "I think I am cute, I Know I am sexy","correct" : "d"}',
                                                                                  4,0,0);
-insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (12, 'multiple',
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (20, 'multiple',
                                                                                  '{"question": "7What is this boogy doogy sceletal * from user?", "a" : "Don''t know", "b" : "Something terrible","c" : "Not so babyboy","d" : "I think I am cute, I Know I am sexy","correct" : "d"}',
                                                                                  4,0,0);
 
-insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (13, 'multiple',
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (21, 'multiple',
                                                                                  '{"question": "8What is this boogy doogy sceletal * from user?", "a" : "Don''t know", "b" : "Something terrible","c" : "Not so babyboy","d" : "I think I am cute, I Know I am sexy","correct" : "d"}',
                                                                                  4,0,0);
-insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (14, 'multiple',
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (22, 'multiple',
                                                                                  '{"question": "9What is this boogy doogy sceletal * from user?", "a" : "Don''t know", "b" : "Something terrible","c" : "Not so babyboy","d" : "I think I am cute, I Know I am sexy","correct" : "d"}',
                                                                                  4,0,0);
-insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (15, 'multiple',
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (23, 'multiple',
                                                                                  '{"question": "10What is this boogy doogy sceletal * from user?", "a" : "Don''t know", "b" : "Something terrible","c" : "Not so babyboy","d" : "I think I am cute, I Know I am sexy","correct" : "d"}',
                                                                                  4,0,0);
-insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (16, 'multiple',
+insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (24, 'multiple',
                                                                                  '{"question": "YFAILEDEDDD What is this boogy doogy sceletal * from user?", "a" : "Don''t know", "b" : "Something terrible","c" : "Not so babyboy","d" : "I think I am cute, I Know I am sexy","correct" : "d"}',
                                                                                  4,0,1);
 

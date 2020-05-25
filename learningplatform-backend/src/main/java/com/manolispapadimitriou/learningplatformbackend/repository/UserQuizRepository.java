@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface UserQuizRepository extends JpaRepository<UserQuiz, Long> {
     Optional<UserQuiz> findAllByUserIdAndQuizId(Integer userId, Integer quizId);
     UserQuiz findByUserIdAndQuizId(Integer userId, Integer quizId);
+    void deleteAllByUserId(Integer userId);
 }
