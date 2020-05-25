@@ -7,6 +7,7 @@ import QuizResults from './QuizResults/QuizResults';
 import './QuizComponent.css';
 import Modal from '../../Modal/Modal';
 import ReactModal from 'react-modal';
+import InnerTheory from './InnerTheory/InnerTheory';
 
 
 
@@ -394,7 +395,10 @@ class QuizComponent extends Component {
                                                                 show={this.state.modalSectionA}
                                                                 closeCallback={this.toggleModalSectionA}
                                                             >
-                                                                <div>{quiz.sectionId}</div>
+                                                                <InnerTheory 
+                                                                    courseId = {this.props.courseId}
+                                                                    sectionId = {quiz.sectionId}
+                                                                />>
                                                             </Modal>
                                                         
                                                         <br/></React.Fragment>}
@@ -409,7 +413,11 @@ class QuizComponent extends Component {
                                                                 show={this.state.modalSectionB}
                                                                 closeCallback={this.toggleModalSectionB}
                                                             >
-                                                                <div>{quiz.sectionId}</div>
+                                                                <InnerTheory 
+                                                                    courseId = {this.props.courseId}
+                                                                    sectionId = {quiz.sectionId}
+                                                                />
+                                                                
                                                             </Modal>
                                                         
                                                         <br/></React.Fragment>}
@@ -424,7 +432,10 @@ class QuizComponent extends Component {
                                                                 show={this.state.modalSectionC}
                                                                 closeCallback={this.toggleModalSectionC}
                                                             >
-                                                                <div>{quiz.sectionId}</div>
+                                                                <InnerTheory 
+                                                                    courseId = {this.props.courseId}
+                                                                    sectionId = {quiz.sectionId}
+                                                                />
                                                             </Modal>
                                                         
                                                         <br/></React.Fragment>}
@@ -440,7 +451,10 @@ class QuizComponent extends Component {
                                                                 show={this.state.modalSectionD}
                                                                 closeCallback={this.toggleModalSectionD}
                                                             >
-                                                                <div>{quiz.sectionId}</div>
+                                                                <InnerTheory 
+                                                                    courseId = {this.props.courseId}
+                                                                    sectionId = {quiz.sectionId}
+                                                                />
                                                             </Modal>
                                                         
                                                         <br/></React.Fragment>}

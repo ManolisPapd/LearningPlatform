@@ -118,6 +118,7 @@ class Quiz extends Component {
                     {this.state.quizzes.length > 0 && 
                         //Component will handle the presentation of the quizzes on the section
                         <QuizComponent 
+                            courseId = {this.props.courseId}
                             quizzes = {this.state.quizzes}
                         />
                     } 
@@ -133,6 +134,8 @@ class Quiz extends Component {
                     {/* final quiz new component when we have all the the quizes */}
                     {this.state.finalQuizFetched === this.props.sectionsLength -3 &&
                         <FinalQuiz
+                            
+                            courseId = {this.props.courseId}
                             sectionStatusMap = {this.state.sectionFailStatusMap}
                             finalModalCheck = {this.finalModalCheck}
                         />

@@ -91,7 +91,7 @@ class Course extends Component {
                         {this.state.sections.map((section,i) => 
                             <div key={i} onClick={() => this.elementClickedHanler(i)}>
                                 <CardComponent 
-                                    
+                                    courseId = {this.props.course.id}
                                     eventKey = {i}
                                     section = {section}
                                     sectionsLength = {this.state.sections.length -1} //-1 because we don't want options to be on statistics

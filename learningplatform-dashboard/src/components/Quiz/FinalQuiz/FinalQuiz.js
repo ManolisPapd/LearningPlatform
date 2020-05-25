@@ -78,6 +78,7 @@ class FinalQuiz extends Component {
             {this.state.quizzes.length > 0 && 
                 
                 <QuizComponent 
+                    courseId = {this.props.courseId}
                     quizzes = {this.state.quizzes}
                     finalQuiz = {true}
                     finalModalCheck = {this.finalModalCheck}

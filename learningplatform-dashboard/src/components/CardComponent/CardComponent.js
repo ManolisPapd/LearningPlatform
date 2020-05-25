@@ -158,6 +158,7 @@ class CardComponent extends Component {
                                     >
                                     <React.Fragment>
                                         <Quiz
+                                            courseId = {this.props.courseId}
                                             sectionId = {this.props.section.id} 
                                             quizType = "section"
                                         />
@@ -202,6 +203,7 @@ class CardComponent extends Component {
                                     >
                                     <React.Fragment>
                                         <Quiz
+                                            courseId = {this.props.courseId}
                                             sectionId = {this.props.section.id} 
                                             quizType = "section"
                                         />
@@ -236,6 +238,7 @@ class CardComponent extends Component {
                                                 quizType = "finalQuiz"
                                                 sectionsLength = {this.props.sectionsLength}
                                                 finalModalCheck = {this.finalModalCheck}
+                                                courseId = {this.props.courseId}
                                             
                                             />
                                         </div>
