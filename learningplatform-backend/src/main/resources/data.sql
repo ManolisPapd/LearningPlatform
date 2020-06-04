@@ -36,7 +36,20 @@ insert into SECTION(id,name,course_id,information)
 values (2,'Statistics',1,'{ "id" : "statistics"}');
 
 insert into SECTION(id,name,course_id,information)
-values (3,'Section 1: Introduction to SQL world',1,'{ "id" : "text_material", "paragraph": "TEXT MATERIAL"}');
+values (3,'Section 1: Introduction to SQL world',1,'{
+    "id": "text_material",
+    "paragraph": [
+    			{
+    				"title": "Why SQL",
+    				"paragraph" : "SQL is Structured Query Language, which is a computer language for storing, manipulating and retrieving data stored in a relational database.SQL is the standard language for Relational Database System. All the Relational Database Management Systems (RDMS) like MySQL, MS Access, Oracle, Sybase, Informix, Postgres and SQL Server use SQL as their standard database language.Also, they are using different dialects, such as"
+    			},
+    			{
+    				"title": "Audience",
+    				"paragraph" : "This SQL tutorial is prepared for beginners to help them understand the basic as well as the advanced concepts related to SQL languages. This tutorial will give you enough understanding on the various components of SQL along with suitable examples."
+    			}
+
+    	]
+}');
 
 insert into SECTION(id,name,course_id,information)
 values (4,'Section 2: Hands on databases',1,'{"id" : "video_material", "paragraph": "TEXT MATERIAL + VIDEO MATERIAL", "video": "youtube.com/WwasdasK"}');
