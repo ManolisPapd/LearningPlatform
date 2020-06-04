@@ -4,6 +4,7 @@ import {Tab, Nav,Row,Col,Accordion, Card, Button  } from 'react-bootstrap';
 import ReactModal from 'react-modal';
 import Modal from '../Modal/Modal';
 import Quiz from '../Quiz/Quiz';
+import TheoryComponent from '../TheoryComponent/Theory';
 import Statistics from '../Statistics/Statistics';
 
 // const Statistics = import('../Statistics/Statistics')
@@ -143,7 +144,9 @@ class CardComponent extends Component {
                         <Col sm={6}>
                             <Tab.Content>
                             <Tab.Pane eventKey="first">
-                                <div>{JSON.parse(this.props.section.information).paragraph}</div>
+                                <TheoryComponent 
+                                    material = {JSON.parse(this.props.section.information).paragraph}
+                                />
                             </Tab.Pane>
                             <Tab.Pane eventKey="second">
                                 <div className="app">
