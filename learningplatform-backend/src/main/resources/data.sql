@@ -27,7 +27,7 @@ values (1,'Course Overview',1,'{ "id": "overview",
 		},
 		{
 			"header" : "Examples in Each Chapter",
-			"context" : "With our online SQL editor, you can edit the SQL statements, and click on a button to view the result."
+			"context" : "With our online SQL editor, you can edit the SQL statements, and click on a button to view the result aslas lasdkasdkasd kaskas dkas daskdas kdas kdas kasd kasd kaskas dkas dkasd kaska sdkasdk."
 		}
 
 	]}');
@@ -52,7 +52,22 @@ values (3,'Section 1: Introduction to SQL world',1,'{
 }');
 
 insert into SECTION(id,name,course_id,information)
-values (4,'Section 2: Hands on databases',1,'{"id" : "video_material", "paragraph": "TEXT MATERIAL + VIDEO MATERIAL", "video": "youtube.com/WwasdasK"}');
+values (4,'Section 2: Hands on databases',1,'{
+    "id": "text_material",
+    "paragraph": [
+    			{
+    				"title": "AAAAAAWhy SQL",
+                    "video": "HXV3zeQKqGY",
+    				"paragraph" : "AAAAASQL is Structured Query Language, which is a computer language for storing, manipulating and retrieving data stored in a relational database.SQL is the standard language for Relational Database System. All the Relational Database Management Systems (RDMS) like MySQL, MS Access, Oracle, Sybase, Informix, Postgres and SQL Server use SQL as their standard database language.Also, they are using different dialects, such as"
+
+                },
+    			{
+    				"title": "AAAAAAudience",
+    				"paragraph" : "AAAAThis SQL tutorial is prepared for beginners to help them understand the basic as well as the advanced concepts related to SQL languages. This tutorial will give you enough understanding on the various components of SQL along with suitable examples."
+    			}
+
+    	]
+}');
 
 insert into SECTION(id,name,course_id,information)
 values (5,'Section 3: Advanced queries',1,'{"id" : "text_material", "paragraph": "TEXT MATERIAL"}');
@@ -174,7 +189,5 @@ insert into QUIZ(id, type, details, section_id, for_section,when_failed) values 
 insert into QUIZ(id, type, details, section_id, for_section,when_failed) values (24, 'multiple',
                                                                                  '{"question": "YFAILEDEDDD What is this boogy doogy sceletal * from user?", "a" : "Don''t know", "b" : "Something terrible","c" : "Not so babyboy","d" : "I think I am cute, I Know I am sexy","correct" : "d"}',
                                                                                  4,0,1);
-
-
 
 
