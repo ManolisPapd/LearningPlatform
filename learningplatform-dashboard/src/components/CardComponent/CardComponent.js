@@ -107,7 +107,9 @@ class CardComponent extends Component {
                         {JSON.parse(this.props.section.information).details.map((paragraph) => 
                             <React.Fragment key={Math.random()}>
                                 <h1 key={Math.random()} className="paragraphHeader">{paragraph.header}</h1>
-                                <h2 key={Math.random()}  className="paragraphContext">{paragraph.context}</h2>
+                
+
+                                <div key={Math.random()}  className="paragraphContext">{paragraph.context}</div>
                                 
                             </React.Fragment>
                             
@@ -127,7 +129,8 @@ class CardComponent extends Component {
                         
                     </Row>
         }
-        else if(JSON.parse(this.props.section.information).id === 'text_material'){
+        else if(JSON.parse(this.props.section.information).id === 'text_material' ||
+        JSON.parse(this.props.section.information).id === 'video_material'){
             sectionsAnalyzer = 
                     <Row>
                         <Col sm={3}>
@@ -173,51 +176,51 @@ class CardComponent extends Component {
                         </Col>
                     </Row>
         }
-        else if(JSON.parse(this.props.section.information).id === 'video_material'){
-            sectionsAnalyzer = 
-                    <Row>
-                        <Col sm={3}>
-                            <Nav variant="pills" className="flex-column">
-                            <Nav.Item>
-                                <Nav.Link eventKey="first">Learning Material</Nav.Link>
+        // else if(JSON.parse(this.props.section.information).id === 'video_material'){
+        //     sectionsAnalyzer = 
+        //             <Row>
+        //                 <Col sm={3}>
+        //                     <Nav variant="pills" className="flex-column">
+        //                     <Nav.Item>
+        //                         <Nav.Link eventKey="first">Learning Material</Nav.Link>
                                 
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link eventKey="second">Quiz</Nav.Link>
-                            </Nav.Item>
-                            </Nav>
-                        </Col>
-                        <Col sm={6}>
-                            <Tab.Content>
-                            <Tab.Pane eventKey="first">
-                                <div>{JSON.parse(this.props.section.information).paragraph}</div>
-                                <div>{JSON.parse(this.props.section.information).video}</div>
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="second">
-                                <div className="app">
-                                    <button className="modal_opener" onClick={this.toggleModal}>
-                                        Begin {this.props.section.name} Quiz!
-                                    </button>
+        //                     </Nav.Item>
+        //                     <Nav.Item>
+        //                         <Nav.Link eventKey="second">Quiz</Nav.Link>
+        //                     </Nav.Item>
+        //                     </Nav>
+        //                 </Col>
+        //                 <Col sm={6}>
+        //                     <Tab.Content>
+        //                     <Tab.Pane eventKey="first">
+        //                         <div>{JSON.parse(this.props.section.information).paragraph}</div>
+        //                         <div>{JSON.parse(this.props.section.information).video}</div>
+        //                     </Tab.Pane>
+        //                     <Tab.Pane eventKey="second">
+        //                         <div className="app">
+        //                             <button className="modal_opener" onClick={this.toggleModal}>
+        //                                 Begin {this.props.section.name} Quiz!
+        //                             </button>
                                     
-                                    <Modal
-                                        show={this.state.showModal}
+        //                             <Modal
+        //                                 show={this.state.showModal}
              
-                                        customClass="custom_modal_class"
-                                    >
-                                    <React.Fragment>
-                                        <Quiz
-                                            courseId = {this.props.courseId}
-                                            sectionId = {this.props.section.id} 
-                                            quizType = "section"
-                                        />
-                                    </React.Fragment>
-                                    </Modal>
-                                </div>
-                            </Tab.Pane>
-                            </Tab.Content>
-                        </Col>
-                    </Row>
-        }
+        //                                 customClass="custom_modal_class"
+        //                             >
+        //                             <React.Fragment>
+        //                                 <Quiz
+        //                                     courseId = {this.props.courseId}
+        //                                     sectionId = {this.props.section.id} 
+        //                                     quizType = "section"
+        //                                 />
+        //                             </React.Fragment>
+        //                             </Modal>
+        //                         </div>
+        //                     </Tab.Pane>
+        //                     </Tab.Content>
+        //                 </Col>
+        //             </Row>
+        // }
         else if(JSON.parse(this.props.section.information).id === 'final_quiz'){
             sectionsAnalyzer = 
                     <Row>

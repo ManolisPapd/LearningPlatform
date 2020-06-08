@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TheoryComponent from '../../../TheoryComponent/Theory';
 import './InnerTheory.css';
 
 
@@ -39,7 +40,7 @@ class InnerTheory extends Component {
             return res.json();
         })
         .then(resData => {
-            console.log(resData.data.getSection.information);
+            
             this.setState({sectionInfo: JSON.parse(resData.data.getSection.information)})
             
             
@@ -57,15 +58,14 @@ class InnerTheory extends Component {
             <React.Fragment>
                 <div>{
                         this.state.sectionInfo &&
-                            (this.state.sectionInfo.id === "video_material" ?
+                            (this.state.sectionInfo.id === "text_material" &&
+                                
                                 <React.Fragment>
-                                    {this.state.sectionInfo.paragraph}
-                                    <div>EDO VIDEO</div>
-                                </React.Fragment>
-                            :
-                                <React.Fragment>
-                                    {this.state.sectionInfo.paragraph}
-                                    <div>EDO TEXT</div>
+                                    <TheoryComponent 
+                                        material = {this.state.sectionInfo.paragraph}
+                                    />
+                                    {/* {this.state.sectionInfo.paragraph} */}
+                                    
                                 </React.Fragment>
                             )
                         }</div>
