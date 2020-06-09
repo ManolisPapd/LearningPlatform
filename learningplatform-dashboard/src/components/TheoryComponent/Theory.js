@@ -13,7 +13,6 @@ class TheoryComponent extends Component {
             height: '390',
             width: '640',
             playerVars: {
-              // https://developers.google.com/youtube/player_parameters
               autoplay: 0,
             },
           };
@@ -34,6 +33,12 @@ class TheoryComponent extends Component {
                                         />
                                     </div> <br/>
                                 </React.Fragment>
+                            }
+                            {item.image &&
+                                <React.Fragment>
+                                    <img src={item.image} className="materialImage" alt="Cinque Terre" width="304" height="236"/><br/>
+                                </React.Fragment>
+                                
                             }
                             <div className="paragraph">{item.paragraph}</div><br/><br/>
                         </React.Fragment>
