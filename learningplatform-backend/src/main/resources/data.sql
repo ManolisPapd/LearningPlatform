@@ -40,19 +40,27 @@ values (3,'Section 1: Introduction to SQL world',1,'{
     "id": "text_material",
     "paragraph": [
     			{
-    				"title": "Why SQL",
-    				"paragraph" : "SQL is Structured Query Language, which is a computer language for storing, manipulating and retrieving data stored in a relational database.SQL is the standard language for Relational Database System. All the Relational Database Management Systems (RDMS) like MySQL, MS Access, Oracle, Sybase, Informix, Postgres and SQL Server use SQL as their standard database language.Also, they are using different dialects, such as"
+    				"title": "What is SQL?",
+    				"paragraph" : "SQL stands for Structured Query Language and lets you access and manipulate databases. SQL became a standard of the American National Standards Institute (ANSI) in 1986, and of the International Organization for Standardization (ISO) in 1987. As the name suggests, it is used when we have structured data (in the form of tables). All databases that are not relational (or do not use fixed structure tables to store data) and therefore do not use SQL, are called NoSQL databases. Examples of NoSQL are MongoDB, DynamoDB, Cassandra, etc."
     			},
     			{
-    				"title": "Audience",
-    				"paragraph" : "This SQL tutorial is prepared for beginners to help them understand the basic as well as the advanced concepts related to SQL languages. This tutorial will give you enough understanding on the various components of SQL along with suitable examples."
+    				"title": "What Can SQL do?",
+    				"paragraph" : "SQL can execute queries against a database, can retrieve data from a database, can insert records in a database, can update records in a database, can delete records from a database, can create new databases, can create new tables in a database, can create stored procedures in a database, can create views in a database and can set permissions on tables, procedures, and views. SQL is just a query language, it is not a database. To perform SQL queries, you need to install any database, for example, Oracle, MySQL, MongoDB, PostGre SQL, SQL Server, DB2, etc."
+    			},
+    			{
+    				"title": "More Information",
+    				"paragraph" : "SQL is designed for a specific purpose: to query data contained in a relational database. SQL is a set-based, declarative programming language, not an imperative programming language like C or BASIC. However, extensions to Standard SQL add procedural programming language functionality, such as control-of-flow constructs. In addition to the standard SQL/PSM extensions and proprietary SQL extensions, procedural and object-oriented programmability is available on many SQL platforms via DBMS integration with other languages. The SQL standard defines SQL/JRT extensions (SQL Routines and Types for the Java Programming Language) to support Java code in SQL databases. Microsoft SQL Server 2005 uses the SQLCLR (SQL Server Common Language Runtime) to host managed .NET assemblies in the database, while prior versions of SQL Server were restricted to unmanaged extended stored procedures primarily written in C. PostgreSQL lets users write functions in a wide variety of languages—including Perl, Python, Tcl, JavaScript (PL/V8) and C."
+    			},
+    			{
+    				"title": "Portability Hurdles",
+    				"paragraph" : "SQL code can rarely be ported between database systems without modifications. There are several reasons for this lack of portability between database systems like, the complexity and size of the SQL standard means that most implementors do not support the entire standard, the standard does not specify database behavior in several important areas, leaving implementations to decide how to behave, the SQL standard precisely specifies the syntax that a conforming database system must implement. However, the standard''s specification of the semantics of language constructs is less well-defined, leading to ambiguity, many database vendors have large existing customer bases; where the newer version of the SQL standard conflicts with the prior behavior of the vendor''s database, the vendor may be unwilling to break backward compatibility, there is little commercial incentive for vendors to make it easier for users to change database suppliers, users evaluating database software tend to place other factors such as performance higher in their priorities than standards conformance."
     			}
 
     	]
 }');
 
 insert into SECTION(id,name,course_id,information)
-values (4,'Section 2: Hands on databases',1,'{
+values (4,'Section 2: Syntax and Tables',1,'{
     "id": "text_material",
     "paragraph": [
     			{
@@ -63,6 +71,7 @@ values (4,'Section 2: Hands on databases',1,'{
                 },
     			{
     				"title": "AAAAAAudience",
+                    "image": "https://s33046.pcdn.co/wp-content/uploads/2018/03/word-image-27.png",
     				"paragraph" : "AAAAThis SQL tutorial is prepared for beginners to help them understand the basic as well as the advanced concepts related to SQL languages. This tutorial will give you enough understanding on the various components of SQL along with suitable examples."
     			}
 
@@ -73,10 +82,16 @@ insert into SECTION(id,name,course_id,information)
 values (5,'Section 3: Advanced queries',1,'{"id" : "text_material", "paragraph": "TEXT MATERIAL"}');
 
 insert into SECTION(id,name,course_id,information)
-values (6,'Final Quiz',1,'{"id" : "final_quiz"}');
+values (6,'Section 4: Join Clauses',1,'{"id" : "text_material", "paragraph": "TEXT MATERIAL"}');
 
 insert into SECTION(id,name,course_id,information)
-values (7,'Options',1,'{"id" : "options"}');
+values (7,'Section 5: Triggers',1,'{"id" : "text_material", "paragraph": "TEXT MATERIAL"}');
+
+insert into SECTION(id,name,course_id,information)
+values (8,'Final Quiz',1,'{"id" : "final_quiz"}');
+
+insert into SECTION(id,name,course_id,information)
+values (9,'Options',1,'{"id" : "options"}');
 
 DROP TABLE IF EXISTS QUIZ;
 CREATE TABLE QUIZ(id INT AUTO_INCREMENT PRIMARY KEY ,
