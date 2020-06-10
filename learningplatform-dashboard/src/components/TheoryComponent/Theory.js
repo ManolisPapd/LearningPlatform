@@ -36,7 +36,7 @@ class TheoryComponent extends Component {
                             }
                             {item.image &&
                                 <React.Fragment>
-                                    <img src={item.image} className="materialImage" alt="Cinque Terre" width="304" height="236"/><br/>
+                                    <img src={item.image} className="materialImage" alt="Cinque Terre"  /><br/>
                                 </React.Fragment>
                                 
                             }

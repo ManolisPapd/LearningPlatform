@@ -6,6 +6,8 @@ import MainNavigation from '../components/Navigation/MainNavigation';
 import Profile from '../components/Profile/Profile';
 import AuthContext from '../context/auth-context';
 import ChatBot from 'react-simple-chatbot';
+import ScrollUp from '../context/scrollUp';
+import upArrow from '../images/up-arrow.png';
 
 
 import './App.css';
@@ -57,6 +59,15 @@ class App extends Component {
   }
 
   render (){
+    const scrollCompStyle = {
+      position: 'fixed',
+      bottom: 100,
+      right: 20,
+      cursor: 'pointer',
+      transitionDuration: '0.5s',
+      transitionTimingFunction: 'linear',
+      transitionDelay: '0s'
+    }
 
     return(
 
@@ -127,6 +138,13 @@ class App extends Component {
                 },
               ]}
             />
+
+          <ScrollUp showUnder={160} style={scrollCompStyle}>
+            <span><img src={upArrow} className="materialImage" alt="Cinque Terre" width="80" height="80"/><br/></span>
+            
+          </ScrollUp>
+
+          
         
       </BrowserRouter>
       

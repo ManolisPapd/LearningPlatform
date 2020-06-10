@@ -3,6 +3,7 @@ import './Course.css'
 import {Tab, Nav,Row,Col,Accordion, Card, Button } from 'react-bootstrap';
 import CardComponent from '../CardComponent/CardComponent';
 
+
 class Course extends Component {
     state = {
         sections: {}
@@ -82,6 +83,7 @@ class Course extends Component {
         return(
 
             <React.Fragment>
+                
 
 
                 {(this.state.sections.length) && 
