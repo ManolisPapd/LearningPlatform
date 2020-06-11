@@ -12,7 +12,7 @@ class Profile extends Component {
     }
 
     render (){
-        const photo = 'https://media-exp1.licdn.com/dms/image/C5603AQGacu22-YNmsg/profile-displayphoto-shrink_200_200/0?e=1597276800&v=beta&t=qLP7x7sj3-NIZ1uxeHpi0Nw07tpvPsrc4pwx80ScDEk';
+        const photo = 'https://media-exp1.licdn.com/dms/image/C5603AQEuVG75BunLkw/profile-displayphoto-shrink_200_200/0?e=1597276800&v=beta&t=FLOwYVGpiKX3BiPp4IpqU2Hv5wmIAZP2QSZWv2_onZ8';
         const userName = 'Manolis Papadimitriou';
         const location = 'Athens, Greece';
         const email = 'mcse19021@uniwa.gr';

@@ -22,7 +22,10 @@ class TheoryComponent extends Component {
                 <div>
                     {Array.from(this.props.material).map((item) =>
                         <React.Fragment key={Math.random()}>
-                            <div className="title">{item.title}</div> <br/>
+                            {item.title && 
+                                <React.Fragment><hr/><div className="title">{item.title}</div> <br/></React.Fragment>
+                            
+                            }
                             {item.video &&
                                 <React.Fragment>
                                     <div>
@@ -40,7 +43,8 @@ class TheoryComponent extends Component {
                                 </React.Fragment>
                                 
                             }
-                            <div className="paragraph">{item.paragraph}</div><br/><br/>
+                            {item.paragraph && <React.Fragment><div className="paragraph">{item.paragraph}</div> <br/></React.Fragment>}
+                            
                         </React.Fragment>
                             
 
