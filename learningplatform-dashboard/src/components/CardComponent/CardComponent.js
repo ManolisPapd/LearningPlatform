@@ -18,21 +18,7 @@ class CardComponent extends Component {
     }
 
     componentDidMount = () => {
-        console.log("CARD MOUNT")
         localStorage.setItem("statisticsCalled","0");
-
-        //   this.interval = setInterval(
-        //     () => {
-        //         if(localStorage.getItem("statisticsCalled") === "1"){
-        //             this.setState({statisticsRerender: true})
-                   
-                    
-        //         }
-        //         else{
-        //             this.setState({statisticsRerender: false})
-        //         }
-        //     }
-        //     ,5000);
 
     }
 
@@ -70,7 +56,7 @@ class CardComponent extends Component {
         };
 
         //request to the backend
-        fetch('http://localhost:8080/graphql', {
+        fetch('https://learningplatform-backend.herokuapp.com/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {

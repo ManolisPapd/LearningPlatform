@@ -43,7 +43,7 @@ class QuizResults extends Component {
             };
 
             //request to the backend
-            fetch('http://localhost:8080/graphql', {
+            fetch('https://learningplatform-backend.herokuapp.com/graphql', {
                 method: 'POST',
                 body: JSON.stringify(requestBody),
                 headers: {

@@ -80,7 +80,7 @@ class QuizComponent extends Component {
         };
 
         //request to the backend
-        fetch('http://localhost:8080/graphql', {
+        fetch('https://learningplatform-backend.herokuapp.com/graphql', {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -124,8 +124,17 @@ class QuizComponent extends Component {
         try{
 
         
-            var correctQueryFromAPI = JSON.stringify(globalDB.database.exec(JSON.parse(quiz.details).correctQuery))
-            var queryFromUser  = JSON.stringify(globalDB.database.exec(this.state.selectedQuery));
+            
+
+            
+            var correctQueryFromAPI = JSON.parse(quiz.details).correctQuery.toUpperCase().trim().replace(/\s/g, "");
+            var queryFromUser  = this.state.selectedQuery.toUpperCase().trim().replace(/\s/g, "");
+            if(!correctQueryFromAPI.startsWith("CREATE")){
+                var correctQueryFromAPI = JSON.stringify(globalDB.database.exec(JSON.parse(quiz.details).correctQuery))
+                var queryFromUser  = JSON.stringify(globalDB.database.exec(this.state.selectedQuery));
+            }
+            
+            
             let status = 0;
             if(queryFromUser === correctQueryFromAPI){
                 console.log(queryFromUser)
@@ -152,7 +161,7 @@ class QuizComponent extends Component {
             };
 
             //request to the backend
-            fetch('http://localhost:8080/graphql', {
+            fetch('https://learningplatform-backend.herokuapp.com/graphql', {
                 method: 'POST',
                 body: JSON.stringify(requestBody),
                 headers: {
@@ -176,6 +185,7 @@ class QuizComponent extends Component {
         } catch (e) { //User typed gibberish, so status 0
             let requestBody = {
                 
+                
                 query: `
                 mutation {
                     saveMultipleChoiceQuiz(userId: ${localStorage.getItem('userId')}, quizId: ${quiz.id}, status: 0)
@@ -184,7 +194,7 @@ class QuizComponent extends Component {
             };
 
             //request to the backend
-            fetch('http://localhost:8080/graphql', {
+            fetch('https://learningplatform-backend.herokuapp.com/graphql', {
                 method: 'POST',
                 body: JSON.stringify(requestBody),
                 headers: {
@@ -471,7 +481,9 @@ class QuizComponent extends Component {
                                 { (this.state.currentQuiz === i && quiz.details && quiz.type === 'code') &&
                                     <React.Fragment>
                                         <p className="codeQuestion">{JSON.parse(quiz.details).question}</p>
-                                        <img src={JSON.parse(quiz.details).sql} className="sqlImage" alt="Cinque Terre"/> 
+                                        {JSON.parse(quiz.details).sql &&
+                                            <img src={JSON.parse(quiz.details).sql} className="sqlImage" alt="Cinque Terre"/> 
+                                        }   
 
                                         {(!this.state.codeQuizSubmitted && !JSON.parse(localStorage.getItem('answeredQuizzes')).hasOwnProperty(quiz.id)) &&
                                             <React.Fragment>
