@@ -48,7 +48,7 @@ class StatisticsComponent extends Component {
                 tmpHoverColors.push('#910303')
             }
             else{
-                tmpBackgroundColors.push('#2bff00')
+                tmpBackgroundColors.push('#48e827')
                 tmpHoverColors.push('#1b9103')
             }
 

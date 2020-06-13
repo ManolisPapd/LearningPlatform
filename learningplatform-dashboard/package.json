@@ -2,11 +2,16 @@
   "name": "learningplatform-dashboard",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "10.13.0",
+    "npm": "6.4.1"
+  },
   "dependencies": {
     "@material-ui/core": "^4.9.12",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "ace-builds": "^1.4.11",
     "alasql": "^0.6.0",
     "bootstrap": "^4.4.1",
     "brace": "^0.11.1",
@@ -30,13 +35,14 @@
     "react-tooltip": "^4.2.6",
     "react-user-profile": "^1.0.3",
     "react-youtube": "^7.11.2",
+    "serve": "^11.3.2",
     "styled-components": "^5.1.0"
   },
   "scripts": {
+    "dev": "react-scripts start",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "heroku-postbuild": "npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
