@@ -10,8 +10,6 @@ import ReactModal from 'react-modal';
 import InnerTheory from './InnerTheory/InnerTheory';
 
 
-
-
 class QuizComponent extends Component {
 
     state = {
@@ -250,7 +248,8 @@ class QuizComponent extends Component {
             delete answeredQuizzes[id];
 
         })
-        localStorage.setItem('answeredQuizzes', JSON.stringify(answeredQuizzes))
+        localStorage.setItem('answeredQuizzes', JSON.stringify(answeredQuizzes));
+        window.location.reload(true);
 
 
     }
@@ -488,15 +487,18 @@ class QuizComponent extends Component {
                                         {(!this.state.codeQuizSubmitted && !JSON.parse(localStorage.getItem('answeredQuizzes')).hasOwnProperty(quiz.id)) &&
                                             <React.Fragment>
                                                 <p className="pLabel">Write your SQL query below and submit the answer!</p>
-                                            
+
+                                                <React.Fragment>
                                                 <ReactAce
                                                     mode="mysql"
-                                                    theme="eclipse"
+                                                    theme="textmate"
                                                     setReadOnly={false}
                                                     onChange={this.handleTypedCode}
                                                     style={{ height: '200px' }}
                                                     ref={instance => { this.ace = instance; }} 
                                                 />
+                                                </React.Fragment>
+                                                
                                                 <Button className="quizSubmit" variant="primary" onClick={e=>this.handleCodeSubmition(quiz)}>Submit Answer!</Button>
                                             </React.Fragment>
                                             

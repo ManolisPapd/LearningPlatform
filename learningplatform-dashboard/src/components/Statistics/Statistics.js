@@ -156,10 +156,10 @@ class Statistics extends Component {
                         completedStatusMap = {this.state.finalCompletedStatus}
                         answersMap = {this.state.finalAnswersStatus}
                     />
-                }
+                }<br/><br/>
                 
 
-                <hr />
+               
 
             </div>
         )

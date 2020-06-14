@@ -122,20 +122,50 @@ class App extends Component {
                   id: '3',
                   options: [
                     { value: 1, label: 'Login to the platform', trigger: '4' },
-                    { value: 2, label: 'Access a course ', trigger: '5' }
+                    { value: 2, label: 'Access a course', trigger: '5' },
+                    { value: 3, label: 'Profile Page', trigger: '6' },
+                    { value: 4, label: 'Start Learning', trigger: '7' },
+                    { value: 5, label: 'Quiz Section', trigger: '8' },
+                    { value: 6, label: 'Final Quiz', trigger: '9' },
+                    { value: 7, label: 'Statistics', trigger: '10' }
                   ],
                 },
                 
                 {
                   id: '4',
-                  message: 'asdasdasdasd.',
+                  message: 'To access the platform you need to login with your email and password.',
                   trigger: '2',
                 },
                 {
                   id: '5',
-                  message: 'bbbbbbbbbbbbbbbb',
+                  message: 'On homepage you will find all the courses, click the one you want to access to.',
                   trigger: '2',
                 },
+                {
+                  id: '6',
+                  message: 'You can access your profile page by clicking the profile icon on top. You can also write comments.',
+                  trigger: '2',
+                },
+                {
+                  id: '7',
+                  message: 'You can see on course main page all the sections available. You can click one of them to start reading.',
+                  trigger: '2',
+                },
+                {
+                  id: '8',
+                  message: 'You can test your knowledge on each section by taking the quiz for each one. It consists of 5 quizzes, multiple choice and coding tests. ',
+                  trigger: '2',
+                },
+                {
+                  id: '9',
+                  message: 'When you have finished studying all the sections, you can test your skills and take the Final Quiz. It consists of quizzes from all sections. If you fail a section, next time you will receive extra questions about this specific section and also you can study again the section you have failed. ',
+                  trigger: '2',
+                },
+                {
+                  id: '10',
+                  message: 'You can view all the statistics for the quizzes you have taken on "Statistics" section. ',
+                  trigger: '2',
+                }
               ]}
             />
 
