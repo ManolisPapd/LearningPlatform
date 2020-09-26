@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FinalQuiz from './FinalQuiz/FinalQuiz';
 import QuizComponent from './QuizComponent/QuizComponent';
 import './Quiz.css';
+import axios from '../../_services/axios';
 
 class Quiz extends Component {
 
@@ -29,28 +30,20 @@ class Quiz extends Component {
                 `
             };
 
-            //request to the backend
-            fetch('https://learningplatform-backend.herokuapp.com/graphql', {
-                method: 'POST',
-                body: JSON.stringify(requestBody),
-                headers: {
-                'Content-Type': 'application/json'
-                }
-            }).then(res => {
+            //axios
+            axios.post('/graphql',requestBody)
+            .then(res => {
                 if(res.status !== 200 && res.status !== 201){
                 throw new Error('Failed!');
                 }
-                return res.json();
-            })
-            .then(resData => {
-                console.log("Section Quizzes\n");
-                console.log(resData.data.allQuiz);
-                this.setState({quizzes: resData.data.allQuiz });
                 
-            })
-            .catch(err => {
+                console.log("Section Quizzes\n");
+                console.log(res.data.data.allQuiz);
+                this.setState({quizzes: res.data.data.allQuiz });
+            }).catch(err => {
                 console.log(err);
             });
+
         }
         else{
             //Check which sections the user has failed the final quizzes
@@ -71,29 +64,20 @@ class Quiz extends Component {
                     `
                 };
     
-                //request to the backend
-                fetch('https://learningplatform-backend.herokuapp.com/graphql', {
-                    method: 'POST',
-                    body: JSON.stringify(requestBody),
-                    headers: {
-                    'Content-Type': 'application/json'
-                    }
-                }).then(res => {
+                //axios
+                axios.post('/graphql',requestBody)
+                .then(res => {
                     if(res.status !== 200 && res.status !== 201){
                     throw new Error('Failed!');
                     }
-                    return res.json();
-                })
-                .then(resData => {
+                    
                     let quizAddition = this.state.finalQuizFetched + 1;
                     let sectionFailStatusMapCopy = this.state.sectionFailStatusMap;
-                    sectionFailStatusMapCopy.set([i+1], resData.data.checkUserSectionStatus.failed);
+                    sectionFailStatusMapCopy.set([i+1], res.data.data.checkUserSectionStatus.failed);
 
                     this.setState({finalQuizFetched: quizAddition, sectionFailStatusMap: sectionFailStatusMapCopy  });
                     
-                    
-                })
-                .catch(err => {
+                }).catch(err => {
                     console.log(err);
                 });
 

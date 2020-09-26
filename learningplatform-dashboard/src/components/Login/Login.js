@@ -47,45 +47,30 @@ class Login extends Component {
           `
       };
 
-      console.log(JSON.stringify(requestBody));
+      
       //axios
-      // axios.post('/graphql',requestBody)
-      //   .then(response => {
-      //     console.log(response);
-      //   })
-
-      //request to the backend
-      // fetch('https://learningplatform-backend.herokuapp.com/graphql', {
-      //   method: 'POST',
-      //   body: JSON.stringify(requestBody),
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   }
-      // })
-      // .then(res => {
-      //   if(res.status !== 200 && res.status !== 201){
-      //     throw new Error('Failed!');
-      //   }
-      //   return res.json();
-      // })
-      // .then(resData => {
-      //   console.log(resData)
-      //   if(resData.data.login){
-      //     // this.setState({credentialsStatus: true});
-      //     // this.context.login(
-      //     //   resData.data.login.token, 
-      //     //   resData.data.login.id, 
-      //     //   resData.data.login.tokenExpiration
-      //     //   )
-      //   }
-      //   //User gave bad credentials
-      //   else{
-      //       this.setState({credentialsStatus: false});
-      //   }
-      // })
-      // .catch(err => {
-      //   console.log(err);
-      // });
+      axios.post('/graphql',requestBody)
+        .then(res => {
+          if(res.status !== 200 && res.status !== 201){
+            throw new Error('Failed!');
+          }
+          console.log(res)
+          if(res.data.data.login){
+            this.setState({credentialsStatus: true});
+            this.context.login(
+              res.data.data.login.token, 
+              res.data.data.login.id, 
+              res.data.data.login.tokenExpiration
+              )
+          }
+          //User gave bad credentials
+          else{
+              this.setState({credentialsStatus: false});
+          }
+          
+        }).catch(err => {
+          console.log(err);
+        });
 
     };
 

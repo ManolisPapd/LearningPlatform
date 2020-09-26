@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import StatisticsComponent from './StatisticsComponent/StatisticsComponent';
 import './Statistics.css';
-
-
-
-
+import axios from '../../_services/axios';
 
 class Statistics extends Component {
 
@@ -49,35 +46,26 @@ class Statistics extends Component {
                 `
             };
 
-            //request to the backend
-            fetch('https://learningplatform-backend.herokuapp.com/graphql', {
-                method: 'POST',
-                body: JSON.stringify(requestBody),
-                headers: {
-                'Content-Type': 'application/json'
-                }
-            }).then(res => {
+            //axios
+            axios.post('/graphql',requestBody)
+            .then(res => {
                 if(res.status !== 200 && res.status !== 201){
                 throw new Error('Failed!');
                 }
-                return res.json();
-            })
-            .then(resData => {
                 //Want to save for each section the status
                 var tmp = this.state.sectionStatus;
                 var tmpCompleted = this.state.completedStatus;
                 var tmpAnswers = this.state.answersStatus;
 
-                tmp.set(i, resData.data.checkUserSectionStatus.failed);
-                tmpCompleted.set(i, resData.data.checkUserSectionStatus.completed);
-                tmpAnswers.set(i, resData.data.checkUserSectionStatus.answers);
+                tmp.set(i, res.data.data.checkUserSectionStatus.failed);
+                tmpCompleted.set(i, res.data.data.checkUserSectionStatus.completed);
+                tmpAnswers.set(i, res.data.data.checkUserSectionStatus.answers);
                 this.setState({sectionStatus:tmp, completedStatus:tmpCompleted, answersStatus: tmpAnswers });
                 
-                
-            })
-            .catch(err => {
+            }).catch(err => {
                 console.log(err);
             });
+
 
         }
 
@@ -98,37 +86,27 @@ class Statistics extends Component {
                 `
             };
 
-            //request to the backend
-            fetch('https://learningplatform-backend.herokuapp.com/graphql', {
-                method: 'POST',
-                body: JSON.stringify(requestBody),
-                headers: {
-                'Content-Type': 'application/json'
-                }
-            }).then(res => {
+            //axios
+            axios.post('/graphql',requestBody)
+            .then(res => {
                 if(res.status !== 200 && res.status !== 201){
                 throw new Error('Failed!');
                 }
-                return res.json();
-            })
-            .then(resData => {
                 //Want to save for each section the status
 
                 var tmpCore = this.state.finalSectionStatus;
                 var tmpCompletedCore = this.state.finalCompletedStatus;
                 var tmpAnswersCore = this.state.finalAnswersStatus;
 
-                tmpCore.set(i, resData.data.checkUserSectionStatus.failed);
-                tmpCompletedCore.set(i, resData.data.checkUserSectionStatus.completed);
-                tmpAnswersCore.set(i, resData.data.checkUserSectionStatus.answers);
+                tmpCore.set(i, res.data.data.checkUserSectionStatus.failed);
+                tmpCompletedCore.set(i, res.data.data.checkUserSectionStatus.completed);
+                tmpAnswersCore.set(i, res.data.data.checkUserSectionStatus.answers);
                 this.setState({finalSectionStatus:tmpCore, finalCompletedStatus:tmpCompletedCore, finalAnswersStatus:tmpAnswersCore  });
   
-                
-            })
-            .catch(err => {
+            }).catch(err => {
                 console.log(err);
             });
-
+            
         }
 
         //Get answers for each section quiz

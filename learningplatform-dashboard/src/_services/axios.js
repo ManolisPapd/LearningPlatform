@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'localhost:8080'
+    baseURL: 'http://localhost:8080'
 });
 
 instance.interceptors.request.use(request => {
-    console.log(request);
+    // console.log(request);
     return request;
 }, error => {
     console.log(error); 

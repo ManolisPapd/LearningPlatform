@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import QuizComponent from '../QuizComponent/QuizComponent';
+import axios from '../../../_services/axios';
 
 class FinalQuiz extends Component {
 
@@ -24,22 +25,15 @@ class FinalQuiz extends Component {
                 `
             };
 
-            //request to the backend
-            fetch('https://learningplatform-backend.herokuapp.com/graphql', {
-                method: 'POST',
-                body: JSON.stringify(requestBody),
-                headers: {
-                'Content-Type': 'application/json'
-                }
-            }).then(res => {
+            //axios
+            axios.post('/graphql',requestBody)
+            .then(res => {
                 if(res.status !== 200 && res.status !== 201){
                 throw new Error('Failed!');
                 }
-                return res.json();
-            })
-            .then(resData => {
+                
                 var copyQuizzes = this.state.quizzes;
-                copyQuizzes = copyQuizzes.concat(resData.data.allQuiz);
+                copyQuizzes = copyQuizzes.concat(res.data.data.allQuiz);
                 //Shuffle quizzes
                 for (let i = copyQuizzes.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -57,11 +51,11 @@ class FinalQuiz extends Component {
                 })
                 
                 localStorage.setItem('finalQuizzesOrder', JSON.stringify(quizOrder));
-                
-            })
-            .catch(err => {
+
+            }).catch(err => {
                 console.log(err);
             });
+
           }            
 
     }

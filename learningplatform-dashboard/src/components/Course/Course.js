@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Course.css'
 import {Tab, Nav,Row,Col,Accordion, Card, Button } from 'react-bootstrap';
 import CardComponent from '../CardComponent/CardComponent';
-
+import axios from '../../_services/axios';
 
 class Course extends Component {
     state = {
@@ -27,28 +27,20 @@ class Course extends Component {
             `
         };
 
-
-        //request to the backend
-        fetch('https://learningplatform-backend.herokuapp.com/graphql', {
-            method: 'POST',
-            body: JSON.stringify(requestBody),
-            headers: {
-            'Content-Type': 'application/json'
-            }
-        }).then(res => {
+        //axios
+        axios.post('/graphql',requestBody)
+        .then(res => {
             if(res.status !== 200 && res.status !== 201){
             throw new Error('Failed!');
             }
-            return res.json();
-        })
-        .then(resData => {
-            console.log(resData.data.courseSections)
-            this.setState({sections: resData.data.courseSections });
             
-        })
-        .catch(err => {
+            console.log(res.data.data.courseSections)
+            this.setState({sections: res.data.data.courseSections });
+            
+        }).catch(err => {
             console.log(err);
         });
+
     }
 
 

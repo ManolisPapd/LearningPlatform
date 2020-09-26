@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {ListGroup} from 'react-bootstrap';
 import './QuizResults.css';
+import axios from '../../../../_services/axios';
 
 class QuizResults extends Component {
     state = {
@@ -42,20 +43,12 @@ class QuizResults extends Component {
                 `
             };
 
-            //request to the backend
-            fetch('https://learningplatform-backend.herokuapp.com/graphql', {
-                method: 'POST',
-                body: JSON.stringify(requestBody),
-                headers: {
-                'Content-Type': 'application/json'
-                }
-            }).then(res => {
+            axios.post('/graphql',requestBody)
+            .then(res => {
                 if(res.status !== 200 && res.status !== 201){
                 throw new Error('Failed!');
                 }
-                return res.json();
-            })
-            .then(resData => {
+                
                 var tmpResultsPresent = this.state.resultsPresent;
                 if(!tmpResultsPresent[sectionId]){
                     tmpResultsPresent[sectionId] = [];
@@ -67,7 +60,7 @@ class QuizResults extends Component {
     
                     var intLocalStorageArray = JSON.parse(localStorage.getItem('finalQuizzesOrder')).map(Number);
 
-                    var tmpArray = Object.create(resData.data.getQuizzesStatus);
+                    var tmpArray = Object.create(res.data.data.getQuizzesStatus);
                     tmpArray.sort(function(a, b){  
                         return intLocalStorageArray.indexOf(a.quizId) - intLocalStorageArray.indexOf(b.quizId);
                     });
@@ -93,25 +86,15 @@ class QuizResults extends Component {
                     this.setState({resultsPresent: tmpResultsPresent });
                 }
                 else{
-                    tmpResultsPresent[sectionId] = resData.data.getQuizzesStatus;
+                    tmpResultsPresent[sectionId] = res.data.data.getQuizzesStatus;
                     this.setState({resultsPresent: tmpResultsPresent });
                 }
-                
-                
-                
-                
-                
 
-                
-            })
-            .catch(err => {
+            }).catch(err => {
                 console.log(err);
             });
             
         })
-
-
-        
 
 
     }

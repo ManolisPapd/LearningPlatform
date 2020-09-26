@@ -6,6 +6,7 @@ import Modal from '../Modal/Modal';
 import Quiz from '../Quiz/Quiz';
 import TheoryComponent from '../TheoryComponent/Theory';
 import Statistics from '../Statistics/Statistics';
+import axios from '../../_services/axios';
 
 // const Statistics = import('../Statistics/Statistics')
 
@@ -55,32 +56,22 @@ class CardComponent extends Component {
             `
         };
 
-        //request to the backend
-        fetch('https://learningplatform-backend.herokuapp.com/graphql', {
-            method: 'POST',
-            body: JSON.stringify(requestBody),
-            headers: {
-            'Content-Type': 'application/json'
-            }
-        }).then(res => {
+        //axios
+        axios.post('/graphql',requestBody)
+        .then(res => {
             if(res.status !== 200 && res.status !== 201){
             throw new Error('Failed!');
             }
-            return res.json();
-        })
-        .then(resData => {
             
             this.setState({resetModalStatus: !this.state.resetModalStatus})
             localStorage.setItem("statisticsCalled","0");
             localStorage.setItem("answeredQuizzes","{}");
             window.location.reload(true);
-
             
-            
-        })
-        .catch(err => {
+        }).catch(err => {
             console.log(err);
         });
+
     }
 
     render (){

@@ -1,6 +1,7 @@
 import React, { Component,lazy, Suspense } from 'react';
 // import Course from '../Course/Course';
 import './Homepage.css';
+import axios from '../../_services/axios';
 
 const Course = lazy(() => {
   return new Promise(resolve => {
@@ -45,27 +46,20 @@ class Homepage extends Component {
         `
     };
 
-      //request to the backend
-      fetch('https://learningplatform-backend.herokuapp.com/graphql', {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(res => {
+    //axios
+    axios.post('/graphql',requestBody)
+    .then(res => {
         if(res.status !== 200 && res.status !== 201){
-          throw new Error('Failed!');
+        throw new Error('Failed!');
         }
-        return res.json();
-      })
-      .then(resData => {
-        console.log(resData)
-        this.setState({courses: resData.data.userCourses});
         
-      })
-      .catch(err => {
+        console.log(res)
+        this.setState({courses: res.data.data.userCourses});
+        
+    }).catch(err => {
         console.log(err);
-      });
+    });
+
     }
   }
     

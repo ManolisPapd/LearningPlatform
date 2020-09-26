@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TheoryComponent from '../../../TheoryComponent/Theory';
 import './InnerTheory.css';
-
+import axios from '../../../../_services/axios';
 
 
 
@@ -26,26 +26,15 @@ class InnerTheory extends Component {
             `
         };
 
-        //request to the backend
-        fetch('https://learningplatform-backend.herokuapp.com/graphql', {
-            method: 'POST',
-            body: JSON.stringify(requestBody),
-            headers: {
-            'Content-Type': 'application/json'
-            }
-        }).then(res => {
+        axios.post('/graphql',requestBody)
+        .then(res => {
             if(res.status !== 200 && res.status !== 201){
             throw new Error('Failed!');
             }
-            return res.json();
-        })
-        .then(resData => {
             
-            this.setState({sectionInfo: JSON.parse(resData.data.getSection.information)})
-            
-            
-        })
-        .catch(err => {
+            this.setState({sectionInfo: JSON.parse(res.data.data.getSection.information)})
+
+        }).catch(err => {
             console.log(err);
         });
 

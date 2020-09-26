@@ -8,7 +8,7 @@ import './QuizComponent.css';
 import Modal from '../../Modal/Modal';
 import ReactModal from 'react-modal';
 import InnerTheory from './InnerTheory/InnerTheory';
-
+import axios from '../../../_services/axios';
 
 class QuizComponent extends Component {
 
@@ -77,27 +77,20 @@ class QuizComponent extends Component {
             `
         };
 
-        //request to the backend
-        fetch('https://learningplatform-backend.herokuapp.com/graphql', {
-            method: 'POST',
-            body: JSON.stringify(requestBody),
-            headers: {
-            'Content-Type': 'application/json'
-            }
-        }).then(res => {
+        //axios
+        axios.post('/graphql',requestBody)
+        .then(res => {
             if(res.status !== 200 && res.status !== 201){
             throw new Error('Failed!');
             }
-            return res.json();
-        })
-        .then(resData => {
-            console.log(resData.data.allQuiz);
-            this.setState({quizzes: resData.data.allQuiz });
             
-        })
-        .catch(err => {
+            console.log(res.data.data.allQuiz);
+            this.setState({quizzes: res.data.data.allQuiz });
+
+        }).catch(err => {
             console.log(err);
         });
+
 
         //Save that quiz has been answered in order to not present it again
         var tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
@@ -158,28 +151,21 @@ class QuizComponent extends Component {
                 `
             };
 
-            //request to the backend
-            fetch('https://learningplatform-backend.herokuapp.com/graphql', {
-                method: 'POST',
-                body: JSON.stringify(requestBody),
-                headers: {
-                'Content-Type': 'application/json'
-                }
-            }).then(res => {
+            //axios
+            axios.post('/graphql',requestBody)
+            .then(res => {
                 if(res.status !== 200 && res.status !== 201){
                 throw new Error('Failed!');
                 }
-                return res.json();
-            })
-            .then(resData => {
-                console.log(resData.data);
-    
-                this.setState({quizzes: resData.data.allQuiz, selectedQuery: null });
                 
-            })
-            .catch(err => {
+                console.log(res.data.data);
+    
+                this.setState({quizzes: res.data.data.allQuiz, selectedQuery: null });
+
+            }).catch(err => {
                 console.log(err);
             });
+
         } catch (e) { //User typed gibberish, so status 0
             let requestBody = {
                 
@@ -191,27 +177,20 @@ class QuizComponent extends Component {
                 `
             };
 
-            //request to the backend
-            fetch('https://learningplatform-backend.herokuapp.com/graphql', {
-                method: 'POST',
-                body: JSON.stringify(requestBody),
-                headers: {
-                'Content-Type': 'application/json'
-                }
-            }).then(res => {
+
+            //axios
+            axios.post('/graphql',requestBody)
+            .then(res => {
                 if(res.status !== 200 && res.status !== 201){
                 throw new Error('Failed!');
                 }
-                return res.json();
-            })
-            .then(resData => {
-                console.log(resData.data);
-                this.setState({quizzes: resData.data.allQuiz });
                 
-            })
-            .catch(err => {
+                console.log(res.data.data);
+                this.setState({quizzes: res.data.data.allQuiz });
+            }).catch(err => {
                 console.log(err);
             });
+
             //Save that quiz has been answered in order to not present it again
             var tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
             tempMap[quiz.id] = 0;
