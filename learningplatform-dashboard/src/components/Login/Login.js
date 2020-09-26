@@ -3,6 +3,7 @@ import AuthContext from '../../context/auth-context';
 import '../../context/loader';
 import logo from '../../images/logo.png';
 import './Login.css'
+import axios from '../../_services/axios';
 
 class Login extends Component {
 
@@ -46,36 +47,45 @@ class Login extends Component {
           `
       };
 
+      console.log(JSON.stringify(requestBody));
+      //axios
+      // axios.post('/graphql',requestBody)
+      //   .then(response => {
+      //     console.log(response);
+      //   })
+
       //request to the backend
-      fetch('https://learningplatform-backend.herokuapp.com/graphql', {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(res => {
-        if(res.status !== 200 && res.status !== 201){
-          throw new Error('Failed!');
-        }
-        return res.json();
-      })
-      .then(resData => {
-        if(resData.data.login){
-          this.setState({credentialsStatus: true});
-          this.context.login(
-            resData.data.login.token, 
-            resData.data.login.id, 
-            resData.data.login.tokenExpiration
-            )
-        }
-        //User gave bad credentials
-        else{
-            this.setState({credentialsStatus: false});
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+      // fetch('https://learningplatform-backend.herokuapp.com/graphql', {
+      //   method: 'POST',
+      //   body: JSON.stringify(requestBody),
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   }
+      // })
+      // .then(res => {
+      //   if(res.status !== 200 && res.status !== 201){
+      //     throw new Error('Failed!');
+      //   }
+      //   return res.json();
+      // })
+      // .then(resData => {
+      //   console.log(resData)
+      //   if(resData.data.login){
+      //     // this.setState({credentialsStatus: true});
+      //     // this.context.login(
+      //     //   resData.data.login.token, 
+      //     //   resData.data.login.id, 
+      //     //   resData.data.login.tokenExpiration
+      //     //   )
+      //   }
+      //   //User gave bad credentials
+      //   else{
+      //       this.setState({credentialsStatus: false});
+      //   }
+      // })
+      // .catch(err => {
+      //   console.log(err);
+      // });
 
     };
 
