@@ -53,7 +53,6 @@ class Homepage extends Component {
         throw new Error('Failed!');
         }
         
-        console.log(res)
         this.setState({courses: res.data.data.userCourses});
         
     }).catch(err => {

@@ -54,7 +54,7 @@ class Login extends Component {
           if(res.status !== 200 && res.status !== 201){
             throw new Error('Failed!');
           }
-          console.log(res)
+          
           if(res.data.data.login){
             this.setState({credentialsStatus: true});
             this.context.login(
