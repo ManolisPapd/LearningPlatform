@@ -16,7 +16,7 @@ import javax.persistence.Id;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String name;
     private String image;
     private String description;

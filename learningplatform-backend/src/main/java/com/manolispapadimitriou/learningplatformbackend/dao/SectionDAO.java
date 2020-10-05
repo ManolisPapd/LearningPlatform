@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class SectionDAO {
-    private Long id;
+    private Integer id;
     private String name;
-    private Long courseId;
+    private Integer courseId;
     private String information;
 
 

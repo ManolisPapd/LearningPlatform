@@ -14,7 +14,7 @@ import javax.persistence.Id;
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String type;
     private Integer sectionId;
     private Integer forSection;

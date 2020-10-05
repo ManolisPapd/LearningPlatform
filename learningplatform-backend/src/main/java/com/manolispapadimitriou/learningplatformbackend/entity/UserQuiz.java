@@ -14,7 +14,7 @@ import javax.persistence.Id;
 public class UserQuiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private Integer userId;
     private Integer quizId;
     private Integer status;

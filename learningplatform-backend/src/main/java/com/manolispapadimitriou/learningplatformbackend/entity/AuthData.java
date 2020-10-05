@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AuthData {
-    private Long id;
+    private Integer id;
     private String token;
     private Integer tokenExpiration;
 }

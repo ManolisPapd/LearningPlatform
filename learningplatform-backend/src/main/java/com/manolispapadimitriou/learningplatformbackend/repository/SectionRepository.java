@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface SectionRepository extends JpaRepository<Section, Long> {
+public interface SectionRepository extends JpaRepository<Section, Integer> {
 
-    List<Section> findAllByCourseId(Long id);
-    Section findByIdAndCourseId(Long id, Long courseId);
+    List<Section> findAllByCourseId(Integer id);
+    Section findByIdAndCourseId(Integer id, Integer courseId);
 }

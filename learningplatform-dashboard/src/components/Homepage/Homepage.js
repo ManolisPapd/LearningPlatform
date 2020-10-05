@@ -76,7 +76,8 @@ class Homepage extends Component {
         <div>
           
             {/* Present clickable courses */}
-            {(this.state.courses.length && !this.state.courseSelected) ? (
+            {(
+              this.state.courses.length && !this.state.courseSelected) ? (
               
               <div className="courseParent">
 

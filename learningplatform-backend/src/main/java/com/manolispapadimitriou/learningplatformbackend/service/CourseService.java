@@ -21,7 +21,7 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public List<CourseDAO> findAllCoursesByUser(Long userId){
+    public List<CourseDAO> findAllCoursesByUser(Integer userId){
         List<UserCourse> userCoursesDAO = userCoursesRepository.findAllByUserId(userId);
 
         List<Course> userCourses = userCoursesDAO.stream()

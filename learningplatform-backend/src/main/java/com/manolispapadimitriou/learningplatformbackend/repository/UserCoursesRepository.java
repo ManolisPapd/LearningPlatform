@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface UserCoursesRepository extends JpaRepository<UserCourse, Long> {
-    List<UserCourse> findAllByUserId(Long userId);
+public interface UserCoursesRepository extends JpaRepository<UserCourse, Integer> {
+    List<UserCourse> findAllByUserId(Integer userId);
 }

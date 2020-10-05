@@ -47,12 +47,12 @@ public class Query implements GraphQLQueryResolver {
 
     }
 
-    public List<CourseDAO> userCourses(Long id){
+    public List<CourseDAO> userCourses(Integer id){
 
         return courseService.findAllCoursesByUser(id);
     }
 
-    public List<SectionDAO> courseSections(Long id){
+    public List<SectionDAO> courseSections(Integer id){
         return sectionService.findAllSectionsByCourse(id);
     }
 
@@ -86,7 +86,7 @@ public class Query implements GraphQLQueryResolver {
 
     public SectionDAO getSection(Integer courseId,Integer sectionId){
 
-        return sectionService.getSectionByCourseId(Long.valueOf(courseId), Long.valueOf(sectionId));
+        return sectionService.getSectionByCourseId(courseId, sectionId);
     }
 
 }

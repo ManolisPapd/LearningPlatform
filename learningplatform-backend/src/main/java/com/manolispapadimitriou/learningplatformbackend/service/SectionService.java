@@ -20,7 +20,7 @@ public class SectionService {
     private CourseRepository courseRepository;
 
 
-    public List<SectionDAO> findAllSectionsByCourse(Long id) {
+    public List<SectionDAO> findAllSectionsByCourse(Integer id) {
         List<Section> sections = sectionRepository.findAllByCourseId(id);
 
         return sections.stream()
@@ -29,7 +29,7 @@ public class SectionService {
 
     }
 
-    public SectionDAO getSectionByCourseId(Long courseId, Long sectionId){
+    public SectionDAO getSectionByCourseId(Integer courseId, Integer sectionId){
         return sectionRepository.findByIdAndCourseId(sectionId,courseId)._toConvertSectionDAO();
 
     }

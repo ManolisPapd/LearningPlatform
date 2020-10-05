@@ -13,9 +13,9 @@ public class Section {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String name;
-    private Long courseId;
+    private Integer courseId;
     private String information;
 
 
