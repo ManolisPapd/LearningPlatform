@@ -1,7 +1,6 @@
 insert into USER(id,name,surname,email,username,password) values (1,'Admin','Admin','user@email.com','user','user');
 insert into USER(id,name,surname,email,username,password) values (2,'Kostas','Kostopoulos','kostas@email.com','user1','test');
-insert into USER(id,name,surname,email,username) values (3,'Nikos','Nikolopoulos','nikos@email.com','user2');
-insert into USER(id,name,surname,email,username) values (4,'Verdi','Verdiponos','verdi@email.com','user3');
+
 
 insert into COURSE(id,name,description,image)
 values (1,
@@ -11,7 +10,7 @@ values (1,
 insert into COURSE(id,name,description,image) values (2,'ALGORITHMS_COURSE','ALGORITHMS COURSE DESCRIPTION','https://blog-c7ff.kxcdn.com/blog/wp-content/uploads/2019/11/Banner-Blog-1A-1.jpg');
 
 insert into USER_COURSE(id,user_id,course_id) values (1,1,1);
-
+insert into USER_COURSE(id,user_id,course_id) values (2,1,1);
 
 DROP TABLE IF EXISTS SECTION;
 CREATE TABLE SECTION(id INT AUTO_INCREMENT PRIMARY KEY ,
