@@ -40,9 +40,18 @@ class App extends Component {
     localStorage.setItem('courseState',0);
     localStorage.setItem('finalModal',false);
 
+    var quizzesInit = {};
     if(JSON.parse(localStorage.getItem('answeredQuizzes')) === null){
-      var quizzesInit = {};
+      
       localStorage.setItem('answeredQuizzes',JSON.stringify(quizzesInit));
+      localStorage.setItem('answeredQuizzesUser',id);
+    }
+    else{
+      //Empty anseweredQuizzes when it's a different user
+      if(localStorage.getItem('answeredQuizzesUser') !== localStorage.getItem('userId')){
+        localStorage.setItem('answeredQuizzes',JSON.stringify(quizzesInit));
+        localStorage.setItem('answeredQuizzesUser',id);
+      }
     }
     
 

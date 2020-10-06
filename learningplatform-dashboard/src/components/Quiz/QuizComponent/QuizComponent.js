@@ -114,15 +114,11 @@ class QuizComponent extends Component {
         
         try{
 
-        
-            
-
-            
             var correctQueryFromAPI = JSON.parse(quiz.details).correctQuery.toUpperCase().trim().replace(/\s/g, "");
             var queryFromUser  = this.state.selectedQuery.toUpperCase().trim().replace(/\s/g, "");
             if(!correctQueryFromAPI.startsWith("CREATE")){
-                var correctQueryFromAPI = JSON.stringify(globalDB.database.exec(JSON.parse(quiz.details).correctQuery))
-                var queryFromUser  = JSON.stringify(globalDB.database.exec(this.state.selectedQuery));
+                correctQueryFromAPI = JSON.stringify(globalDB.database.exec(JSON.parse(quiz.details).correctQuery))
+                queryFromUser  = JSON.stringify(globalDB.database.exec(this.state.selectedQuery));
             }
             
             
@@ -137,7 +133,7 @@ class QuizComponent extends Component {
             }
             else{
                 //Save that quiz has been answered in order to not present it again
-                var tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
+                tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
                 tempMap[quiz.id] = 0;
                 localStorage.setItem('answeredQuizzes', JSON.stringify(tempMap))
             }

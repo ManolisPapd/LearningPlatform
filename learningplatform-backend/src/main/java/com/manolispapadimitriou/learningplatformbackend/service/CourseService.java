@@ -5,9 +5,11 @@ import com.manolispapadimitriou.learningplatformbackend.entity.Course;
 import com.manolispapadimitriou.learningplatformbackend.entity.UserCourse;
 import com.manolispapadimitriou.learningplatformbackend.repository.CourseRepository;
 import com.manolispapadimitriou.learningplatformbackend.repository.UserCoursesRepository;
+import org.checkerframework.checker.nullness.Opt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,7 +27,7 @@ public class CourseService {
         List<UserCourse> userCoursesDAO = userCoursesRepository.findAllByUserId(userId);
 
         List<Course> userCourses = userCoursesDAO.stream()
-                .map(course -> courseRepository.findById(course.getId()))
+                .map(userCourse -> courseRepository.findById(userCourse.getCourseId()))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
