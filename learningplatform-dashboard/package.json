@@ -37,6 +37,7 @@
     "react-tooltip": "^4.2.6",
     "react-user-profile": "^1.0.3",
     "react-youtube": "^7.11.2",
+    "redux": "^4.0.5",
     "serve": "^11.3.2",
     "styled-components": "^5.1.0"
   },
