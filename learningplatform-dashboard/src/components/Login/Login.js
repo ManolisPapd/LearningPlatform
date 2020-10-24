@@ -4,6 +4,7 @@ import '../../context/loader';
 import logo from '../../images/logo.png';
 import './Login.css'
 import axios from '../../_services/axios';
+import {connect} from 'react-redux';
 
 class Login extends Component {
 
@@ -57,10 +58,11 @@ class Login extends Component {
           
           if(res.data.data.login){
             this.setState({credentialsStatus: true});
+            this.props.onTokenFiller(res.data.data.login.token);
             this.context.login(
-              res.data.data.login.token, 
-              res.data.data.login.id, 
-              res.data.data.login.tokenExpiration
+                res.data.data.login.token, 
+                res.data.data.login.id, 
+                res.data.data.login.tokenExpiration
               )
           }
           //User gave bad credentials
@@ -157,4 +159,16 @@ class Login extends Component {
       
   }
 
-export default Login;
+const mapstateToProps = state => {
+  return {
+    token: state.token
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onTokenFiller: (tokenVal) => dispatch({type: 'TOKEN_FILLER', payload: {token: tokenVal}})
+  };
+};
+
+export default connect(mapstateToProps, mapDispatchToProps)(Login);

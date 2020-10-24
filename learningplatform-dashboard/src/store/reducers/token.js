@@ -1,8 +1,7 @@
-import * as actionTypes from './actions';
+import * as actionTypes from '../actions';
 
 const initialState = {
-    token: null,
-    quizModal: false
+    token: null
 }
 
 const reducer = (state = initialState, action) => {
@@ -13,10 +12,6 @@ const reducer = (state = initialState, action) => {
             console.log(action.payload);
             return {
                 token: action.payload.token
-            }
-        case actionTypes.QUIZ_MODAL:
-            return {
-                quizModal: !this.state.quizModal
             }
         default:
             return state;

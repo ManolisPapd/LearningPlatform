@@ -9,7 +9,6 @@ import ChatBot from 'react-simple-chatbot';
 import ScrollUp from '../context/scrollUp';
 import upArrow from '../images/up-arrow.png';
 
-
 import './App.css';
 
 // const Homepage = lazy(() => import('../components/Homepage/Homepage'));
