@@ -17,11 +17,14 @@ import java.util.stream.Collectors;
 @Service
 public class CourseService {
 
-    @Autowired
-    private UserCoursesRepository userCoursesRepository;
+    private final UserCoursesRepository userCoursesRepository;
 
-    @Autowired
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
+
+    public CourseService(UserCoursesRepository userCoursesRepository, CourseRepository courseRepository) {
+        this.userCoursesRepository = userCoursesRepository;
+        this.courseRepository = courseRepository;
+    }
 
     public List<CourseDAO> findAllCoursesByUser(Integer userId){
         List<UserCourse> userCoursesDAO = userCoursesRepository.findAllByUserId(userId);

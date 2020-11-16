@@ -16,11 +16,14 @@ import java.util.stream.Collectors;
 @Service
 public class QuizService {
 
-    @Autowired
-    private QuizRepository quizRepository;
+    private final QuizRepository quizRepository;
 
-    @Autowired
-    private UserQuizRepository userQuizRepository;
+    private final UserQuizRepository userQuizRepository;
+
+    public QuizService(QuizRepository quizRepository, UserQuizRepository userQuizRepository) {
+        this.quizRepository = quizRepository;
+        this.userQuizRepository = userQuizRepository;
+    }
 
 
     public List<Quiz> getSectionQuiz(Integer sectionId){

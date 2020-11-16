@@ -13,11 +13,14 @@ import java.util.stream.Collectors;
 @Service
 public class SectionService {
 
-    @Autowired
-    private SectionRepository sectionRepository;
+    private final SectionRepository sectionRepository;
 
-    @Autowired
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
+
+    public SectionService(SectionRepository sectionRepository, CourseRepository courseRepository) {
+        this.sectionRepository = sectionRepository;
+        this.courseRepository = courseRepository;
+    }
 
 
     public List<SectionDAO> findAllSectionsByCourse(Integer id) {
