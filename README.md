@@ -1,13 +1,6 @@
 # LearningPlatform
 
 
-
-
-
-steilo teleia
--nabalos thn akrh
-
-
 * Διαγνωσης Λαθων
 	* Να διακρινει δυο λαθη
 		* Λογικα, Συντακτικά 
