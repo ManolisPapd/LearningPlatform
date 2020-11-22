@@ -15,7 +15,7 @@ class Quiz extends Component {
     componentDidMount = () => {
         if(this.props.quizType === 'section'){
             //Retrieve quizzes for section
-
+            console.log("MEGAMAN: ",this.props.sectionId);
             let requestBody = {
             
                 query: `
@@ -93,7 +93,6 @@ class Quiz extends Component {
 
     render (){
 
-        let quizPresenter = <div></div>;
         //Present section quiz
         if(this.props.quizType === 'section'){
             return(

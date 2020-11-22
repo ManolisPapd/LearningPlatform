@@ -10,12 +10,13 @@ class FinalQuiz extends Component {
 
     componentDidMount = () =>{
         //Get all final quizes 
+        var herokuSectionId = 21;
         for (var [sectionId, failedFlag] of this.props.sectionStatusMap) {
             let requestBody = {
             
                 query: `
                 query {
-                    allQuiz(sectionId: ${sectionId}, sectionQuiz: false, failed: ${failedFlag}){
+                    allQuiz(sectionId: ${herokuSectionId}, sectionQuiz: false, failed: ${failedFlag}){
                         id
                         type
                         details
@@ -24,6 +25,7 @@ class FinalQuiz extends Component {
                 }
                 `
             };
+            herokuSectionId += 10;
 
             //axios
             axios.post('/graphql',requestBody)

@@ -10,6 +10,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.QUIZ_MODAL:
             console.log("MODAL");
             return {
+                ...state,
                 quizModal: !this.state.quizModal
             }
         default:

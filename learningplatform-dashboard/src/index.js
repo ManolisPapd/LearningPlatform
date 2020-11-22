@@ -7,11 +7,13 @@ import '../node_modules/font-awesome/css/font-awesome.min.css'
 import {createStore, combineReducers} from 'redux';
 import tokenReducer from './store/reducers/token';
 import modalReducer from './store/reducers/modal';
+import helperReducer from './store/reducers/helper';
 import {Provider} from 'react-redux';
 
 const rootReducer = combineReducers({
   token: tokenReducer,
-  modal: modalReducer
+  modal: modalReducer,
+  helper: helperReducer
 });
 const store = createStore(rootReducer);
 

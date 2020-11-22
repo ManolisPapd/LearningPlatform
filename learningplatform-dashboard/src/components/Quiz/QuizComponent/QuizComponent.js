@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import {Form,Button} from 'react-bootstrap';
 import ReactAce from 'react-ace-editor';
-import Spinner from '../../Spinner/Spinner';
 import globalDB from '../../../context/db.js';
 import QuizResults from './QuizResults/QuizResults';
 import './QuizComponent.css';
 import Modal from '../../Modal/Modal';
-import ReactModal from 'react-modal';
 import InnerTheory from './InnerTheory/InnerTheory';
 import axios from '../../../_services/axios';
+import { connect } from 'react-redux';
+import * as actionTypes from '../../../store/actions';
 
 class QuizComponent extends Component {
 
@@ -188,7 +188,7 @@ class QuizComponent extends Component {
             });
 
             //Save that quiz has been answered in order to not present it again
-            var tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
+            tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
             tempMap[quiz.id] = 0;
             localStorage.setItem('answeredQuizzes', JSON.stringify(tempMap))
         } finally{
@@ -382,7 +382,7 @@ class QuizComponent extends Component {
                                                                 <InnerTheory 
                                                                     courseId = {this.props.courseId}
                                                                     sectionId = {quiz.sectionId}
-                                                                />>
+                                                                />
                                                             </Modal>
                                                         
                                                         <br/></React.Fragment>}
@@ -532,4 +532,9 @@ class QuizComponent extends Component {
 
 }
 
-export default QuizComponent;
+const mapDispatchToProps = dispatch => {
+    return {
+        onHelperActivation: () => dispatch({type: actionTypes.HELPER_MODAL})
+    }
+};
+export default connect(null, mapDispatchToProps)(QuizComponent);

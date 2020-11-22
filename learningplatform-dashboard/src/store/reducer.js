@@ -2,7 +2,9 @@ import * as actionTypes from './actions';
 
 const initialState = {
     token: null,
-    quizModal: false
+    quizModal: false,
+    helperModal: null
+
 }
 
 const reducer = (state = initialState, action) => {
@@ -17,6 +19,12 @@ const reducer = (state = initialState, action) => {
         case actionTypes.QUIZ_MODAL:
             return {
                 quizModal: !this.state.quizModal
+            }
+        case actionTypes.HELPER_MODAL:
+            console.log("HELPER MODAL ACTIVATED");
+            console.log(action.payload);
+            return {
+                helperModal: action.payload.helperModal
             }
         default:
             return state;

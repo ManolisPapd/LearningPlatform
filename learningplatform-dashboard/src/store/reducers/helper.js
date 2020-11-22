@@ -1,18 +1,18 @@
 import * as actionTypes from '../actions';
 
 const initialState = {
-    token: null
+    helperModal: null
 }
 
 const reducer = (state = initialState, action) => {
 
     switch (action.type){
-        case actionTypes.TOKEN_FILLER:
-            console.log("#######################");
+        case actionTypes.HELPER_MODAL:
+            console.log("MEGAMAN: HELPER MODAL ACTIVATED");
             console.log(action.payload);
             return {
                 ...state,
-                token: action.payload.token
+                helperModal: action.payload.helperModal
             }
         default:
             return state;
