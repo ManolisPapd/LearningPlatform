@@ -68,6 +68,7 @@ class QuizComponent extends Component {
             status = 1;
         }
 
+
         let requestBody = {
             
             query: `
@@ -131,13 +132,14 @@ class QuizComponent extends Component {
                 tempMap[quiz.id] = 1;
                 localStorage.setItem('answeredQuizzes', JSON.stringify(tempMap))
             }
-            else{
+            else{             
+                //HELPER  
+                this.props.onHelperActivation(666);
                 //Save that quiz has been answered in order to not present it again
                 tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
                 tempMap[quiz.id] = 0;
                 localStorage.setItem('answeredQuizzes', JSON.stringify(tempMap))
             }
-
             let requestBody = {
                 
                 query: `
@@ -146,6 +148,7 @@ class QuizComponent extends Component {
                 }
                 `
             };
+
 
             //axios
             axios.post('/graphql',requestBody)
@@ -172,6 +175,8 @@ class QuizComponent extends Component {
                 }
                 `
             };
+            //HELPER
+            this.props.onHelperActivation(Math.floor(Math.random() * 10));
 
 
             //axios
@@ -506,7 +511,6 @@ class QuizComponent extends Component {
                             </div>
                         ))}
 
-                        
                         <h3 className="questionHeader">Question: {this.state.currentQuiz + 1} / {this.props.quizzes.length}</h3>
 
                         {this.state.currentQuiz > 0 ? ( <Button variant="success" onClick={this.handleQuizNavigationPrevious}> <i className="fa fa-angle-left"></i> previous</Button>)
@@ -534,7 +538,7 @@ class QuizComponent extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onHelperActivation: () => dispatch({type: actionTypes.HELPER_MODAL})
+        onHelperActivation: (result) => dispatch({type: actionTypes.HELPER_MODAL, payload:{number:result}})
     }
 };
 export default connect(null, mapDispatchToProps)(QuizComponent);

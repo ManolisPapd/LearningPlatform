@@ -7,6 +7,7 @@ import Quiz from '../Quiz/Quiz';
 import TheoryComponent from '../TheoryComponent/Theory';
 import Statistics from '../Statistics/Statistics';
 import axios from '../../_services/axios';
+import HelperComponent from '../HelperComponent/HelperComponent';
 
 // const Statistics = import('../Statistics/Statistics')
 
@@ -145,6 +146,7 @@ class CardComponent extends Component {
                                             sectionId = {this.props.section.id} 
                                             quizType = "section"
                                         />
+                                        <HelperComponent/>
                                     </React.Fragment>
                                     </Modal>
                                 </div>
@@ -291,5 +293,6 @@ class CardComponent extends Component {
         }
        
      }
-       
- export default CardComponent;
+
+
+export default CardComponent;

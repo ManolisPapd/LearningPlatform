@@ -4,6 +4,7 @@ import QuizComponent from './QuizComponent/QuizComponent';
 import './Quiz.css';
 import axios from '../../_services/axios';
 
+
 class Quiz extends Component {
 
     state = {
@@ -15,7 +16,6 @@ class Quiz extends Component {
     componentDidMount = () => {
         if(this.props.quizType === 'section'){
             //Retrieve quizzes for section
-            console.log("MEGAMAN: ",this.props.sectionId);
             let requestBody = {
             
                 query: `
