@@ -3,6 +3,7 @@ import './CardComponent.css'
 import {Tab, Nav,Row,Col,Accordion, Card, Button  } from 'react-bootstrap';
 import ReactModal from 'react-modal';
 import Modal from '../Modal/Modal';
+import ModalHelper from '../ModalHelper/ModalHelper';
 import Quiz from '../Quiz/Quiz';
 import TheoryComponent from '../TheoryComponent/Theory';
 import Statistics from '../Statistics/Statistics';
@@ -135,20 +136,33 @@ class CardComponent extends Component {
                                         Begin {this.props.section.name} Quiz!
                                     </button>
                                     
+                                    <ModalHelper
+                                        show={this.state.showModal}
+                                        customClass="custom_modal_class"
+                                    >
+                                        
+                                        <React.Fragment>
+                                            <HelperComponent/>
+                                            
+                                        </React.Fragment>
+                                    </ModalHelper>
                                     
                                     <Modal
                                         show={this.state.showModal}
                                         customClass="custom_modal_class"
                                     >
-                                    <React.Fragment>
-                                        <Quiz
-                                            courseId = {this.props.courseId}
-                                            sectionId = {this.props.section.id} 
-                                            quizType = "section"
-                                        />
-                                        <HelperComponent/>
-                                    </React.Fragment>
+                                        
+                                        <React.Fragment>
+                                            <Quiz
+                                                courseId = {this.props.courseId}
+                                                sectionId = {this.props.section.id} 
+                                                quizType = "section"
+                                            />
+                                            
+                                        </React.Fragment>
                                     </Modal>
+                                    
+                                    
                                 </div>
                             </Tab.Pane>
                             </Tab.Content>
