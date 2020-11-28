@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions';
 
 const initialState = {
-    helperModal: 0
+    helperModal: "This helper will be activated on syntax and logic errors."
 }
 
 const reducer = (state = initialState, action) => {

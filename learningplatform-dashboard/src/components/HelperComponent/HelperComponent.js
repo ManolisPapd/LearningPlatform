@@ -8,7 +8,8 @@ class HelperComponent extends Component {
 
         return(
             <React.Fragment>
-                <h1>HELPER TEST</h1>
+                <h2 id="title">Interactive Helper</h2>
+                <hr></hr>
                 <p>{this.props.helperModal}</p>
             </React.Fragment>
             
