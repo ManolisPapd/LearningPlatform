@@ -112,20 +112,19 @@ class QuizComponent extends Component {
         // console.log(JSON.stringify(globalDB.database.exec("SELECT * FROM person WHERE sex='F' AND income > 60000")));
         console.log("Code Submition")
         this.setState({codeQuizSubmitted: true});
+        var queryFromUser = this.state.selectedQuery;
         
         try{
 
             var correctQueryFromAPI = JSON.parse(quiz.details).correctQuery.toUpperCase().trim().replace(/\s/g, "");
-            var queryFromUser  = this.state.selectedQuery.toUpperCase().trim().replace(/\s/g, "");
+            queryFromUser  = this.state.selectedQuery.toUpperCase().trim().replace(/\s/g, "");
             if(!correctQueryFromAPI.startsWith("CREATE")){
                 correctQueryFromAPI = JSON.stringify(globalDB.database.exec(JSON.parse(quiz.details).correctQuery))
                 queryFromUser  = JSON.stringify(globalDB.database.exec(this.state.selectedQuery));
             }
             
-            
             let status = 0;
             if(queryFromUser === correctQueryFromAPI){
-                console.log(queryFromUser)
                 status = 1;
                 //Save that quiz has been answered in order to not present it again
                 var tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
@@ -134,7 +133,7 @@ class QuizComponent extends Component {
             }
             else{             
                 //HELPER  
-                this.props.onHelperActivation(666);
+                this.props.onHelperActivation("Plain wrong", queryFromUser);
                 //Save that quiz has been answered in order to not present it again
                 tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
                 tempMap[quiz.id] = 0;
@@ -176,7 +175,7 @@ class QuizComponent extends Component {
                 `
             };
             //HELPER
-            this.props.onHelperActivation(Math.floor(Math.random() * 10));
+            this.props.onHelperActivation("Provided query doesn't seem to comply to SQL standards.", queryFromUser);
 
 
             //axios
@@ -538,7 +537,7 @@ class QuizComponent extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onHelperActivation: (result) => dispatch({type: actionTypes.HELPER_MODAL, payload:{number:result}})
+        onHelperActivation: (message, query) => dispatch({type: actionTypes.HELPER_MODAL, payload:{message:message, query:query}})
     }
 };
 export default connect(null, mapDispatchToProps)(QuizComponent);

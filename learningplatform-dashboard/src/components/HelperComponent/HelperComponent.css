@@ -2,3 +2,16 @@
     color: black;
     font-size: 33px;
 }
+
+#queryInput{
+    
+    font-size: 17px;
+    color: rgb(47, 47, 139);
+    font-weight: 500;
+}
+
+
+#helperInput{
+    font-size: 15px;
+}
+
