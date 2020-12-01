@@ -13,9 +13,10 @@ class HelperComponent extends Component {
                 
                 <h2 id="title"><Photo src={helperLogo} alt={"Helper"} size="small" />   Interactive Helper</h2>
                 <hr></hr>
-                {this.props.query !== "" && 
+                {(this.props.query !== "" && this.props.query !== null) &&
                     <p>Your answer:<p id = "queryInput">{this.props.query}</p></p> 
                 }
+                
                 
                 <p id = "helperInput">{this.props.helperModal}</p>
             </React.Fragment>
