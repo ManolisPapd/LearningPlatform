@@ -1,0 +1,80 @@
+type User {
+    id: ID!
+    name: String
+    surname: String
+    email: String
+    password: String
+
+}
+
+type AuthData {
+    id: ID!
+    token: String!
+    tokenExpiration: Int!
+}
+
+type Section {
+    id: ID!
+    name: String
+    courseId: String
+    information: String
+}
+
+type Course {
+    id: ID!
+    name: String
+    image: String
+    description: String
+
+}
+
+type Quiz {
+    id: ID!
+    type: String
+    details: String
+    sectionId: Int
+    forSection: Int
+    whenFailed: Int
+}
+
+type Status{
+    failed: Boolean!
+    completed: Boolean!
+    answers: Int
+
+}
+
+type UserQuiz {
+    id: Int!
+    userId: Int
+    quizId: Int
+    status: Int
+}
+
+type Analyzer {
+    id: String!
+    reason: String!
+}
+
+type Query {
+    allUsers: [User]
+    login(email: String!, password: String!): AuthData
+    userCourses(userId: Int!) : [Course]
+    courseSections(courseId: Int!) : [Section]
+    allQuiz(sectionId: Int!, sectionQuiz:Boolean!, failed:Boolean!) : [Quiz]
+    checkUserSectionStatus(userId: Int!, sectionId: Int!,sectionQuiz:Boolean!) : Status
+    getQuizzesStatus(userId: Int!, sectionId: Int!, sectionQuiz:Boolean!):[UserQuiz]
+    getSection(courseId: Int!,sectionId: Int!):Section
+    errorAnalyzer(language: String!, wrongAnswer: String!, correctAnswer: String!):[Analyzer]
+
+}
+
+type Mutation {
+    saveMultipleChoiceQuiz(userId: Int!, quizId: Int!, status: Int!) : Boolean
+    resetData(userId:Int!):Boolean
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}

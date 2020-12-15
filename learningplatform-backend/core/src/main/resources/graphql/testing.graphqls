@@ -1,0 +1,12 @@
+query($email: String!, $password: String!, $language: String!, $wrongAnswer: String!, $correctAnswer: String!) {
+    errorAnalyzer(language : $language, wrongAnswer : $wrongAnswer, correctAnswer: $correctAnswer){
+        id
+        reason
+    }
+    login(email : $email, password : $password){
+        id
+        token
+        tokenExpiration
+    }
+}
+
