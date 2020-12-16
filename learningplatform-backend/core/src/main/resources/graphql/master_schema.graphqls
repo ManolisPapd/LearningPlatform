@@ -53,6 +53,7 @@ type UserQuiz {
 
 type Analyzer {
     id: String!
+    type: String!
     reason: String!
 }
 

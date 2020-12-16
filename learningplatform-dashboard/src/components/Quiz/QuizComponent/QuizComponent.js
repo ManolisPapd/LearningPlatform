@@ -120,11 +120,18 @@ class QuizComponent extends Component {
             queryFromUser  = this.state.selectedQuery.toUpperCase().trim().replace(/\s/g, "");
             if(!correctQueryFromAPI.startsWith("CREATE")){
                 correctQueryFromAPI = JSON.stringify(globalDB.database.exec(JSON.parse(quiz.details).correctQuery))
-                queryFromUser  = JSON.stringify(globalDB.database.exec(this.state.selectedQuery));
+                try{
+                    queryFromUser  = JSON.stringify(globalDB.database.exec(this.state.selectedQuery));
+                }catch (e) { //User entered query not related to db.js or gibberish, it will be tested on 
+                    
+                }
+                
+
             }
             
             let status = 0;
             if(queryFromUser === correctQueryFromAPI){
+
                 status = 1;
                 //Save that quiz has been answered in order to not present it again
                 var tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
@@ -133,7 +140,9 @@ class QuizComponent extends Component {
             }
             else{             
                 //HELPER  
+                //TODO call api to determine if syntax or logic error
                 this.props.onHelperActivation("Plain wrong", queryFromUser);
+                
                 //Save that quiz has been answered in order to not present it again
                 tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
                 tempMap[quiz.id] = 0;
@@ -176,6 +185,7 @@ class QuizComponent extends Component {
             };
             //HELPER
             this.props.onHelperActivation("Provided query doesn't seem to comply to SQL standards.", queryFromUser);
+            //TODO call api syntax error
 
 
             //axios

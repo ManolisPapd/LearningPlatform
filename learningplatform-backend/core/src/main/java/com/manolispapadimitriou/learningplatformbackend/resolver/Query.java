@@ -95,7 +95,7 @@ public class Query implements GraphQLQueryResolver {
     }
 
     public List<Analyzer> errorAnalyzer(String language, String wrongAnswer, String correctAnswer){
-        List<Analyzer> analyzers = Arrays.asList(new Analyzer("SELECT", "Correct format of Select is : \"Select FROM [..]"));
+        List<Analyzer> analyzers = Arrays.asList(new Analyzer("SELECT", "syntax", "Correct format of Select is : \"Select FROM [..]"));
         return analyzers;
     }
 

@@ -1,6 +1,7 @@
 query($email: String!, $password: String!, $language: String!, $wrongAnswer: String!, $correctAnswer: String!) {
     errorAnalyzer(language : $language, wrongAnswer : $wrongAnswer, correctAnswer: $correctAnswer){
         id
+        type
         reason
     }
     login(email : $email, password : $password){
