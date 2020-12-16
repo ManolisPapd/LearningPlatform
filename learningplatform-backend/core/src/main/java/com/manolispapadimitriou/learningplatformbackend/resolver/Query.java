@@ -9,13 +9,12 @@ import com.manolispapadimitriou.learningplatformbackend.entity.User;
 import com.manolispapadimitriou.learningplatformbackend.entity.UserQuiz;
 import com.manolispapadimitriou.learningplatformbackend.model.Analyzer;
 import com.manolispapadimitriou.learningplatformbackend.model.Status;
-import com.manolispapadimitriou.learningplatformbackend.service.CourseService;
-import com.manolispapadimitriou.learningplatformbackend.service.QuizService;
-import com.manolispapadimitriou.learningplatformbackend.service.SectionService;
-import com.manolispapadimitriou.learningplatformbackend.service.UserService;
+import com.manolispapadimitriou.learningplatformbackend.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +33,9 @@ public class Query implements GraphQLQueryResolver {
 
     @Resource
     private QuizService quizService;
+
+    @Autowired
+    private ErrorHandler errorHandler;
 
     public List<User> allUsers() {
         return userService.findAll();
@@ -90,13 +92,11 @@ public class Query implements GraphQLQueryResolver {
     }
 
     public SectionDAO getSection(Integer courseId,Integer sectionId){
-
         return sectionService.getSectionByCourseId(courseId, sectionId);
     }
 
-    public List<Analyzer> errorAnalyzer(String language, String wrongAnswer, String correctAnswer){
-        List<Analyzer> analyzers = Arrays.asList(new Analyzer("SELECT", "syntax", "Correct format of Select is : \"Select FROM [..]"));
-        return analyzers;
+    public List<Analyzer> errorAnalyzer(String language, String wrongAnswer, String correctAnswer) throws SQLException, ClassNotFoundException {
+        return errorHandler.getErrors(language, wrongAnswer, correctAnswer);
     }
 
 }
