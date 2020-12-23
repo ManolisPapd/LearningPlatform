@@ -7,6 +7,9 @@ public class Data {
     public static final String PASSWORD = "password";
     public static final String SQL = "SQL";
     public static final String SYNTAX_CHECKER = "Syntax error";
+    public static final String TABLE_CHECKER = "Table ";
     public static final String SYNTAX = "syntax";
     public static final String LOGIC = "logic";
+    public static final String TEST_TABLE = "TEST_TABLE";
+    public static final String FROM = "from";
 }
