@@ -17,6 +17,8 @@ public class ErrorHandlerImpl implements ErrorHandler {
         String errorType = determineErrorType(language,wrongAnswer);
         if(errorType.equals(Data.SYNTAX)){
 
+        }else{
+
         }
         List<Analyzer> analyzers = Arrays.asList(new Analyzer("SELECT", errorType, "Correct format of SELECT IS"));
         return analyzers;
@@ -69,7 +71,4 @@ public class ErrorHandlerImpl implements ErrorHandler {
         return Data.LOGIC;
     }
 
-    private String queryBreakDown(String query){
-        return null;
-    }
 }
