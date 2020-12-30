@@ -11,5 +11,8 @@ public class Data {
     public static final String SYNTAX = "syntax";
     public static final String LOGIC = "logic";
     public static final String TEST_TABLE = "TEST_TABLE";
+    public static final String WRONG_FORMAT = "WRONG_FORMAT";
     public static final String FROM = "from";
+    public static final String SELECT = "SELECT";
+
 }

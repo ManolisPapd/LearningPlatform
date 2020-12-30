@@ -6,21 +6,23 @@ import com.manolispapadimitriou.learningplatformbackend.util.Data;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Component
 public class ErrorHandlerImpl implements ErrorHandler {
+    private String errorType;
 
     @Override
     public List<Analyzer> getErrors(String language, String wrongAnswer, String correctAnswer) throws SQLException, ClassNotFoundException {
-        String errorType = determineErrorType(language,wrongAnswer);
+        errorType = determineErrorType(language,wrongAnswer);
+        List<Analyzer> analyzers = new ArrayList<>();
         if(errorType.equals(Data.SYNTAX)){
-
+            analyzers = getErrors(language, wrongAnswer);
         }else{
 
         }
-        List<Analyzer> analyzers = Arrays.asList(new Analyzer("SELECT", errorType, "Correct format of SELECT IS"));
         return analyzers;
     }
 
@@ -70,5 +72,27 @@ public class ErrorHandlerImpl implements ErrorHandler {
         }
         return Data.LOGIC;
     }
+
+    /**
+     *
+     * @param wrongAnswer
+     * @return
+     */
+    private List<Analyzer> getErrors(String language, String wrongAnswer){
+        List<Analyzer> analyzers = new ArrayList<>();
+        if(language.equalsIgnoreCase(Data.SQL)){
+            Analyzer analyzer;
+            if(wrongAnswer.toUpperCase().startsWith(Data.SELECT)){
+                //TODO breakdown answer with regex
+                analyzer = new Analyzer(Data.SELECT, errorType, "TEST");
+            }else{
+                analyzer = new Analyzer(Data.WRONG_FORMAT, errorType, "Wrong Format, answer could not be analyzed.");
+            }
+            analyzers.add(analyzer);
+        }
+        return analyzers;
+
+    }
+
 
 }
