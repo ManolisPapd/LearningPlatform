@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 @Component
 public class ErrorHandlerImpl implements ErrorHandler {
@@ -21,6 +22,7 @@ public class ErrorHandlerImpl implements ErrorHandler {
         if(errorType.equals(Data.SYNTAX)){
             analyzers = getErrors(language, wrongAnswer);
         }else{
+            analyzers = getLogixErrors(language, wrongAnswer);
 
         }
         return analyzers;
@@ -82,8 +84,55 @@ public class ErrorHandlerImpl implements ErrorHandler {
         List<Analyzer> analyzers = new ArrayList<>();
         if(language.equalsIgnoreCase(Data.SQL)){
             Analyzer analyzer;
+            //TODO Need to check the order also
             if(wrongAnswer.toUpperCase().startsWith(Data.SELECT)){
-                //TODO breakdown answer with regex
+                /**
+                 * If split has 2 check the second until keyword
+                 * If split has 1 it means that it wasn't entered
+                 */
+                List<String> keywords = Arrays.asList(Data.SELECT, Data.FROM, Data.WHERE, Data.HAVING, Data.ORDER_BY, Data.GROUP_BY, Data.LIMIT);
+                for(String keyword : keywords){
+                    String[] tokens = wrongAnswer.split("(?i)"+keyword);
+                    if(tokens.length == 2){
+
+//                        System.out.println(keyword+": " + tokens[1]);
+                        /**
+                         * Finding where is the closer keyword and will split.
+                         */
+                        int min = 999999;
+                        String min_keyword = "";
+                        for (String keyword_check : keywords) {
+                            Integer index = tokens[1].toLowerCase(Locale.ROOT).indexOf(keyword_check.toLowerCase(Locale.ROOT));
+                            if(index != - 1 && min > index){
+                                min = index;
+                                min_keyword = keyword_check;
+//                                System.out.println("\t\tKeyword: " + keyword_check +" is at " +index);
+                            }
+                        }
+                        String finalText = "";
+                        if(!min_keyword.isEmpty()){
+//                            System.out.println("\t Closer keyword is " + min_keyword + " at position " + min);
+                            /**
+                             * Will split based on this keyword
+                             * But when it's the last one, it doesn't have a keyword
+                             */
+                            String[] finalTokens = tokens[1].toLowerCase(Locale.ROOT).split(min_keyword.toLowerCase(Locale.ROOT));
+                            finalText = finalTokens[0];
+                        } else{
+                            finalText = tokens[1];
+                        }
+
+                        /**
+                         * Checking format of the keyword
+                         */
+                        System.out.println(keyword + " " + finalText);
+                        ;
+                        System.out.println("\t format is " + KeywordEnum.getByValue(keyword).checkFormat());
+
+                    }
+
+                }
+
                 analyzer = new Analyzer(Data.SELECT, errorType, "TEST");
             }else{
                 analyzer = new Analyzer(Data.WRONG_FORMAT, errorType, "Wrong Format, answer could not be analyzed.");
@@ -93,6 +142,17 @@ public class ErrorHandlerImpl implements ErrorHandler {
         return analyzers;
 
     }
+
+
+    private List<Analyzer> getLogixErrors(String language, String wrongAnswer){
+        List<Analyzer> analyzers = new ArrayList<>();
+        Analyzer analyzer = new Analyzer("TMP", errorType, "TMP");
+        analyzers.add(analyzer);
+        return analyzers;
+
+    }
+
+
 
 
 }

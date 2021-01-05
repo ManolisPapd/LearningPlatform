@@ -12,7 +12,12 @@ public class Data {
     public static final String LOGIC = "logic";
     public static final String TEST_TABLE = "TEST_TABLE";
     public static final String WRONG_FORMAT = "WRONG_FORMAT";
-    public static final String FROM = "from";
+    public static final String FROM = "FROM";
     public static final String SELECT = "SELECT";
+    public static final String WHERE = "WHERE";
+    public static final String GROUP_BY = "GROUP BY";
+    public static final String HAVING = "HAVING";
+    public static final String ORDER_BY = "ORDER BY";
+    public static final String LIMIT = "LIMIT";
 
 }
