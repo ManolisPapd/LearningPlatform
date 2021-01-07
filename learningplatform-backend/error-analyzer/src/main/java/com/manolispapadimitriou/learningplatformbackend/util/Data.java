@@ -19,5 +19,6 @@ public class Data {
     public static final String HAVING = "HAVING";
     public static final String ORDER_BY = "ORDER BY";
     public static final String LIMIT = "LIMIT";
+    public static final String ON = "ON";
 
 }

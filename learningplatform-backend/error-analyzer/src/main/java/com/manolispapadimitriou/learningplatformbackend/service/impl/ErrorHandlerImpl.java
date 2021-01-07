@@ -6,10 +6,7 @@ import com.manolispapadimitriou.learningplatformbackend.util.Data;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Component
 public class ErrorHandlerImpl implements ErrorHandler {
@@ -18,11 +15,15 @@ public class ErrorHandlerImpl implements ErrorHandler {
     @Override
     public List<Analyzer> getErrors(String language, String wrongAnswer, String correctAnswer) throws SQLException, ClassNotFoundException {
         errorType = determineErrorType(language,wrongAnswer);
-        List<Analyzer> analyzers = new ArrayList<>();
+        List<Analyzer> analyzers;
         if(errorType.equals(Data.SYNTAX)){
-            analyzers = getErrors(language, wrongAnswer);
+            analyzers = getSyntaxErrors(language, wrongAnswer);
+            //If analyzers is empty, it means that no syntax errors were found and it will be checked for syntax
+            if(analyzers.isEmpty()){
+                analyzers = getLogicErrors(language, wrongAnswer);
+            }
         }else{
-            analyzers = getLogixErrors(language, wrongAnswer);
+            analyzers = getLogicErrors(language, wrongAnswer);
 
         }
         return analyzers;
@@ -55,6 +56,7 @@ public class ErrorHandlerImpl implements ErrorHandler {
                     try{
                         String[] test1 = wrongAnswer.split(" ");
                         //find table after select
+                        //TODO find also columns
                         String tableFromWrongAnswer = "";
                         for (int i=0; i<test1.length; i++) {
                             if(test1[i].equalsIgnoreCase(Data.FROM)){
@@ -64,6 +66,7 @@ public class ErrorHandlerImpl implements ErrorHandler {
                         con.prepareStatement("drop table if exists " + Data.TEST_TABLE).executeUpdate();
                         con.prepareStatement("create table " + Data.TEST_TABLE +"(id int auto_increment, primary key(id))").executeUpdate();
                         String wrongAnswer1 = wrongAnswer.replace(tableFromWrongAnswer, Data.TEST_TABLE);
+                        //TODO when query is select and then nothing, it doesn't count as wrong so we need to handle it
                         con.prepareStatement(wrongAnswer1).getMetaData();
                     }catch (Exception e1){
                         return Data.SYNTAX;
@@ -80,7 +83,7 @@ public class ErrorHandlerImpl implements ErrorHandler {
      * @param wrongAnswer
      * @return
      */
-    private List<Analyzer> getErrors(String language, String wrongAnswer){
+    private List<Analyzer> getSyntaxErrors(String language, String wrongAnswer){
         List<Analyzer> analyzers = new ArrayList<>();
         if(language.equalsIgnoreCase(Data.SQL)){
             Analyzer analyzer;
@@ -93,9 +96,10 @@ public class ErrorHandlerImpl implements ErrorHandler {
                 List<String> keywords = Arrays.asList(Data.SELECT, Data.FROM, Data.WHERE, Data.HAVING, Data.ORDER_BY, Data.GROUP_BY, Data.LIMIT);
                 for(String keyword : keywords){
                     String[] tokens = wrongAnswer.split("(?i)"+keyword);
-                    if(tokens.length == 2){
 
-//                        System.out.println(keyword+": " + tokens[1]);
+
+
+                    if(tokens.length == 2){
                         /**
                          * Finding where is the closer keyword and will split.
                          */
@@ -106,12 +110,10 @@ public class ErrorHandlerImpl implements ErrorHandler {
                             if(index != - 1 && min > index){
                                 min = index;
                                 min_keyword = keyword_check;
-//                                System.out.println("\t\tKeyword: " + keyword_check +" is at " +index);
                             }
                         }
                         String finalText = "";
                         if(!min_keyword.isEmpty()){
-//                            System.out.println("\t Closer keyword is " + min_keyword + " at position " + min);
                             /**
                              * Will split based on this keyword
                              * But when it's the last one, it doesn't have a keyword
@@ -126,27 +128,36 @@ public class ErrorHandlerImpl implements ErrorHandler {
                          * Checking format of the keyword
                          */
                         System.out.println(keyword + " " + finalText);
-                        ;
-                        System.out.println("\t format is " + KeywordEnum.getByValue(keyword).checkFormat());
 
+                        Boolean keywordStatus = KeywordEnum.getByValue(keyword).checkFormat(finalText);
+                        System.out.println("\t format is " + keywordStatus);
+
+                        if(!keywordStatus){ //adding the error that is the problematic
+                            analyzers.add(new Analyzer(keyword, errorType, KeywordReasonEnum.getByValue(keyword).getReason()));
+                        }
+
+                    }
+                    //When the keyword is the last on answer, which means that it's wrong because no present expression is there
+                    // , the array length stays 1 even though it is a success
+                    else if(tokens.length == 1 && wrongAnswer.toLowerCase(Locale.ROOT).contains(keyword.toLowerCase(Locale.ROOT))){
+                        analyzers.add(new Analyzer(keyword, errorType, KeywordReasonEnum.getByValue(keyword).getReason()));
                     }
 
                 }
 
-                analyzer = new Analyzer(Data.SELECT, errorType, "TEST");
             }else{
-                analyzer = new Analyzer(Data.WRONG_FORMAT, errorType, "Wrong Format, answer could not be analyzed.");
+                analyzers.add(new Analyzer(Data.WRONG_FORMAT, errorType, "Wrong Format, answer could not be analyzed."));
             }
-            analyzers.add(analyzer);
         }
         return analyzers;
 
     }
 
 
-    private List<Analyzer> getLogixErrors(String language, String wrongAnswer){
+    private List<Analyzer> getLogicErrors(String language, String wrongAnswer){
         List<Analyzer> analyzers = new ArrayList<>();
-        Analyzer analyzer = new Analyzer("TMP", errorType, "TMP");
+
+        Analyzer analyzer = new Analyzer("TMP", Data.LOGIC, "TMP");
         analyzers.add(analyzer);
         return analyzers;
 
