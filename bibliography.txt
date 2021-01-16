@@ -1,0 +1,4 @@
+Object Behavior on C# - https://arxiv.org/ftp/arxiv/papers/1712/1712.04189.pdf
+Logical Errors in SQL Queries - https://www.researchgate.net/publication/221397890_Detecting_Logical_Errors_in_SQL_Queries
+SQL Logic Error Detection using Start End Mid Algorithm - https://www.researchgate.net/publication/322161296_SQL_Logic_Error_Detection_by_Using_Start_End_Mid_Algorithm
+Semantic errors in SQL queries: A quite complete list - https://www.researchgate.net/publication/4105066_Semantic_errors_in_SQL_queries_A_quite_complete_list/link/02e7e52e174f849a78000000/download

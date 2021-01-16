@@ -20,10 +20,10 @@ public class ErrorHandlerImpl implements ErrorHandler {
             analyzers = getSyntaxErrors(language, wrongAnswer);
             //If analyzers is empty, it means that no syntax errors were found and it will be checked for syntax
             if(analyzers.isEmpty()){
-                analyzers = getLogicErrors(language, wrongAnswer);
+                analyzers = getLogicErrors(language, wrongAnswer, correctAnswer);
             }
         }else{
-            analyzers = getLogicErrors(language, wrongAnswer);
+            analyzers = getLogicErrors(language, wrongAnswer, correctAnswer);
 
         }
         return analyzers;
@@ -80,6 +80,7 @@ public class ErrorHandlerImpl implements ErrorHandler {
 
     /**
      *
+     * @param language
      * @param wrongAnswer
      * @return
      */
@@ -154,16 +155,30 @@ public class ErrorHandlerImpl implements ErrorHandler {
     }
 
 
-    private List<Analyzer> getLogicErrors(String language, String wrongAnswer){
+    /**
+     *
+     * @param language
+     * @param wrongAnswer
+     * @param correctAnswer
+     * @return
+     */
+    private List<Analyzer> getLogicErrors(String language, String wrongAnswer, String correctAnswer){
         List<Analyzer> analyzers = new ArrayList<>();
+        if(language.equals(Data.SQL)){
+            /**
+             * TODO List:
+             * 1 - From correctAnswer find the tables to create and columns if possible
+             * 2 - From wrongAnswer find the tables and columns and compare them with the ones from (1).
+             *  2.1 - If they are not the same return
+             */
+        }
+
 
         Analyzer analyzer = new Analyzer("TMP", Data.LOGIC, "TMP");
         analyzers.add(analyzer);
         return analyzers;
 
     }
-
-
 
 
 }
