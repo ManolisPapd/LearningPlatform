@@ -89,6 +89,7 @@ public class ErrorHandlerImpl implements ErrorHandler {
         if(language.equalsIgnoreCase(Data.SQL)){
             Analyzer analyzer;
             //TODO Need to check the order also
+            //Checking select
             if(wrongAnswer.toUpperCase().startsWith(Data.SELECT)){
                 /**
                  * If split has 2 check the second until keyword
@@ -97,8 +98,6 @@ public class ErrorHandlerImpl implements ErrorHandler {
                 List<String> keywords = Arrays.asList(Data.SELECT, Data.FROM, Data.WHERE, Data.HAVING, Data.ORDER_BY, Data.GROUP_BY, Data.LIMIT);
                 for(String keyword : keywords){
                     String[] tokens = wrongAnswer.split("(?i)"+keyword);
-
-
 
                     if(tokens.length == 2){
                         /**
@@ -167,9 +166,13 @@ public class ErrorHandlerImpl implements ErrorHandler {
         if(language.equals(Data.SQL)){
             /**
              * TODO List:
-             * 1 - From correctAnswer find the tables to create and columns if possible
-             * 2 - From wrongAnswer find the tables and columns and compare them with the ones from (1).
-             *  2.1 - If they are not the same return
+             * 1 - Create all tables for test purposes
+             *  1.1 - Handle create database differently
+             *  1.2 - If answer has CREATE TABLE, execute the creation delete if exists
+             *  1.3 - See how to get results from INSERT
+             * 2 - Execute them and compare the results
+             * 3 - Breakdown correctAnswer and wrongAnswer and find the differences
+             * 4 - Return the list of differences
              */
         }
 
