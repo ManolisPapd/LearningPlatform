@@ -96,7 +96,8 @@ public class Query implements GraphQLQueryResolver {
     }
 
     public List<Analyzer> errorAnalyzer(String language, String wrongAnswer, String correctAnswer) throws SQLException, ClassNotFoundException {
-        return errorHandler.getErrors(language, wrongAnswer, correctAnswer);
+        //Replacing ; because of errors
+        return errorHandler.getErrors(language, wrongAnswer.replaceAll(";",""), correctAnswer.replaceAll(";",""));
     }
 
 }

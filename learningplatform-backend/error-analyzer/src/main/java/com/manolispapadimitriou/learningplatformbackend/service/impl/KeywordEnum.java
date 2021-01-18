@@ -97,6 +97,12 @@ public enum KeywordEnum {
         public Boolean checkFormat(String answerPart) {
             return true;
         }
+    },
+    CREATE(Data.CREATE){
+        @Override
+        public Boolean checkFormat(String answerPart) {
+            return true;
+        }
     };
 
     private String value;

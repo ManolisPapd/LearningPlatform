@@ -20,5 +20,6 @@ public class Data {
     public static final String ORDER_BY = "ORDER BY";
     public static final String LIMIT = "LIMIT";
     public static final String ON = "ON";
+    public static final String CREATE = "CREATE";
 
 }

@@ -163,7 +163,7 @@ public class ErrorHandlerImpl implements ErrorHandler {
      */
     private List<Analyzer> getLogicErrors(String language, String wrongAnswer, String correctAnswer){
         List<Analyzer> analyzers = new ArrayList<>();
-        if(language.equals(Data.SQL)){
+        if(language.toUpperCase(Locale.ROOT).equals(Data.SQL)){
             /**
              * TODO List:
              * 1 - Create all tables for test purposes
@@ -174,14 +174,72 @@ public class ErrorHandlerImpl implements ErrorHandler {
              * 3 - Breakdown correctAnswer and wrongAnswer and find the differences
              * 4 - Return the list of differences
              */
+
+            //TODO format string and spaces
+            //Splitting based on spaces and comparing the words
+            String[] correctSplit = correctAnswer.toUpperCase(Locale.ROOT).split(" ");
+            String[] wrongSplit = wrongAnswer.toUpperCase(Locale.ROOT).split(" ");
+            analyzers.addAll(compareStrings(correctSplit, wrongSplit));
+
+            //CREATE statement handling
+            if(correctAnswer.toUpperCase(Locale.ROOT).startsWith(Data.CREATE)){
+                //Splitting based on spaces and comparing the words
+            }
+            else{
+                //Execute correct and wrong answers and compare them
+
+
+                //Tables are standard, if there is a
+
+            }
+
         }
 
-
-        Analyzer analyzer = new Analyzer("TMP", Data.LOGIC, "TMP");
-        analyzers.add(analyzer);
         return analyzers;
 
     }
 
+    /**
+     * Compares two string and returns the differences
+     * @param correct
+     * @param wrong
+     * @return
+     */
+    private List<Analyzer> compareStrings(String[] correct, String[] wrong){
+        List<Analyzer> analyzers = new ArrayList<>();
+        List<String> wrongWords = new ArrayList<>();
+        List<String> correctWords = new ArrayList<>();
+
+        //Setting size to not be out of bounds
+        int size = correct.length;
+        if(correct.length > wrong.length){
+            size = wrong.length;
+        }
+
+        //comparing each word
+        for(int i=0; i<size; i++){
+            if(!correct[i].equals(wrong[i])){
+                correctWords.add(correct[i]);
+                wrongWords.add(wrong[i]);
+
+                String correctReason = correct[i];
+                String wrongReason = wrong[i];
+
+                //Changing case when it's not a keyword
+                if(KeywordEnum.getByValue(wrongReason) == null){
+                    wrongReason = wrongReason.toLowerCase(Locale.ROOT);
+                }
+                if(KeywordEnum.getByValue(correctReason) == null){
+                    correctReason = correctReason.toLowerCase(Locale.ROOT);
+                }
+
+                Analyzer analyzer = new Analyzer(Data.LOGIC, Data.LOGIC, "Given input : \"" +wrongReason + "\". Correct input: \"" +correctReason + "\"" );
+                analyzers.add(analyzer);
+            }
+        }
+
+        return analyzers;
+
+    }
 
 }
