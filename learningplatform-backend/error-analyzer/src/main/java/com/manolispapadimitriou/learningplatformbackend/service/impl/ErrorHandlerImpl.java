@@ -161,7 +161,7 @@ public class ErrorHandlerImpl implements ErrorHandler {
      * @param correctAnswer
      * @return
      */
-    private List<Analyzer> getLogicErrors(String language, String wrongAnswer, String correctAnswer){
+    private List<Analyzer> getLogicErrors(String language, String wrongAnswer, String correctAnswer) throws SQLException {
         List<Analyzer> analyzers = new ArrayList<>();
         if(language.toUpperCase(Locale.ROOT).equals(Data.SQL)){
             /**
@@ -186,10 +186,22 @@ public class ErrorHandlerImpl implements ErrorHandler {
                 //Splitting based on spaces and comparing the words
             }
             else{
-                //Execute correct and wrong answers and compare them
+                /**
+                 * Execute correct and wrong answers and compare them
+                 */
 
-
-                //Tables are standard, if there is a
+                //Step 1. Execute wrong query and if it has syntax errors it means table or/and columns are wrong and exit
+                try{
+                    Connection con = DriverManager.getConnection(Data.DB_URL, Data.USER, Data.PASSWORD);
+                    con.prepareStatement(wrongAnswer).getMetaData();
+                    //----- Exception Free -----
+                    //Step 2. Executing both syntax free queries
+                    //Step 2.1. Wrong query is correct, execute correct query also and save the results for both of them
+                    //Step 2.2. Compare the results and if there are differences return, if not empty the analyzers table.
+                }catch (Exception e){
+                    //Because of Step 1, analyzers will be kept.
+                    System.out.println("RCS: " + e.getMessage());
+                }
 
             }
 
