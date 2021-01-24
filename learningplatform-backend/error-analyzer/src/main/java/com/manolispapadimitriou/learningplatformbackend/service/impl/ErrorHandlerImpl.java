@@ -198,7 +198,7 @@ public class ErrorHandlerImpl implements ErrorHandler {
                     //Step 2. Executing both syntax free queries
                     //Step 2.1. Wrong query is correct, execute correct query also and save the results for both of them
                     //Step 2.2. Compare the results and if there are differences return, if not empty the analyzers table.
-                    
+
                 }catch (Exception e){
                     //Because of Step 1, analyzers will be kept.
                     System.out.println("RCS: " + e.getMessage());
