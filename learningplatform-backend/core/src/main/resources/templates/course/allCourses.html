@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Learning Platform</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+
+<div class="container">
+	<h3>All Courses</h3>
+	<hr>
+
+	<!-- Add a button -->
+	<a th:href="@{/showFormForAddCourse}"
+	   class="btn btn-primary btn-sm mb-3">
+		Create Course
+	</a>
+
+	<table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Teacher</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr th:each="course : ${allCourses}">
+				<td th:text="${course.getName()}" />
+				<td th:text="${course.getDescription()}" />
+				<td th:text="${course.getTeacher().getName() + ' ' + course.getTeacher().getSurname()}" />
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+</body>
+</html>

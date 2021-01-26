@@ -4,6 +4,7 @@ type User {
     surname: String
     email: String
     password: String
+    role: Int
 
 }
 
@@ -25,6 +26,7 @@ type Course {
     name: String
     image: String
     description: String
+    teacher: Int
 
 }
 

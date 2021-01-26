@@ -33,6 +33,9 @@ public class SectionService {
 
     public SectionDAO getSectionByCourseId(Integer courseId, Integer sectionId){
         return sectionRepository.findByIdAndCourseId(sectionId,courseId)._toConvertSectionDAO();
+    }
 
+    public SectionDAO getSectionById(Integer sectionId){
+        return sectionRepository.findById(sectionId).get()._toConvertSectionDAO();
     }
 }

@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.manolispapadimitriou.learningplatformbackend.dao.CourseDAO;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -20,6 +17,9 @@ public class Course {
     private String image;
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "teacher")
+    private User teacher;
 
     public CourseDAO _toConvertCourseDAO(){
         CourseDAO courseDAO = new CourseDAO();
@@ -27,6 +27,7 @@ public class Course {
         courseDAO.setName(this.name);
         courseDAO.setImage(this.image);
         courseDAO.setDescription(this.description);
+        courseDAO.setTeacher(this.teacher);
 
         return courseDAO;
     }

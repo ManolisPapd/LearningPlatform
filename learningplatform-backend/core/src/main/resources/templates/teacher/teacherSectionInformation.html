@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Learning Platform</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+
+
+<body>
+
+
+<div class="container">
+    <h3 th:text="${sectionsInformation.getSectionName()}"/>
+    <hr>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Title</th>
+            <th>Paragraph</th>
+            <th>Image</th>
+            <th>Video</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="section : ${sectionsInformation.getSectionInformationList()}">
+            <td th:text="${section.getTitle()}" />
+            <td th:text="${section.getParagraph()}" />
+            <td th:text="${section.getImage()}" />
+            <td th:text="${section.getVideo()}" />
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>

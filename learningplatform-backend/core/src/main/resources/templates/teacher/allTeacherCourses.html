@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Learning Platform</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+
+<div class="container">
+    <h3>My courses</h3>
+    <hr>
+
+    <!-- Add a button -->
+    <a th:href="@{/showFormForAddCourse}"
+       class="btn btn-primary btn-sm mb-3">
+        Create Course
+    </a>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="course : ${allCourses}">
+            <td th:text="${course.getName()}" style="cursor: pointer" th:onclick="'javascript:rowClicked(\'' + ${course.getId()} + '\');'"/>
+            <td th:text="${course.getDescription()}" />
+            <td>
+                <a th:href="@{/showFormForCourseUpdate(courseId=${course.getId()})}"
+                   class="btn btn-info btn-sm">
+                    Update
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    function rowClicked(value) {
+        location.href = "/courseDetails?courseId=" + value;
+    }
+</script>
+</body>
+</html>

@@ -32,10 +32,21 @@ public class CourseService {
                 .map(Optional::get)
                 .collect(Collectors.toList());
 
-
-
         return userCourses.stream()
-                .map(course -> course._toConvertCourseDAO())
+                .map(Course::_toConvertCourseDAO)
                 .collect(Collectors.toList());
     }
+
+    public Course findCourseById(Integer courseId){
+        return courseRepository.findById(courseId).get();
+    }
+
+    public List<CourseDAO> getAllCourses(){
+        return courseRepository.findAll().stream().map(Course::_toConvertCourseDAO).collect(Collectors.toList());
+    }
+
+    public void saveCourse(Course course){
+        courseRepository.save(course);
+    }
+
 }
