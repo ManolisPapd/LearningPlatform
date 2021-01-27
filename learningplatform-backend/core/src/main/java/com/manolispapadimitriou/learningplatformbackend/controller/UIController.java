@@ -137,8 +137,10 @@ public class UIController {
         List<SectionDAO> allSectionsByCourse = sectionService.findAllSectionsByCourse(courseId);
         //remove statistics
         allSectionsByCourse.remove(1);
+
         model.addAttribute("course", courseService.findCourseById(courseId));
         model.addAttribute("sections",allSectionsByCourse.subList(0, allSectionsByCourse.size() - 2));
+        model.addAttribute("students", userService.findUserByCourse(courseId));
 
         return "teacher/teacherCourseDetails";
     }

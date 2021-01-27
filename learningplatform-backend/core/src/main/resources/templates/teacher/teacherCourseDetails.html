@@ -29,6 +29,7 @@
         <thead class="thead-dark">
         <tr>
             <th>Name</th>
+            <th>Action</th>
         </tr>
         </thead>
 
@@ -48,11 +49,38 @@
 </div>
 
 
-<button onclick="showStudents()">Show Students</button>
+<div class="container">
+    <h3>Students</h3>
+    <hr>
 
-<div id="myDIV">
-    This is my DIV element.
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>e-mail</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="student : ${students}">
+            <td th:text="'cs' + ${student.getId()}"/>
+            <td th:text=" ${student.getName()}"/>
+            <td th:text="${student.getSurname()}"/>
+            <td th:text=" 'cs' + ${student.getId()} + '@university.edu'"/>
+
+        </tr>
+        </tbody>
+    </table>
 </div>
+
+
+<!--<button onclick="showStudents()">Show Students</button>-->
+
+<!--<div id="myDIV">-->
+<!--    This is my DIV element.-->
+<!--</div>-->
 
 <script>
 

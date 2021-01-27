@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface UserCoursesRepository extends JpaRepository<UserCourse, Integer> {
     List<UserCourse> findAllByUserId(Integer userId);
+    List<UserCourse> findAllByCourseId(Integer courseId);
 }
