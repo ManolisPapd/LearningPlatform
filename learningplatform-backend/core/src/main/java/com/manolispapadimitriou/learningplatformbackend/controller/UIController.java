@@ -81,6 +81,8 @@ public class UIController {
         return "teacher/allTeacherCourses";
     }
 
+    /*----- ADMIN ENDPOINTS ----- */
+
 
     /*----- GENERAL USE ENDPOINTS ----- */
 
