@@ -1,10 +1,185 @@
-<!DOCTYPE html>
-<html lang="en">
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Learning Platform</title>-->
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<nav class="navbar navbar-inverse">-->
+<!--    <div class="container-fluid">-->
+<!--        <div class="navbar-header">-->
+<!--            <a class="navbar-brand" href="#">Learning Platform - Admin Tool</a>-->
+<!--        </div>-->
+<!--        <ul class="nav navbar-nav">-->
+<!--            <li><a href="#">Courses</a></li>-->
+<!--            <li><a href="#">Teachers</a></li>-->
+<!--            <li><a href="#">Students</a></li>-->
+<!--            <li><a href="#">Inbox</a></li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--</nav>-->
+
+
+
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
     <title>Learning Platform</title>
+    <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-    <h1>ADMIN</h1>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Learning Platform - Admin Tool</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="#">Courses</a></li>
+            <li><a href="#">Teachers</a></li>
+            <li><a href="#">Students</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <h3> Courses</h3>
+    <hr>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Teacher</th>
+            <th>e-mail</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="course : ${allCourses}">
+            <td th:text="${course.getName()}" />
+            <td th:text="${course.getDescription()}" />
+            <td th:text="${course.getTeacher().getName() + ' ' + course.getTeacher().getSurname()}" />
+            <td th:text="${course.getTeacher().getEmail()}" />
+            <td>
+                <a href="#">
+                    <span class="glyphicon glyphicon-edit" ></span>
+                </a>
+                <a href="#">
+                    <span class="glyphicon glyphicon-trash" style="color:red"></span>
+                </a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/showFormForAddCourse}"
+       class="btn btn-primary btn-sm mb-3">
+        Create Course
+    </a> <br/> <br/>
+
+
+    <h3> Courses</h3>
+    <hr>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>e-mail</th>
+            <th>Courses Teaching</th>
+            <th>Action</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="teacher : ${allTeachers}">
+            <td th:text="${teacher.getName()}" />
+            <td th:text="${teacher.getSurname()}" />
+            <td th:text="${teacher.getEmail()}" />
+            <td>
+                <ul th:each="course : ${teacher.getCourses()}">
+                 <li th:text="${course.getName()}" />
+                </ul>
+            </td>
+            <td>
+                <a href="#">
+                    <span class="glyphicon glyphicon-edit" ></span>
+                </a>
+
+                <a href="#">
+                    <span class="glyphicon glyphicon-trash" style="color:red"></span>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/showFormForAddCourse}"
+       class="btn btn-primary btn-sm mb-3">
+        Add Teacher
+    </a> <br/> <br/>
+
+
+    <h3>Students</h3>
+    <hr>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>e-mail</th>
+            <th>Courses Attending</th>
+            <th>Action</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="student : ${allStudents}">
+            <td th:text="${student.getName()}" />
+            <td th:text="${student.getSurname()}" />
+            <td th:text=" 'cs' + ${student.getId()} + '@university.edu'"/>
+            <td>
+                <ul th:each="course : ${allStudentCourses.get(student.getId())}">
+                    <li th:text="${course.getName()}" />
+                </ul>
+            </td>
+            <td>
+                <a href="#">
+                    <span class="glyphicon glyphicon-edit" style="color:deepskyblue"></span>
+                </a>
+
+                <a href="#">
+                    <span class="glyphicon glyphicon-trash" style="color:red"></span>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/showFormForAddCourse}"
+       class="btn btn-primary btn-sm mb-3">
+        Add Student
+    </a> <br/> <br/>
+</div>
+
 </body>
 </html>

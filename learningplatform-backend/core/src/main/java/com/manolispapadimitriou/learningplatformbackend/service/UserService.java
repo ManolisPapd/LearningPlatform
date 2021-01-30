@@ -40,6 +40,10 @@ public class UserService {
         return userRepository.findById(id).get();
     }
 
+    public List<User> findByRole(Integer id){
+        return userRepository.findByRole(id);
+    }
+
     public List<User> findUserByCourse(Integer courseId){
         List<User> users = new ArrayList<>();
         List<UserCourse> allByCourseId = userCoursesRepository.findAllByCourseId(courseId);

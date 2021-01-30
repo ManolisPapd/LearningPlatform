@@ -1,5 +1,6 @@
 package com.manolispapadimitriou.learningplatformbackend.controller;
 
+import com.manolispapadimitriou.learningplatformbackend.dao.CourseDAO;
 import com.manolispapadimitriou.learningplatformbackend.dao.SectionDAO;
 import com.manolispapadimitriou.learningplatformbackend.entity.Course;
 import com.manolispapadimitriou.learningplatformbackend.entity.User;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class UIController {
@@ -61,6 +64,22 @@ public class UIController {
 
     @GetMapping("/admin")
     public String admin(Model model){
+
+        List<User> students = userService.findByRole(2);
+        Map<Integer, List<CourseDAO>> studentCourses = new HashMap<>();
+
+        for(User student : students){
+            List<CourseDAO> allCoursesByUser = courseService.findAllCoursesByUser(student.getId());
+            studentCourses.put(student.getId(), allCoursesByUser);
+        }
+
+        model.addAttribute("allCourses",courseService.getAllCourses());
+        model.addAttribute("allTeachers",userService.findByRole(1));
+        model.addAttribute("allStudents",students);
+        model.addAttribute("allStudentCourses",studentCourses);
+
+
+
 
         return "admin/admin";
     }
@@ -210,6 +229,6 @@ public class UIController {
         if(role.equals("teacher")){
             return "redirect:/teacherCourses";
         }
-        return "redirect:/allCourses";
+        return "redirect:/admin";
     }
 }
