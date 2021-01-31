@@ -30,14 +30,16 @@ class Statistics extends Component {
 
       getData = () => {
            //Get section quiz status
+           //heroku numbering
+
         for(let i = 2; i < this.props.sectionsLength -1; i++ ){
             //Check if user has failed this section
             //Don't forget add 1 to i because section counting begins from 1
             let requestBody = {
-        
+                //TODO section is very very bad and custom, need to fix it for general purpose
                 query: `
                 query {
-                    checkUserSectionStatus(userId:${localStorage.getItem('userId')}, sectionId: ${i+1}, sectionQuiz:true){
+                    checkUserSectionStatus(userId:${localStorage.getItem('userId')}, sectionId: ${i*10 + 1}, sectionQuiz:true){
                         failed
                         completed
                         answers

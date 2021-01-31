@@ -117,11 +117,17 @@ class QuizComponent extends Component {
         try{
 
             var correctQueryFromAPI = JSON.parse(quiz.details).correctQuery.toUpperCase().trim().replace(/\s/g, "");
+            var isQueryFromUserChanged = false;
             queryFromUser  = this.state.selectedQuery.toUpperCase().trim().replace(/\s/g, "");
             if(!correctQueryFromAPI.startsWith("CREATE")){
-                correctQueryFromAPI = JSON.stringify(globalDB.database.exec(JSON.parse(quiz.details).correctQuery))
+                //Theloume mono to query, h logiki xeirizetai sto backend
+                // correctQueryFromAPI = JSON.stringify(globalDB.database.exec(JSON.parse(quiz.details).correctQuery))
+                correctQueryFromAPI = JSON.parse(quiz.details).correctQuery;
                 try{
-                    queryFromUser  = JSON.stringify(globalDB.database.exec(this.state.selectedQuery));
+                    //Theloume mono to query, h logiki xeirizetai sto backend
+                    // queryFromUser = JSON.stringify(globalDB.database.exec(this.state.selectedQuery));
+                    queryFromUser = this.state.selectedQuery;
+                    isQueryFromUserChanged = true;
                 }catch (e) { //User entered query not related to db.js or gibberish, it will be tested on 
                     
                 }
@@ -141,7 +147,40 @@ class QuizComponent extends Component {
             else{             
                 //HELPER  
                 //TODO call api to determine if syntax or logic error
-                this.props.onHelperActivation("Plain wrong", queryFromUser);
+                
+
+                var newQueryFromUser = queryFromUser;
+                if(!isQueryFromUserChanged){
+                    newQueryFromUser = this.state.selectedQuery;
+                }
+                let requestBody = {
+            
+                    query: `
+                        query {
+                            errorAnalyzer(language : \"sql\", wrongAnswer : \"${newQueryFromUser}\", correctAnswer: \"${JSON.parse(quiz.details).correctQuery}\"){
+                                id
+                                type
+                                reason
+                            }
+                        }   
+                    `
+                };
+    
+                //axios
+                axios.post('/graphql',requestBody)
+                .then(res => {
+                    if(res.status !== 200 && res.status !== 201){
+                    throw new Error('Failed!');
+                    }
+            
+                    console.log("RCS:", res.data);
+                    this.props.onHelperActivation(res.data, queryFromUser);
+                    
+                }).catch(err => {
+                    console.log(err);
+                });
+
+                //----end call
                 
                 //Save that quiz has been answered in order to not present it again
                 tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));

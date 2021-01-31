@@ -27,6 +27,7 @@ public enum KeywordEnum {
              */
             String[] columns = answerPartRedefined.split(",");
             if(answerPartRedefined.equals("*") || //checking *
+                    answerPartRedefined.startsWith(" count") ||
                     (columns.length > 1 && columns[columns.length -1 ].trim().matches("[A-Za-z0-9]+") && !columns[columns.length -1 ].trim().isEmpty() && columns[columns.length -1 ] != null  ) || //checking multiple columns and the last item is not symbol, empty or null
                     (columns.length == 1 && columns[0].trim().matches("[A-Za-z0-9]+") && !columns[0].trim().isEmpty() && columns[0] != null) //checking is one column is not symbol, null or empty
             ){
