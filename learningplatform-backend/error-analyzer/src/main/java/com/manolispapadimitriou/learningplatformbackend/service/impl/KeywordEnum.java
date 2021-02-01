@@ -1,5 +1,6 @@
 package com.manolispapadimitriou.learningplatformbackend.service.impl;
 
+import antlr.StringUtils;
 import com.manolispapadimitriou.learningplatformbackend.util.Data;
 import com.manolispapadimitriou.learningplatformbackend.util.SqlData;
 
@@ -26,10 +27,11 @@ public enum KeywordEnum {
              * Step 2. Checking if it has * or columns separated by comma or not
              */
             String[] columns = answerPartRedefined.split(",");
-            if(answerPartRedefined.equals("*") || //checking *
+            if(answerPartRedefined.trim().equals("*") || //checking *
                     answerPartRedefined.startsWith(" count") ||
-                    (columns.length > 1 && columns[columns.length -1 ].trim().matches("[A-Za-z0-9]+") && !columns[columns.length -1 ].trim().isEmpty() && columns[columns.length -1 ] != null  ) || //checking multiple columns and the last item is not symbol, empty or null
-                    (columns.length == 1 && columns[0].trim().matches("[A-Za-z0-9]+") && !columns[0].trim().isEmpty() && columns[0] != null) //checking is one column is not symbol, null or empty
+                    answerPartRedefined.startsWith(" sum") ||
+                    (columns.length > 1 && columns[columns.length -1 ].trim().matches(Data.REGEX_ALPHANUMERIC) && !columns[columns.length -1 ].trim().isEmpty() && columns[columns.length -1 ] != null  ) || //checking multiple columns and the last item is not symbol, empty or null
+                    (columns.length == 1 && columns[0].trim().matches(Data.REGEX_ALPHANUMERIC) && !columns[0].trim().isEmpty() && columns[0] != null) //checking is one column is not symbol, null or empty
             ){
                 return true;
             }
@@ -49,13 +51,13 @@ public enum KeywordEnum {
                 /**
                  * second and third element will be checked if they are not symbol, null or empty
                  */
-                if(!naming[1].isEmpty() && naming[1].trim().matches("[A-Za-z0-9]+") && naming[1] != null &&
-                        !naming[2].isEmpty() && naming[2].trim().matches("[A-Za-z0-9]+") && naming[2] != null ){
+                if(!naming[1].isEmpty() && naming[1].trim().matches(Data.REGEX_ALPHANUMERIC) && naming[1] != null &&
+                        !naming[2].isEmpty() && naming[2].trim().matches(Data.REGEX_ALPHANUMERIC) && naming[2] != null ){
                     return true;
                 }
             }
             else{ //Checking table name
-                if(!answerPart.isEmpty() && answerPart.trim().matches("[A-Za-z0-9]+")){
+                if(!answerPart.isEmpty() && answerPart.trim().matches(Data.REGEX_ALPHANUMERIC)){
                     return true;
                 }
             }
@@ -69,7 +71,7 @@ public enum KeywordEnum {
             /**
              * Step 1. Check no null or empty
              */
-            if(answerPart != null && !answerPart.isEmpty()){
+            if(answerPart != null && !answerPart.trim().isEmpty()){
                 return true;
             }
             return false;
@@ -90,19 +92,53 @@ public enum KeywordEnum {
     ORDER_BY(Data.ORDER_BY){
         @Override
         public Boolean checkFormat(String answerPart) {
-            return true;
+            /**
+             * Step 1. Check no null or empty
+             */
+            if(answerPart != null && !answerPart.isEmpty()){
+                String[] splitAnswer = answerPart.split(" ");
+                /**
+                 * Step 2.1. Check if last word is asc or desc
+                 * length 3 because first is ""
+                 */
+                if(splitAnswer.length == 3){
+                    if(splitAnswer[2].equalsIgnoreCase(Data.ASC) ||splitAnswer[2].equalsIgnoreCase(Data.DESC)){
+                        return true;
+                    }
+                }
+                /**
+                 * Step 2.2. Check no null or empty
+                 */
+                else if(splitAnswer.length == 2){
+                    return true;
+                }
+            }
+            return false;
         }
     },
     LIMIT(Data.LIMIT){
         @Override
         public Boolean checkFormat(String answerPart) {
-            return true;
+            String[] splitAnswer = answerPart.split("^[ ][0-9]*[ ]((?i)offset)[ ][0-9]*|^[ ][0-9]*,[ ][0-9]*|^[ ][0-9]*,[0-9]*|^[ ][0-9]*[ ],[ ][0-9]*|^[ ][0-9]*[ ],[0-9]*|^[ ][0-9]*");
+            if(splitAnswer.length == 0){
+                return true;
+            }
+            return false;
         }
     },
     CREATE(Data.CREATE){
         @Override
         public Boolean checkFormat(String answerPart) {
             return true;
+        }
+    },
+    INSERT(Data.INSERT){
+        @Override
+        public Boolean checkFormat(String answerPart) {
+            if(answerPart.split("INSERT INTO (\\S+) \\((\\S+)\\) VALUES \\((\\S+)\\)").length == 0){
+                return true;
+            }
+            return false;
         }
     };
 

@@ -26,25 +26,61 @@ public enum KeywordReasonEnum {
     GROUP_BY(Data.GROUP_BY){
         @Override
         public String getReason() {
-            return null;
+            return "GROUP BY format should be GROUP BY {col_name | expr | position}";
         }
     },
     HAVING(Data.HAVING){
         @Override
         public String getReason() {
-            return null;
+            return "HAVING format should be GROUP BY {col_name | expr | position}";
         }
     },
     ORDER_BY(Data.ORDER_BY){
         @Override
         public String getReason() {
-            return null;
+            return "ORDER BY format should be ORDER BY {col_name | expr | position} [ASC | DESC]";
         }
     },
     LIMIT(Data.LIMIT){
         @Override
         public String getReason() {
-            return null;
+            return "LIMIT format should be LIMIT {[offset,] row_count | row_count OFFSET offset}";
+        }
+    },
+    INSERT(Data.INSERT){
+        @Override
+        public String getReason() {
+            return "INSERT format should be INSERT INTO [table](column1 .. column n) VALUES (value1 .. value n)";
+        }
+    },
+    UPDATE(Data.UPDATE){
+        @Override
+        public String getReason() {
+            return "UPDATE format should be UPDATE [table] SET [assignment expression] WHERE [where expression]";
+        }
+    },
+    JOIN(Data.JOIN){
+        @Override
+        public String getReason() {
+            return "JOIN format should be JOIN [table] AS [name] ON [tables relation]";
+        }
+    },
+    INNER_JOIN(Data.INNER_JOIN){
+        @Override
+        public String getReason() {
+            return "INNER JOIN format should be INNER JOIN [table] AS [name] ON [tables relation]";
+        }
+    },
+    LEFT_JOIN(Data.LEFT_JOIN){
+        @Override
+        public String getReason() {
+            return "LEFT JOIN format should be LEFT JOIN [table] AS [name] ON [tables relation]";
+        }
+    },
+    RIGHT_JOIN(Data.RIGHT_JOIN){
+        @Override
+        public String getReason() {
+            return "RIGHT JOIN format should be RIGHT JOIN [table] AS [name] ON [tables relation]";
         }
     };
 

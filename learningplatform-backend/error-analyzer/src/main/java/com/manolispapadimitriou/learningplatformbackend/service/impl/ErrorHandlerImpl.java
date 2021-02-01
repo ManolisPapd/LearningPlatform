@@ -145,7 +145,14 @@ public class ErrorHandlerImpl implements ErrorHandler {
 
                 }
 
-            }else{
+            }
+            else if(wrongAnswer.toUpperCase().startsWith(Data.INSERT)){
+                Boolean keywordStatus = KeywordEnum.getByValue(Data.INSERT).checkFormat(wrongAnswer.toUpperCase(Locale.ROOT));
+                if(!keywordStatus){
+                    analyzers.add(new Analyzer(Data.INSERT, errorType, KeywordReasonEnum.getByValue(Data.INSERT).getReason()));
+                }
+            }
+            else{
                 analyzers.add(new Analyzer(Data.WRONG_FORMAT, errorType, "Wrong Format, answer could not be analyzed."));
             }
         }

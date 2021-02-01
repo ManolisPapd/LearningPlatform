@@ -21,5 +21,14 @@ public class Data {
     public static final String LIMIT = "LIMIT";
     public static final String ON = "ON";
     public static final String CREATE = "CREATE";
+    public static final String INSERT = "INSERT INTO";
+    public static final String UPDATE = "UPDATE";
+    public static final String JOIN = "JOIN";
+    public static final String INNER_JOIN = "INNER JOIN";
+    public static final String LEFT_JOIN = "LEFT JOIN";
+    public static final String RIGHT_JOIN = "RIGHT JOIN";
+    public static final String ASC = "ASC";
+    public static final String DESC = "DESC";
+    public static final String REGEX_ALPHANUMERIC = "[A-Za-z0-9]+";
 
 }
