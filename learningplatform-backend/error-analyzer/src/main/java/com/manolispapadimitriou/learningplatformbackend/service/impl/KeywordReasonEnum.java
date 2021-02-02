@@ -32,7 +32,7 @@ public enum KeywordReasonEnum {
     HAVING(Data.HAVING){
         @Override
         public String getReason() {
-            return "HAVING format should be GROUP BY {col_name | expr | position}";
+            return "HAVING format should be HAVING [where_condition]";
         }
     },
     ORDER_BY(Data.ORDER_BY){
@@ -81,6 +81,12 @@ public enum KeywordReasonEnum {
         @Override
         public String getReason() {
             return "RIGHT JOIN format should be RIGHT JOIN [table] AS [name] ON [tables relation]";
+        }
+    },
+    CREATE(Data.CREATE){
+        @Override
+        public String getReason() {
+            return "CREATE format should be for creating tables CREATE TABLE [IF NOT EXISTS] [table] (column1 datatype .. column n datatype, {options}) and for creating database CREATE DATABASE [database_name]";
         }
     };
 

@@ -80,13 +80,20 @@ public enum KeywordEnum {
     GROUP_BY(Data.GROUP_BY){
         @Override
         public Boolean checkFormat(String answerPart) {
-            return true;
+            if(answerPart != null && !answerPart.trim().isEmpty()){
+                return true;
+            }
+            return false;
         }
     },
     HAVING(Data.HAVING){
         @Override
         public Boolean checkFormat(String answerPart) {
-            return true;
+            if(answerPart != null && !answerPart.trim().isEmpty()){
+                return true;
+            }
+
+            return false;
         }
     },
     ORDER_BY(Data.ORDER_BY){
@@ -129,13 +136,27 @@ public enum KeywordEnum {
     CREATE(Data.CREATE){
         @Override
         public Boolean checkFormat(String answerPart) {
-            return true;
+            //TODO continue
+            if(answerPart.split("(CREATE DATABASE) (\\S+)").length == 0){
+                return true;
+            }
+            return false;
         }
+
     },
     INSERT(Data.INSERT){
         @Override
         public Boolean checkFormat(String answerPart) {
-            if(answerPart.split("INSERT INTO (\\S+) \\((\\S+)\\) VALUES \\((\\S+)\\)").length == 0){
+            if(answerPart.split("(INSERT INTO) (\\S+).*\\((.*?)\\).*(VALUES).*\\((.*?)\\)(.*\\;?)").length == 0){
+                return true;
+            }
+            return false;
+        }
+    },
+    UPDATE(Data.UPDATE){
+        @Override
+        public Boolean checkFormat(String answerPart) {
+            if(answerPart.split("(UPDATE) (\\S+).(SET) (\\S+).* (WHERE) (\\S+).*").length == 0){
                 return true;
             }
             return false;

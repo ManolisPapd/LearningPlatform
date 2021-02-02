@@ -152,6 +152,18 @@ public class ErrorHandlerImpl implements ErrorHandler {
                     analyzers.add(new Analyzer(Data.INSERT, errorType, KeywordReasonEnum.getByValue(Data.INSERT).getReason()));
                 }
             }
+            else if(wrongAnswer.toUpperCase().startsWith(Data.UPDATE)){
+                Boolean keywordStatus = KeywordEnum.getByValue(Data.UPDATE).checkFormat(wrongAnswer.toUpperCase(Locale.ROOT));
+                if(!keywordStatus){
+                    analyzers.add(new Analyzer(Data.UPDATE, errorType, KeywordReasonEnum.getByValue(Data.UPDATE).getReason()));
+                }
+            }
+            else if(wrongAnswer.toUpperCase().startsWith(Data.CREATE)){
+                Boolean keywordStatus = KeywordEnum.getByValue(Data.CREATE).checkFormat(wrongAnswer.toUpperCase(Locale.ROOT));
+                if(!keywordStatus){
+                    analyzers.add(new Analyzer(Data.CREATE, errorType, KeywordReasonEnum.getByValue(Data.CREATE).getReason()));
+                }
+            }
             else{
                 analyzers.add(new Analyzer(Data.WRONG_FORMAT, errorType, "Wrong Format, answer could not be analyzed."));
             }
