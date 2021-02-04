@@ -4,6 +4,7 @@ import Login from '../components/Login/Login'
 // import Homepage from '../components/Homepage/Homepage'
 import MainNavigation from '../components/Navigation/MainNavigation';
 import Profile from '../components/Profile/Profile';
+import Forum from '../components/Forum/Forum';
 import AuthContext from '../context/auth-context';
 import ChatBot from 'react-simple-chatbot';
 import ScrollUp from '../context/scrollUp';
@@ -95,6 +96,7 @@ class App extends Component {
               {(this.state.token || localStorage.getItem('token')) &&  <Redirect from="/auth" to ="/homepage" exact />}
               {(!this.state.token || !localStorage.getItem('token')) &&  <Route exact path="/auth" component={Login} />}
               {(this.state.token || localStorage.getItem('token')) &&  <Route exact path="/profile" component={Profile} />}
+              {(this.state.token || localStorage.getItem('token')) &&  <Route exact path="/forum" component={Forum} />}
               {(this.state.token || localStorage.getItem('token')) && 
               
                 <Suspense fallback={<div className="loader">Loading...</div>}>

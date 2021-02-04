@@ -38,7 +38,8 @@ class MainNavigation extends Component {
                   <Nav className="mr-auto">
                   <NavLink activeStyle={{borderBottom: '5px solid white'}} className="navItem" to="/homepage" style={{ textDecoration: 'none' }}><i className="fa fa-book"></i></NavLink>
                   <NavLink activeStyle={{borderBottom: '5px solid white'}} className="navItem" to="/profile" style={{ textDecoration: 'none' }}><i className="fa fa-user"></i></NavLink>
-                
+                  <NavLink activeStyle={{borderBottom: '5px solid white'}} className="navItem" to="/forum" style={{ textDecoration: 'none' }}><i className="fa fa-wpforms"></i></NavLink>
+
                               
                   </Nav>
                   <Nav>
