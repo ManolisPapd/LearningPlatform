@@ -1,7 +1,7 @@
 package com.manolispapadimitriou.learningplatformbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.manolispapadimitriou.learningplatformbackend.dao.SectionDAO;
+import com.manolispapadimitriou.learningplatformbackend.dto.SectionDTO;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -22,14 +22,14 @@ public class Section {
     private String information;
 
 
-    public SectionDAO _toConvertSectionDAO(){
-        SectionDAO sectionDAO = new SectionDAO();
-        sectionDAO.setId(this.id);
-        sectionDAO.setName(this.name);
-        sectionDAO.setCourseId(this.courseId);
-        sectionDAO.setInformation(this.information);
+    public SectionDTO _toConvertSectionDAO(){
+        SectionDTO sectionDTO = new SectionDTO();
+        sectionDTO.setId(this.id);
+        sectionDTO.setName(this.name);
+        sectionDTO.setCourseId(this.courseId);
+        sectionDTO.setInformation(this.information);
 
-        return sectionDAO;
+        return sectionDTO;
 
     }
 }

@@ -1,7 +1,7 @@
 package com.manolispapadimitriou.learningplatformbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.manolispapadimitriou.learningplatformbackend.dao.CourseDAO;
+import com.manolispapadimitriou.learningplatformbackend.dto.CourseDTO;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,14 +21,14 @@ public class Course {
     @JoinColumn(name = "teacher")
     private User teacher;
 
-    public CourseDAO _toConvertCourseDAO(){
-        CourseDAO courseDAO = new CourseDAO();
-        courseDAO.setId(this.id);
-        courseDAO.setName(this.name);
-        courseDAO.setImage(this.image);
-        courseDAO.setDescription(this.description);
-        courseDAO.setTeacher(this.teacher);
+    public CourseDTO _toConvertCourseDAO(){
+        CourseDTO courseDTO = new CourseDTO();
+        courseDTO.setId(this.id);
+        courseDTO.setName(this.name);
+        courseDTO.setImage(this.image);
+        courseDTO.setDescription(this.description);
+        courseDTO.setTeacher(this.teacher);
 
-        return courseDAO;
+        return courseDTO;
     }
 }

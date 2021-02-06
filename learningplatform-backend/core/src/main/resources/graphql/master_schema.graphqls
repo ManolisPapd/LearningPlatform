@@ -59,6 +59,35 @@ type Analyzer {
     reason: String!
 }
 
+
+type ForumComment{
+    id: Int!
+    body: String!
+    user: User!
+    dateCreated: String!
+}
+
+type ForumTopic{
+    id: Int!
+    name: String!
+    posts: [ForumPost]!
+}
+
+type ForumPost{
+    id: Int!
+    title: String!
+    body: String!
+    user: User!
+    dateCreated: String!
+    dateNewPost: String!
+    comments: [ForumComment]
+}
+
+type Forum{
+    topics: [ForumTopic]!
+    posts: [ForumPost]!
+}
+
 type Query {
     allUsers: [User]
     login(email: String!, password: String!): AuthData
@@ -69,6 +98,7 @@ type Query {
     getQuizzesStatus(userId: Int!, sectionId: Int!, sectionQuiz:Boolean!):[UserQuiz]
     getSection(courseId: Int!,sectionId: Int!):Section
     errorAnalyzer(language: String!, wrongAnswer: String!, correctAnswer: String!):[Analyzer]
+    getForumData(name: String!):Forum
 
 }
 

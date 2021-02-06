@@ -1,6 +1,6 @@
 package com.manolispapadimitriou.learningplatformbackend.service;
 
-import com.manolispapadimitriou.learningplatformbackend.dao.CourseDAO;
+import com.manolispapadimitriou.learningplatformbackend.dto.CourseDTO;
 import com.manolispapadimitriou.learningplatformbackend.entity.Course;
 import com.manolispapadimitriou.learningplatformbackend.entity.UserCourse;
 import com.manolispapadimitriou.learningplatformbackend.repository.CourseRepository;
@@ -23,7 +23,7 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    public List<CourseDAO> findAllCoursesByUser(Integer userId){
+    public List<CourseDTO> findAllCoursesByUser(Integer userId){
         List<UserCourse> userCoursesDAO = userCoursesRepository.findAllByUserId(userId);
 
         List<Course> userCourses = userCoursesDAO.stream()
@@ -41,7 +41,7 @@ public class CourseService {
         return courseRepository.findById(courseId).get();
     }
 
-    public List<CourseDAO> getAllCourses(){
+    public List<CourseDTO> getAllCourses(){
         return courseRepository.findAll().stream().map(Course::_toConvertCourseDAO).collect(Collectors.toList());
     }
 

@@ -1,9 +1,11 @@
 package com.manolispapadimitriou.learningplatformbackend.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
-import com.manolispapadimitriou.learningplatformbackend.dao.CourseDAO;
-import com.manolispapadimitriou.learningplatformbackend.dao.SectionDAO;
-import com.manolispapadimitriou.learningplatformbackend.entity.AuthData;
+import com.manolispapadimitriou.learningplatformbackend.dto.CourseDTO;
+import com.manolispapadimitriou.learningplatformbackend.dto.ForumDTO;
+import com.manolispapadimitriou.learningplatformbackend.dto.SectionDTO;
+import com.manolispapadimitriou.learningplatformbackend.entity.Forum;
+import com.manolispapadimitriou.learningplatformbackend.model.AuthData;
 import com.manolispapadimitriou.learningplatformbackend.entity.Quiz;
 import com.manolispapadimitriou.learningplatformbackend.entity.User;
 import com.manolispapadimitriou.learningplatformbackend.entity.UserQuiz;
@@ -16,7 +18,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -37,6 +38,9 @@ public class Query implements GraphQLQueryResolver {
     @Autowired
     private ErrorHandler errorHandler;
 
+    @Autowired
+    private ForumService forumService;
+
     public List<User> allUsers() {
         return userService.findAll();
     }
@@ -54,12 +58,12 @@ public class Query implements GraphQLQueryResolver {
 
     }
 
-    public List<CourseDAO> userCourses(Integer id){
+    public List<CourseDTO> userCourses(Integer id){
 
         return courseService.findAllCoursesByUser(id);
     }
 
-    public List<SectionDAO> courseSections(Integer id){
+    public List<SectionDTO> courseSections(Integer id){
         return sectionService.findAllSectionsByCourse(id);
     }
 
@@ -91,7 +95,7 @@ public class Query implements GraphQLQueryResolver {
 
     }
 
-    public SectionDAO getSection(Integer courseId,Integer sectionId){
+    public SectionDTO getSection(Integer courseId, Integer sectionId){
         return sectionService.getSectionByCourseId(courseId, sectionId);
     }
 
@@ -99,5 +103,10 @@ public class Query implements GraphQLQueryResolver {
         //Replacing ; because of errors
         return errorHandler.getErrors(language, wrongAnswer.replaceAll(";",""), correctAnswer.replaceAll(";",""));
     }
+
+    public ForumDTO getForumData(String name){
+        return forumService.getForumTopicData(name);
+    }
+
 
 }

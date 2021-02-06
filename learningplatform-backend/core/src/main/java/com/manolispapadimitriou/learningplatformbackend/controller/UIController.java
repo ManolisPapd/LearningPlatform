@@ -1,7 +1,7 @@
 package com.manolispapadimitriou.learningplatformbackend.controller;
 
-import com.manolispapadimitriou.learningplatformbackend.dao.CourseDAO;
-import com.manolispapadimitriou.learningplatformbackend.dao.SectionDAO;
+import com.manolispapadimitriou.learningplatformbackend.dto.CourseDTO;
+import com.manolispapadimitriou.learningplatformbackend.dto.SectionDTO;
 import com.manolispapadimitriou.learningplatformbackend.entity.Course;
 import com.manolispapadimitriou.learningplatformbackend.entity.User;
 import com.manolispapadimitriou.learningplatformbackend.model.SectionInformation;
@@ -66,10 +66,10 @@ public class UIController {
     public String admin(Model model){
 
         List<User> students = userService.findByRole(2);
-        Map<Integer, List<CourseDAO>> studentCourses = new HashMap<>();
+        Map<Integer, List<CourseDTO>> studentCourses = new HashMap<>();
 
         for(User student : students){
-            List<CourseDAO> allCoursesByUser = courseService.findAllCoursesByUser(student.getId());
+            List<CourseDTO> allCoursesByUser = courseService.findAllCoursesByUser(student.getId());
             studentCourses.put(student.getId(), allCoursesByUser);
         }
 
@@ -155,7 +155,7 @@ public class UIController {
     //Presents course detail
     @GetMapping("/courseDetails")
     public String getCourseDetail(@RequestParam("courseId") int courseId,Model model,HttpServletRequest req){
-        List<SectionDAO> allSectionsByCourse = sectionService.findAllSectionsByCourse(courseId);
+        List<SectionDTO> allSectionsByCourse = sectionService.findAllSectionsByCourse(courseId);
         //remove statistics
         allSectionsByCourse.remove(1);
 
@@ -170,7 +170,7 @@ public class UIController {
     @GetMapping("/courseSection")
     public String getCourseSectionInformation(@RequestParam("sectionId") int sectionId,Model model,HttpServletRequest req) throws JSONException {
 
-        SectionDAO section= sectionService.getSectionById(sectionId);
+        SectionDTO section= sectionService.getSectionById(sectionId);
 
         SectionInformationWrapper sectionInformationWrapper = new SectionInformationWrapper();
         sectionInformationWrapper.setSectionName(section.getName());
