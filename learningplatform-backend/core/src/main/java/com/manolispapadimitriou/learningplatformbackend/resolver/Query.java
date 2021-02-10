@@ -10,6 +10,7 @@ import com.manolispapadimitriou.learningplatformbackend.entity.Quiz;
 import com.manolispapadimitriou.learningplatformbackend.entity.User;
 import com.manolispapadimitriou.learningplatformbackend.entity.UserQuiz;
 import com.manolispapadimitriou.learningplatformbackend.model.Analyzer;
+import com.manolispapadimitriou.learningplatformbackend.model.CategoryResponseWrapper;
 import com.manolispapadimitriou.learningplatformbackend.model.Status;
 import com.manolispapadimitriou.learningplatformbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -108,5 +110,8 @@ public class Query implements GraphQLQueryResolver {
         return forumService.getForumTopicData(name);
     }
 
+    public CategoryResponseWrapper literalsCategoriesForum(){
+        return forumService.getCategoriesForum();
+    }
 
 }

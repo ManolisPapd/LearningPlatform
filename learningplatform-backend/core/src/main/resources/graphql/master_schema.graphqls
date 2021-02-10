@@ -88,6 +88,23 @@ type Forum{
     posts: [ForumPost]!
 }
 
+
+type LatestComment{
+    user:User!
+    date:String!
+}
+
+type CategoryData{
+    category: String!
+    topics: Int!
+    posts: Int!
+    latestComment:LatestComment!
+}
+
+type CategoryResponseWrapper {
+    categories:[CategoryData]!
+}
+
 type Query {
     allUsers: [User]
     login(email: String!, password: String!): AuthData
@@ -99,6 +116,7 @@ type Query {
     getSection(courseId: Int!,sectionId: Int!):Section
     errorAnalyzer(language: String!, wrongAnswer: String!, correctAnswer: String!):[Analyzer]
     getForumData(name: String!):Forum
+    literalsCategoriesForum:CategoryResponseWrapper
 
 }
 
