@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -110,7 +111,7 @@ public class Query implements GraphQLQueryResolver {
         return forumService.getForumTopicData(name);
     }
 
-    public CategoryResponseWrapper literalsCategoriesForum(){
+    public CategoryResponseWrapper literalsCategoriesForum() throws ParseException {
         return forumService.getCategoriesForum();
     }
 

@@ -96,6 +96,7 @@ type LatestComment{
 
 type CategoryData{
     category: String!
+    categoryInformation: String!
     topics: Int!
     posts: Int!
     latestComment:LatestComment!
