@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as ReactBootStrap from 'react-bootstrap';
 import axios from '../../../_services/axios';
+import ForumPost from '../ForumPost/ForumPost';
 
 
 class ForumContent extends Component {
@@ -8,7 +9,8 @@ class ForumContent extends Component {
         topics: {},
         posts: {},
         currentCategory: false,
-        topicSelected: null
+        topicSelected: null,
+        postSelected: null
     }
 
     componentDidMount = () => {
@@ -94,7 +96,7 @@ class ForumContent extends Component {
             throw new Error('Failed!');
             }
             
-            console.log("RCS: called", res.data.data.getForumData);
+            console.log("RCS: called", res.data.data.getForumData.posts);
             this.setState({topics: res.data.data.getForumData.topics, posts: res.data.data.getForumData.posts});
             
             
@@ -105,6 +107,10 @@ class ForumContent extends Component {
 
     loadTopic = (topic) => {
         this.setState({topicSelected: topic});
+    }
+
+    loadPost = (post) => {
+        this.setState({postSelected: post});
     }
 
     render (){
@@ -148,7 +154,7 @@ class ForumContent extends Component {
                                 <tbody>
                                     {this.state.posts.map((post, key) =>
                                         <tr>
-                                            <td id="categoryTableItem" >{post.title}</td>
+                                            <td id="categoryTableItem" onClick={() => this.loadPost(post)}>{post.title}</td>
                                             <td><div style={{ textAlign: "center" }}>{post.comments.length}</div></td>
                                             
                                         </tr>
@@ -166,6 +172,14 @@ class ForumContent extends Component {
                         />
                     </div>
 
+                }
+
+                {this.state.postSelected && 
+                    <div>
+                        <ForumPost 
+                            post = {this.state.postSelected}
+                        />
+                    </div>
                 }
 
 
