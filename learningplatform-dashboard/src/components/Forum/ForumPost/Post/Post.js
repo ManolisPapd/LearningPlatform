@@ -5,6 +5,12 @@ import axios from '../../../../_services/axios';
 
 
 class Post extends Component {
+    
+    postReply = (userIdToReply, contentBody) => {
+        //TODO implement reply
+        //maybe redux to get it on the replycomponent
+    } 
+
     render (){
         return(
             <React.Fragment>
@@ -20,7 +26,7 @@ class Post extends Component {
                             <small className="text-muted">{this.props.user.name} {this.props.user.surname}</small>  <br/>
                             <small className="text-muted">Published on {this.props.dateCreated}</small> <br/>
                         </Card.Text>
-                        <Button variant="outline-dark">Reply</Button>
+                        <Button variant="outline-dark" onClick={() => this.postReply(this.props.user.id, this.props.body)}>Reply</Button>
                     </Card.Body>
                 </Card>
             </React.Fragment>

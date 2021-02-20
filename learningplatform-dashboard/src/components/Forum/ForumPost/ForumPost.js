@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as ReactBootStrap from 'react-bootstrap';
 import axios from '../../../_services/axios';
 import Post from './Post/Post';
+import ReplyComponent from './ReplyComponent/ReplyComponent';
 
 class ForumPost extends Component {
 
@@ -30,6 +31,7 @@ class ForumPost extends Component {
                         <br></br>
                     </div>
                 )}
+                <ReplyComponent/>
             </React.Fragment>
     )}
 
