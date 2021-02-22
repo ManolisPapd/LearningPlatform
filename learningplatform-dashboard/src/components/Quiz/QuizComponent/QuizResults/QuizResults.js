@@ -114,14 +114,14 @@ class QuizResults extends Component {
                                     <React.Fragment key = {sectionResults[0]} >
 
                                         <ListGroup horizontal>
-                                            <ListGroup.Item variant="light">Section {sectionResults[0] - 2}</ListGroup.Item>
-                                            {sectionResults[1].map((quizResults) =>
+                                            <ListGroup.Item variant="light">Section { (sectionResults[0] - (Math.floor(sectionResults[0]/10)*9)) - 2}</ListGroup.Item>
+                                            {sectionResults[1].map((quizResults, key) =>
                                                 <React.Fragment key={quizResults.id}>
                                                     {( this.props.finalQuiz) ?
                                                         quizResults.status ? (<ListGroup.Item className="successLabel" variant="success" key={quizResults.quizId}>{this.state.resultsEntries[quizResults.quizId] + 1}</ListGroup.Item>) : 
                                                             (<ListGroup.Item className="dangerLabel" variant="danger" key={quizResults.quizId}>{this.state.resultsEntries[quizResults.quizId] + 1}</ListGroup.Item>)
-                                                         : quizResults.status ? (<ListGroup.Item className="successLabel" variant="success" key={quizResults.quizId}>{quizResults.quizId}</ListGroup.Item>) : 
-                                                         (<ListGroup.Item className="dangerLabel" variant="danger" key={quizResults.quizId}>{quizResults.quizId}</ListGroup.Item>)
+                                                         : quizResults.status ? (<ListGroup.Item className="successLabel" variant="success" key={quizResults.quizId}>{key + 1}</ListGroup.Item>) : 
+                                                         (<ListGroup.Item className="dangerLabel" variant="danger" key={quizResults.quizId}>{key + 1}</ListGroup.Item>)
 
                                                     }
                                                 </React.Fragment>
