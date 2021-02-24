@@ -1,3 +1,3 @@
 --student
-INSERT INTO student (name) VALUES
-('george'), ('nick');
+INSERT INTO student (name,surname) VALUES
+('a','Jenkins'), ('b','Storm');

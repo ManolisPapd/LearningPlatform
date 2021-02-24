@@ -2,7 +2,9 @@ package com.manolispapadimitriou.learningplatformbackend.service.impl;
 
 import com.manolispapadimitriou.learningplatformbackend.model.Analyzer;
 import com.manolispapadimitriou.learningplatformbackend.service.ErrorHandler;
+import com.manolispapadimitriou.learningplatformbackend.stringsimilarity.SorensenDice;
 import com.manolispapadimitriou.learningplatformbackend.util.Data;
+import org.h2.jdbc.JdbcResultSetMetaData;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -20,9 +22,11 @@ public class ErrorHandlerImpl implements ErrorHandler {
             analyzers = getSyntaxErrors(language, wrongAnswer);
             //If analyzers is empty, it means that no syntax errors were found and it will be checked for syntax
             if(analyzers.isEmpty()){
+                Double distance = SorensenDice.similarity(wrongAnswer.toUpperCase(Locale.ROOT), correctAnswer.toUpperCase(Locale.ROOT));
                 analyzers = getLogicErrors(language, wrongAnswer, correctAnswer);
             }
         }else{
+            Double distance = SorensenDice.similarity(wrongAnswer.toUpperCase(Locale.ROOT), correctAnswer.toUpperCase(Locale.ROOT));
             analyzers = getLogicErrors(language, wrongAnswer, correctAnswer);
 
         }
@@ -198,6 +202,7 @@ public class ErrorHandlerImpl implements ErrorHandler {
             //Splitting based on spaces and comparing the words
             String[] correctSplit = correctAnswer.toUpperCase(Locale.ROOT).split(" ");
             String[] wrongSplit = wrongAnswer.toUpperCase(Locale.ROOT).split(" ");
+            //Way 1, comparing word by word
             analyzers.addAll(compareStrings(correctSplit, wrongSplit));
 
             //CREATE statement handling
@@ -214,9 +219,29 @@ public class ErrorHandlerImpl implements ErrorHandler {
                     Connection con = DriverManager.getConnection(Data.DB_URL, Data.USER, Data.PASSWORD);
                     con.prepareStatement(wrongAnswer).getMetaData();
                     //----- Exception Free -----
+                    //Way 2, comparing by result
                     //Step 2. Executing both syntax free queries
                     //Step 2.1. Wrong query is correct, execute correct query also and save the results for both of them
                     //Step 2.2. Compare the results and if there are differences return, if not empty the analyzers table.
+
+
+
+                    JdbcResultSetMetaData jdbcResultSetMetaData = (JdbcResultSetMetaData) con.prepareStatement(wrongAnswer).executeQuery().getMetaData();
+                    //1.Get column count
+                    //2.For each column get name
+
+
+                    ResultSet resultSet = con.prepareStatement(wrongAnswer).executeQuery();
+                    //3. For each column name get results
+                    while (resultSet.next()) {
+                        //Loop all column names and save result
+//                        resultSet.getString(column)
+                    }
+
+                    //Do it for the correct also. Sort the columns
+
+
+
 
                 }catch (Exception e){
                     //Because of Step 1, analyzers will be kept.
@@ -249,29 +274,46 @@ public class ErrorHandlerImpl implements ErrorHandler {
         }
 
         //comparing each word
-        for(int i=0; i<size; i++){
+        int i;
+        for(i=0; i<size; i++){
             if(!correct[i].equals(wrong[i])){
-                correctWords.add(correct[i]);
-                wrongWords.add(wrong[i]);
+                analyzers.add(calculateLogicError(correct[i], wrong[i]));
+            }
+        }
 
-                String correctReason = correct[i];
-                String wrongReason = wrong[i];
-
-                //Changing case when it's not a keyword
-                if(KeywordEnum.getByValue(wrongReason) == null){
-                    wrongReason = wrongReason.toLowerCase(Locale.ROOT);
-                }
-                if(KeywordEnum.getByValue(correctReason) == null){
-                    correctReason = correctReason.toLowerCase(Locale.ROOT);
-                }
-
-                Analyzer analyzer = new Analyzer(Data.LOGIC, Data.LOGIC, "Given input : \"" +wrongReason + "\". Correct input: \"" +correctReason + "\"" );
-                analyzers.add(analyzer);
+        //If wrong is greater than correct, we have to return the redundant
+        if(correct.length < wrong.length){
+            for(int j=i; j < wrong.length; j++){
+                analyzers.add(calculateLogicError("", wrong[j]));
+            }
+        }
+        else if(correct.length > wrong.length){
+            for(int j=i; j < correct.length; j++){
+                analyzers.add(calculateLogicError(correct[j], "Not given"));
             }
         }
 
         return analyzers;
 
+    }
+
+
+    private Analyzer calculateLogicError(String correct, String wrong){
+//        correctWords.add(correct[i]);
+//        wrongWords.add(wrong[i]);
+
+        String correctReason = correct;
+        String wrongReason = wrong;
+
+        //Changing case when it's not a keyword
+        if(KeywordEnum.getByValue(wrongReason) == null){
+            wrongReason = wrongReason.toLowerCase(Locale.ROOT);
+        }
+        if(KeywordEnum.getByValue(correctReason) == null){
+            correctReason = correctReason.toLowerCase(Locale.ROOT);
+        }
+
+        return new Analyzer(Data.LOGIC, Data.LOGIC, "Given input : \"" +wrongReason + "\". Correct input: \"" +correctReason + "\"" );
     }
 
 }
