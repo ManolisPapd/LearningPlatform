@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class ErrorHandlerImpl implements ErrorHandler {
@@ -22,13 +23,10 @@ public class ErrorHandlerImpl implements ErrorHandler {
             analyzers = getSyntaxErrors(language, wrongAnswer);
             //If analyzers is empty, it means that no syntax errors were found and it will be checked for syntax
             if(analyzers.isEmpty()){
-                Double distance = SorensenDice.similarity(wrongAnswer.toUpperCase(Locale.ROOT), correctAnswer.toUpperCase(Locale.ROOT));
                 analyzers = getLogicErrors(language, wrongAnswer, correctAnswer);
             }
         }else{
-            Double distance = SorensenDice.similarity(wrongAnswer.toUpperCase(Locale.ROOT), correctAnswer.toUpperCase(Locale.ROOT));
             analyzers = getLogicErrors(language, wrongAnswer, correctAnswer);
-
         }
         return analyzers;
     }
@@ -213,36 +211,15 @@ public class ErrorHandlerImpl implements ErrorHandler {
                 /**
                  * Execute correct and wrong answers and compare them
                  */
-
-                //Step 1. Execute wrong query and if it has syntax errors it means table or/and columns are wrong and exit
                 try{
-                    Connection con = DriverManager.getConnection(Data.DB_URL, Data.USER, Data.PASSWORD);
-                    con.prepareStatement(wrongAnswer).getMetaData();
-                    //----- Exception Free -----
-                    //Way 2, comparing by result
-                    //Step 2. Executing both syntax free queries
-                    //Step 2.1. Wrong query is correct, execute correct query also and save the results for both of them
-                    //Step 2.2. Compare the results and if there are differences return, if not empty the analyzers table.
+                    List<String> wrongValuesFromColumns = getValuesFromColumns(wrongAnswer);
+                    List<String> correctValuesFromColumns = getValuesFromColumns(correctAnswer);
 
-
-
-                    JdbcResultSetMetaData jdbcResultSetMetaData = (JdbcResultSetMetaData) con.prepareStatement(wrongAnswer).executeQuery().getMetaData();
-                    //1.Get column count
-                    //2.For each column get name
-
-
-                    ResultSet resultSet = con.prepareStatement(wrongAnswer).executeQuery();
-                    //3. For each column name get results
-                    while (resultSet.next()) {
-                        //Loop all column names and save result
-//                        resultSet.getString(column)
+                    //If they are the same and distance is greater than 0.7 we empty the wrong ones
+                    if(wrongValuesFromColumns.equals(correctValuesFromColumns)
+                            && SorensenDice.similarity(wrongAnswer.toUpperCase(Locale.ROOT), correctAnswer.toUpperCase(Locale.ROOT)) > 0.7){
+                        return Collections.emptyList();
                     }
-
-                    //Do it for the correct also. Sort the columns
-
-
-
-
                 }catch (Exception e){
                     //Because of Step 1, analyzers will be kept.
                     System.out.println("RCS: " + e.getMessage());
@@ -299,9 +276,6 @@ public class ErrorHandlerImpl implements ErrorHandler {
 
 
     private Analyzer calculateLogicError(String correct, String wrong){
-//        correctWords.add(correct[i]);
-//        wrongWords.add(wrong[i]);
-
         String correctReason = correct;
         String wrongReason = wrong;
 
@@ -314,6 +288,40 @@ public class ErrorHandlerImpl implements ErrorHandler {
         }
 
         return new Analyzer(Data.LOGIC, Data.LOGIC, "Given input : \"" +wrongReason + "\". Correct input: \"" +correctReason + "\"" );
+    }
+
+
+    private List<String> getValuesFromColumns(String answer) throws SQLException {
+        Connection con = DriverManager.getConnection(Data.DB_URL, Data.USER, Data.PASSWORD);
+        con.prepareStatement(answer).getMetaData();
+        //----- Exception Free -----
+        //Way 2, comparing by result
+        //Step 2. Executing both syntax free queries
+        //Step 2.1. Wrong query is correct, execute correct query also and save the results for both of them
+        //Step 2.2. Compare the results and if there are differences return, if not empty the analyzers table.
+
+
+
+        JdbcResultSetMetaData jdbcResultSetMetaData = (JdbcResultSetMetaData) con.prepareStatement(answer).executeQuery().getMetaData();
+
+        //1.Get column count
+        int columnCount = jdbcResultSetMetaData.getColumnCount();
+
+        //2.For each column get name
+        ResultSet resultSet = con.prepareStatement(answer).executeQuery();
+        List<String> columnData = new ArrayList<>();
+        //3. For each column name get results
+        while (resultSet.next()) {
+            //Loop all column names and save result
+            for(int i = 1; i <= columnCount; i++){
+                columnData.add(resultSet.getString(jdbcResultSetMetaData.getColumnName(i)));
+            }
+
+        }
+
+        //Do it for the correct also. Sort the columns
+        return columnData.stream().sorted().collect(Collectors.toList());
+
     }
 
 }
