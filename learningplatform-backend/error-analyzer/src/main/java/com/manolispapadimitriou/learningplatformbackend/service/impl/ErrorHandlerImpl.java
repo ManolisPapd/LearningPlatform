@@ -205,7 +205,10 @@ public class ErrorHandlerImpl implements ErrorHandler {
 
             //CREATE statement handling
             if(correctAnswer.toUpperCase(Locale.ROOT).startsWith(Data.CREATE)){
-                //Splitting based on spaces and comparing the words
+                //If similarity is zero, it means it has no similarities and return a message for that
+                if( SorensenDice.similarity(wrongAnswer.toUpperCase(Locale.ROOT), correctAnswer.toUpperCase(Locale.ROOT)) < 0.2){
+                    analyzers.add(0, new Analyzer("logic", "logic", "Given answer is not related with the correct answer"));
+                }
             }
             else{
                 /**
@@ -287,7 +290,7 @@ public class ErrorHandlerImpl implements ErrorHandler {
             correctReason = correctReason.toLowerCase(Locale.ROOT);
         }
 
-        return new Analyzer(Data.LOGIC, Data.LOGIC, "Given input : \"" +wrongReason + "\". Correct input: \"" +correctReason + "\"" );
+        return new Analyzer(Data.LOGIC, Data.LOGIC, wrongReason + " , " +correctReason);
     }
 
 

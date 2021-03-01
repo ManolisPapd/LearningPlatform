@@ -119,7 +119,7 @@ class QuizComponent extends Component {
             var correctQueryFromAPI = JSON.parse(quiz.details).correctQuery.toUpperCase().trim().replace(/\s/g, "");
             var isQueryFromUserChanged = false;
             queryFromUser  = this.state.selectedQuery.toUpperCase().trim().replace(/\s/g, "");
-            if(!correctQueryFromAPI.startsWith("CREATE")){
+            if(true){
                 //Theloume mono to query, h logiki xeirizetai sto backend
                 // correctQueryFromAPI = JSON.stringify(globalDB.database.exec(JSON.parse(quiz.details).correctQuery))
                 correctQueryFromAPI = JSON.parse(quiz.details).correctQuery;
@@ -136,19 +136,8 @@ class QuizComponent extends Component {
             }
             
             let status = 0;
-            if(queryFromUser === correctQueryFromAPI){
-
-                status = 1;
-                //Save that quiz has been answered in order to not present it again
-                var tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
-                tempMap[quiz.id] = 1;
-                localStorage.setItem('answeredQuizzes', JSON.stringify(tempMap))
-            }
-            else{             
-                //HELPER  
-                //TODO call api to determine if syntax or logic error
-                
-
+       
+            
                 var newQueryFromUser = queryFromUser;
                 if(!isQueryFromUserChanged){
                     newQueryFromUser = this.state.selectedQuery;
@@ -172,9 +161,25 @@ class QuizComponent extends Component {
                     if(res.status !== 200 && res.status !== 201){
                     throw new Error('Failed!');
                     }
-            
-                    console.log("RCS:", res.data);
-                    this.props.onHelperActivation(res.data, queryFromUser);
+                    
+                    //Check if answer is correct
+                    if(res.data.data.errorAnalyzer.length == 0){
+                        status = 1;
+                        //Save that quiz has been answered in order to not present it again
+                        var tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
+                        tempMap[quiz.id] = 1;
+                        localStorage.setItem('answeredQuizzes', JSON.stringify(tempMap))
+                        console.log("RCS: CORRECT", res.data)
+                    }
+                    else{
+                        this.props.onHelperActivation(res.data, newQueryFromUser);
+                        //Save that quiz has been answered in order to not present it again
+                        var tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
+                        tempMap[quiz.id] = 0;
+                        localStorage.setItem('answeredQuizzes', JSON.stringify(tempMap))
+                        console.log("RCS: WRONG", res.data)
+                    }
+                    
                     
                 }).catch(err => {
                     console.log(err);
@@ -182,12 +187,9 @@ class QuizComponent extends Component {
 
                 //----end call
                 
-                //Save that quiz has been answered in order to not present it again
-                tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
-                tempMap[quiz.id] = 0;
-                localStorage.setItem('answeredQuizzes', JSON.stringify(tempMap))
-            }
-            let requestBody = {
+                
+            
+            requestBody = {
                 
                 query: `
                 mutation {
@@ -234,14 +236,13 @@ class QuizComponent extends Component {
                 throw new Error('Failed!');
                 }
                 
-                console.log(res.data.data);
                 this.setState({quizzes: res.data.data.allQuiz });
             }).catch(err => {
                 console.log(err);
             });
 
             //Save that quiz has been answered in order to not present it again
-            tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
+            var tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
             tempMap[quiz.id] = 0;
             localStorage.setItem('answeredQuizzes', JSON.stringify(tempMap))
         } finally{

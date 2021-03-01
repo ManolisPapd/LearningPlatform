@@ -1,6 +1,7 @@
 import './HelperComponent.css';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
+import * as ReactBootStrap from 'react-bootstrap';
 import Photo from '../../../src/components/Profile/UserProfile/Photo';
 import helperLogo from '../../../src/images/helper.png';
 
@@ -17,14 +18,24 @@ class HelperComponent extends Component {
                     <div>
                         <p>Your answer:<p id = "queryInput">{this.props.query}</p></p> 
                         
-                        {console.log("RCS: AA ",this.props.helperModal)}
                         <p>Error type: <p id = "queryInput">{this.props.helperModal.data.errorAnalyzer[0].id}</p></p>
-                        <p>Reason(s): </p>
-                        { (this.props.helperModal.data.errorAnalyzer.map((error, i) => 
-                            <div key={i}> 
-                                <p><p id = "queryInput"> {error.reason}</p></p> 
-                            </div>
-                        ))}
+                        <ReactBootStrap.Table striped bordered hover bordered={ false }>
+                            <thead>
+                                <tr>
+                                    <th id="forumTitle">Given Input</th>
+                                    <th id="forumTitle">Correct Input</th>
+                                </tr>
+                            </thead>
+                        
+
+                            { (this.props.helperModal.data.errorAnalyzer.map((error, i) => 
+                                <tr>
+                                    <td><div style={{ textAlign: "left" }}>{error.reason.split(",")[0]}</div></td>
+                                    <td><div style={{ textAlign: "left" }}>{error.reason.split(",")[1]}</div></td>
+                                </tr>
+                            ))}
+
+                        </ReactBootStrap.Table>
                     </div>
                     
                     
