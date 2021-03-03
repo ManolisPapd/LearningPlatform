@@ -43,11 +43,11 @@ public class ForumService {
         //All categories
         List<String> categoriesLiterals = Arrays.asList("Announcements", "Courses", "Help", "General Discussion", "FAQ");
         Map<String, String> categoriesLiteral = new HashMap<>();
-        categoriesLiteral.put("Announcements", "value1");
-        categoriesLiteral.put("Courses", "value2");
-        categoriesLiteral.put("Help", "value3");
-        categoriesLiteral.put("General Discussion", "value4");
-        categoriesLiteral.put("FAQ", "value5");
+        categoriesLiteral.put("Announcements", "All the important updates and news regarding the platform.");
+        categoriesLiteral.put("Courses", "Discussion topics for each course.");
+        categoriesLiteral.put("Help", "Troubleshooting and providing assistance regarding the usage of the platform.");
+        categoriesLiteral.put("General Discussion", "Off topic discussions.");
+        categoriesLiteral.put("FAQ", "Questions and answers regarding the platform.");
 
 
         List<CategoryData> categories = new ArrayList<>();
