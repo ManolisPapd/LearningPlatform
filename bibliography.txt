@@ -6,5 +6,10 @@ Sørensen–Dice coefficient string matching: https://en.wikipedia.org/wiki/S%C3
         https://github.com/tdebatty/java-string-similarity#sorensen-dice-coefficient
         Approximate string matching: https://www.cs.helsinki.fi/u/ukkonen/TCS92.pdf
         https://www.researchgate.net/profile/Mehdi-Manna-2/publication/326648449_Web_Documents_Similarity_Using_K-Shingle_Tokens_and_MinHash_Technique/links/5b897f8f299bf1d5a7359e52/Web-Documents-Similarity-Using-K-Shingle-Tokens-and-MinHash-Technique.pdf
-
+https://docs.spring.io/spring-security/site/docs/current/reference/html5/
+https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
+https://grafana.com/grafana/
+https://prometheus.io/docs/introduction/overview/
+https://graphql.org/learn/
+https://reactjs.org/docs/getting-started.html
 CDC https://en.wikipedia.org/wiki/Change_data_capture
