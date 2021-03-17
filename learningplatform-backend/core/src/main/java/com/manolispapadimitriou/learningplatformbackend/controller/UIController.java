@@ -4,11 +4,15 @@ import com.manolispapadimitriou.learningplatformbackend.dto.CourseDTO;
 import com.manolispapadimitriou.learningplatformbackend.dto.SectionDTO;
 import com.manolispapadimitriou.learningplatformbackend.entity.Course;
 import com.manolispapadimitriou.learningplatformbackend.entity.User;
+import com.manolispapadimitriou.learningplatformbackend.entity.Valkanium;
 import com.manolispapadimitriou.learningplatformbackend.model.SectionInformation;
 import com.manolispapadimitriou.learningplatformbackend.model.SectionInformationWrapper;
+import com.manolispapadimitriou.learningplatformbackend.repository.ValkaniumRepository;
 import com.manolispapadimitriou.learningplatformbackend.service.CourseService;
 import com.manolispapadimitriou.learningplatformbackend.service.SectionService;
 import com.manolispapadimitriou.learningplatformbackend.service.UserService;
+import com.manolispapadimitriou.learningplatformbackend.service.ValkaniumService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -18,10 +22,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.transaction.Transactional;
+import java.util.*;
 
 @Controller
 public class UIController {
@@ -30,12 +32,20 @@ public class UIController {
     private final UserService userService;
     private final SectionService sectionService;
 
+    @Autowired
+    private ValkaniumService valkaniumService;
+
+
     public UIController(CourseService courseService, UserService userService, SectionService sectionService) {
         this.courseService = courseService;
         this.userService = userService;
         this.sectionService = sectionService;
     }
 
+    @GetMapping("/test")
+    public void test(){
+        valkaniumService.delete();
+    }
 
     @GetMapping("/login")
     public String login(Model model){
