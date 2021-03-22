@@ -13,3 +13,4 @@ https://prometheus.io/docs/introduction/overview/
 https://graphql.org/learn/
 https://reactjs.org/docs/getting-started.html
 CDC https://en.wikipedia.org/wiki/Change_data_capture
+https://dev.mysql.com/doc/refman/8.0/en/
