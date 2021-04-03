@@ -1,0 +1,10 @@
+version: '2'
+services:
+  learning-platform-backend:
+    container_name: learning-platform-backend
+    build:
+      context: learningplatform-backend
+      dockerfile: Dockerfile
+    image: learning-platform-backend:latest
+    ports:
+      - 8080:8080
