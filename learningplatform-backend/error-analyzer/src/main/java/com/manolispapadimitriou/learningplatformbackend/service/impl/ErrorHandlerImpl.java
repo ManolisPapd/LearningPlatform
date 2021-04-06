@@ -209,6 +209,9 @@ public class ErrorHandlerImpl implements ErrorHandler {
                 if( SorensenDice.similarity(wrongAnswer.toUpperCase(Locale.ROOT), correctAnswer.toUpperCase(Locale.ROOT)) < 0.2){
                     analyzers.add(0, new Analyzer("logic", "logic", "Given answer is not related with the correct answer"));
                 }
+                else{
+                    return Collections.emptyList();
+                }
             }
             else{
                 /**

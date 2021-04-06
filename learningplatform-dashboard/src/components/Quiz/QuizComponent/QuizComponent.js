@@ -163,13 +163,40 @@ class QuizComponent extends Component {
                     }
                     
                     //Check if answer is correct
+                    
                     if(res.data.data.errorAnalyzer.length == 0){
                         status = 1;
+                        console.log("RCS: AXXX",status)
                         //Save that quiz has been answered in order to not present it again
                         var tempMap = JSON.parse(localStorage.getItem('answeredQuizzes'));
                         tempMap[quiz.id] = 1;
                         localStorage.setItem('answeredQuizzes', JSON.stringify(tempMap))
                         console.log("RCS: CORRECT", res.data)
+
+                        requestBody = {
+                
+                            query: `
+                            mutation {
+                                saveMultipleChoiceQuiz(userId: ${localStorage.getItem('userId')}, quizId: ${quiz.id}, status: ${status})
+                            }
+                            `
+                        };
+            
+            
+                        //axios
+                        axios.post('/graphql',requestBody)
+                        .then(res => {
+                            if(res.status !== 200 && res.status !== 201){
+                            throw new Error('Failed!');
+                            }
+                            
+                            console.log(res.data.data);
+                
+                            this.setState({quizzes: res.data.data.allQuiz, selectedQuery: null });
+            
+                        }).catch(err => {
+                            console.log(err);
+                        });
                     }
                     else{
                         this.props.onHelperActivation(res.data, newQueryFromUser);
@@ -178,6 +205,31 @@ class QuizComponent extends Component {
                         tempMap[quiz.id] = 0;
                         localStorage.setItem('answeredQuizzes', JSON.stringify(tempMap))
                         console.log("RCS: WRONG", res.data)
+
+                        requestBody = {
+                
+                            query: `
+                            mutation {
+                                saveMultipleChoiceQuiz(userId: ${localStorage.getItem('userId')}, quizId: ${quiz.id}, status: ${status})
+                            }
+                            `
+                        };
+            
+            
+                        //axios
+                        axios.post('/graphql',requestBody)
+                        .then(res => {
+                            if(res.status !== 200 && res.status !== 201){
+                            throw new Error('Failed!');
+                            }
+                            
+                            console.log(res.data.data);
+                
+                            this.setState({quizzes: res.data.data.allQuiz, selectedQuery: null });
+            
+                        }).catch(err => {
+                            console.log(err);
+                        });
                     }
                     
                     
@@ -188,31 +240,8 @@ class QuizComponent extends Component {
                 //----end call
                 
                 
+            console.log("RCS: BAXXX",status)
             
-            requestBody = {
-                
-                query: `
-                mutation {
-                    saveMultipleChoiceQuiz(userId: ${localStorage.getItem('userId')}, quizId: ${quiz.id}, status: ${status})
-                }
-                `
-            };
-
-
-            //axios
-            axios.post('/graphql',requestBody)
-            .then(res => {
-                if(res.status !== 200 && res.status !== 201){
-                throw new Error('Failed!');
-                }
-                
-                console.log(res.data.data);
-    
-                this.setState({quizzes: res.data.data.allQuiz, selectedQuery: null });
-
-            }).catch(err => {
-                console.log(err);
-            });
 
         } catch (e) { //User typed gibberish, so status 0
             let requestBody = {
