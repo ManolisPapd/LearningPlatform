@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  learning-platform-backend:
+    image: 'learning-platform-backend-image:latest'
+    build:
+      context: .
+    container_name: learning-platform-backend
+    ports:
+      - "8080:8080"
