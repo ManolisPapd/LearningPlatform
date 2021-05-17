@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +44,10 @@ public class UIController {
 
     @GetMapping("/login")
     public String login(Model model){
+        List<? super Number> numbers = new ArrayList<>();
+                numbers.add(3);
+        numbers.add(3.14159);
+        numbers.add(new BigDecimal("3"));
         User user = new User();
         model.addAttribute("user", user);
         return "login-form";
@@ -68,7 +73,6 @@ public class UIController {
 
     @GetMapping("/admin")
     public String admin(Model model){
-
         List<User> students = userService.findByRole(2);
         Map<Integer, List<CourseDTO>> studentCourses = new HashMap<>();
 
