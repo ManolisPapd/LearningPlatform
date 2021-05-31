@@ -18,20 +18,26 @@ class HelperComponent extends Component {
                     <div>
                         <p>Your answer:<p id = "queryInput">{this.props.query}</p></p> 
                         
-                        <p>Error type: <p id = "queryInput">{this.props.helperModal.data.errorAnalyzer[0].id}</p></p>
+                        <p>Error type: <p id = "queryInput">{this.props.helperModal.data.errorAnalyzer[0].type}</p></p>
                         <ReactBootStrap.Table striped bordered hover bordered={ false }>
                             <thead>
                                 <tr>
-                                    <th id="forumTitle">Given Input</th>
-                                    <th id="forumTitle">Correct Input</th>
+                                    {(this.props.helperModal.data.errorAnalyzer[0].type === 'Syntax')  
+                                        ? <th id="forumTitle">Syntax Error Explanation</th>
+                                        : <div>
+                                            <th id="forumTitle">Given Input</th>
+                                            <th id="forumTitle">Correct Input</th>
+                                        </div>
+                                    }
+                                    
                                 </tr>
                             </thead>
                         
 
                             { (this.props.helperModal.data.errorAnalyzer.map((error, i) => 
                                 <tr>
-                                    <td><div style={{ textAlign: "left" }}>{error.reason.split(",")[0]}</div></td>
-                                    <td><div style={{ textAlign: "left" }}>{error.reason.split(",")[1]}</div></td>
+                                    <td><div style={{ textAlign: "left" }}>{error.reason.split("#PLACEHOLDER#")[0]}</div></td>
+                                    <td><div style={{ textAlign: "left" }}>{error.reason.split("#PLACEHOLDER#")[1]}</div></td>
                                 </tr>
                             ))}
 

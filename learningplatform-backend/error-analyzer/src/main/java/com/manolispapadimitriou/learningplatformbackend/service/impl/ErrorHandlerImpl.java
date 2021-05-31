@@ -293,7 +293,7 @@ public class ErrorHandlerImpl implements ErrorHandler {
             correctReason = correctReason.toLowerCase(Locale.ROOT);
         }
 
-        return new Analyzer(Data.LOGIC, Data.LOGIC, wrongReason + " , " +correctReason);
+        return new Analyzer(Data.LOGIC, Data.LOGIC, wrongReason + " #PLACEHOLDER# " +correctReason);
     }
 
 
