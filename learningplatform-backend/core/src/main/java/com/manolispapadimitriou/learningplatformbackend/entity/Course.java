@@ -4,7 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.manolispapadimitriou.learningplatformbackend.dto.CourseDTO;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Data
@@ -21,7 +26,7 @@ public class Course {
     @JoinColumn(name = "teacher")
     private User teacher;
 
-    public CourseDTO _toConvertCourseDAO(){
+    public CourseDTO _toConvertCourseDAO() {
         CourseDTO courseDTO = new CourseDTO();
         courseDTO.setId(this.id);
         courseDTO.setName(this.name);

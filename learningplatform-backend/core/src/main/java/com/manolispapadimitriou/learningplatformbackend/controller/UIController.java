@@ -61,6 +61,8 @@ public class UIController {
         User userFromDB = userService.findUser(user.getEmail(),user.getPassword());
 
         if(userFromDB.getRole() == 0){
+            session.setAttribute("userId",userFromDB.getId());
+            session.setAttribute("role","admin");
             return "redirect:/admin";
         }else if(userFromDB.getRole() == 1){
             session.setAttribute("userId",userFromDB.getId());
@@ -158,6 +160,40 @@ public class UIController {
         courseService.saveCourse(course);
 
         return determineHomePage(req);
+    }
+
+    @PostMapping("/saveUser")
+    public String saveUser(@ModelAttribute("user") User user,HttpServletRequest req){
+        //TODO revert it when you add user handling
+        userService.saveUser(user);
+
+        return determineHomePage(req);
+    }
+
+    @GetMapping("/showFormForAddTeacher")
+    public String showFormForAddTeacher(Model model,HttpServletRequest req){
+        Object userId = req.getSession().getAttribute("userId");
+
+        User teacher = new User();
+        User user = userService.findById((Integer) userId);
+
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("user", user);
+
+        return "teacher/add-teacher-form";
+    }
+
+    @GetMapping("/showFormForAddStudent")
+    public String showFormForAddStudent(Model model,HttpServletRequest req){
+        Object userId = req.getSession().getAttribute("userId");
+
+        User student = new User();
+        User user = userService.findById((Integer) userId);
+
+        model.addAttribute("student", student);
+        model.addAttribute("user", user);
+
+        return "student/add-student-form";
     }
 
     //Presents course detail

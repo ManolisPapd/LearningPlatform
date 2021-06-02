@@ -20,14 +20,14 @@ public class UserService {
         this.userCoursesRepository = userCoursesRepository;
     }
 
-    public User findUser(String email, String password){
+    public User findUser(String email, String password) {
 
-       User user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email);
 
-       if(user.getPassword().equals(password)){
-           return user;
-       }
-       throw new NullPointerException("Wrong Credentials");
+        if (user.getPassword().equals(password)) {
+            return user;
+        }
+        throw new NullPointerException("Wrong Credentials");
 
     }
 
@@ -36,15 +36,15 @@ public class UserService {
     }
 
 
-    public User findById(Integer id){
+    public User findById(Integer id) {
         return userRepository.findById(id).get();
     }
 
-    public List<User> findByRole(Integer id){
+    public List<User> findByRole(Integer id) {
         return userRepository.findByRole(id);
     }
 
-    public List<User> findUserByCourse(Integer courseId){
+    public List<User> findUserByCourse(Integer courseId) {
         List<User> users = new ArrayList<>();
         List<UserCourse> allByCourseId = userCoursesRepository.findAllByCourseId(courseId);
 
@@ -54,6 +54,10 @@ public class UserService {
         }
 
         return users;
+    }
+
+    public void saveUser(User user){
+        this.userRepository.saveAndFlush(user);
     }
 
 }

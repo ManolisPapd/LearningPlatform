@@ -16,22 +16,35 @@
 
 <div class="container">
 
-    <h3>Create new course</h3>
+    <h3>Create new teacher</h3>
     <hr>
 
-    <p class="h4 mb-4">Save Course</p>
+    <p class="h4 mb-4">Save Teacher</p>
 
-    <form action="#" th:action="@{/saveCourse}"
-          th:object="${course}" method="POST">
+    <form action="#" th:action="@{/saveUser}"
+          th:object="${teacher}" method="POST">
 
         <input type="text" th:field="*{id}"
                class="form-control mb-4 col-4" placeholder="Name" hidden>
 
         <input type="text" th:field="*{name}"
-               class="form-control mb-4 col-4" placeholder="Name">
+               class="form-control mb-4 col-4" placeholder="First Name">
 
-        <input type="text" th:field="*{description}"
-               class="form-control mb-4 col-4" placeholder="Description">
+        <input type="text" th:field="*{surname}"
+               class="form-control mb-4 col-4" placeholder="Last Name">
+
+        <input type="text" th:field="*{email}"
+               class="form-control mb-4 col-4" placeholder="Email">
+
+        <input type="text" th:field="*{Username}"
+               class="form-control mb-4 col-4" placeholder="Username">
+
+        <input type="text" th:field="*{password}"
+               class="form-control mb-4 col-4" placeholder="Password">
+
+        <input type="text" th:field="*{role}"
+               class="form-control mb-4 col-4" placeholder="role" hidden
+               value="1">
 
         <button type="submit" class="btn btn-info col-2">Save</button>
 
