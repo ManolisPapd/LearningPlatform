@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>D:/Programming/LearningPlatform/learningplatform-backend/core/src/main/java/com/manolispapadimitriou/learningplatformbackend/service</OriginalElement>
+  <nodes>
+    <node x="0.0" y="0.0">com.manolispapadimitriou.learningplatformbackend.service.ForumService</node>
+    <node x="0.0" y="577.0">com.manolispapadimitriou.learningplatformbackend.service.CourseService</node>
+    <node x="447.0" y="344.0">com.manolispapadimitriou.learningplatformbackend.service.UserService</node>
+    <node x="0.0" y="344.0">com.manolispapadimitriou.learningplatformbackend.service.QuizService</node>
+    <node x="349.0" y="577.0">com.manolispapadimitriou.learningplatformbackend.service.SectionService</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic" zoom="0.7" showDependencies="false" x="151.0000000000001" y="129.5" />
+  <SelectedNodes>
+    <node>com.manolispapadimitriou.learningplatformbackend.service.ForumService</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

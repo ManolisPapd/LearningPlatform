@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.manolispapadimitriou.learningplatformbackend.entity</OriginalElement>
+  <nodes>
+    <node x="538.0" y="0.0">com.manolispapadimitriou.learningplatformbackend.entity.Course</node>
+    <node x="489.0" y="644.0">com.manolispapadimitriou.learningplatformbackend.entity.ForumTopic</node>
+    <node x="231.0" y="344.0">com.manolispapadimitriou.learningplatformbackend.entity.Section</node>
+    <node x="520.0" y="344.0">com.manolispapadimitriou.learningplatformbackend.entity.ForumComment</node>
+    <node x="0.0" y="344.0">com.manolispapadimitriou.learningplatformbackend.entity.Quiz</node>
+    <node x="0.0" y="0.0">com.manolispapadimitriou.learningplatformbackend.entity.ForumPost</node>
+    <node x="307.0" y="0.0">com.manolispapadimitriou.learningplatformbackend.entity.User</node>
+    <node x="0.0" y="644.0">com.manolispapadimitriou.learningplatformbackend.entity.Forum</node>
+    <node x="258.0" y="644.0">com.manolispapadimitriou.learningplatformbackend.entity.UserQuiz</node>
+    <node x="720.0" y="644.0">com.manolispapadimitriou.learningplatformbackend.entity.UserCourse</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="686.5454545454545" y="-39.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

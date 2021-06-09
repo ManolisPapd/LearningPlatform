@@ -118,11 +118,10 @@ type Query {
     errorAnalyzer(language: String!, wrongAnswer: String!, correctAnswer: String!):[Analyzer]
     getForumData(name: String!):Forum
     literalsCategoriesForum:CategoryResponseWrapper
-
 }
 
 type Mutation {
-    saveMultipleChoiceQuiz(userId: Int!, quizId: Int!, status: Int!) : Boolean
+    saveQuiz(userId: Int!, quizId: Int!, status: Int!) : Boolean
     resetData(userId:Int!):Boolean
 }
 

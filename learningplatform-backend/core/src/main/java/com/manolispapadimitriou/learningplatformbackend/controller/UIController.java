@@ -118,7 +118,6 @@ public class UIController {
     //Update courses name and description
     @GetMapping("/showFormForCourseUpdate")
     public String shoFormForCourseUpdate(@RequestParam("courseId") int courseId, Model model){
-
         Course course = courseService.findCourseById(courseId);
         model.addAttribute("course", course);
 

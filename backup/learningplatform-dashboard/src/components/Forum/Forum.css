@@ -1,0 +1,32 @@
+#categoryTableItem {
+    font-weight: 500;
+}
+
+#categoryTableItem:hover {
+    background-color: rgb(197, 188, 248);
+    cursor: pointer;
+}
+
+#forumTitle{
+    background-color: rgb(3, 5, 22);
+    color: white;
+}
+
+#forumHeader{
+    background-color: red;
+    color: white;
+    font-size: 15px;
+    font-family: inherit;
+}
+
+#categoryInformation{
+    color: grey;
+    font-weight: 100;
+}
+
+#postsHeader{
+    background-color: rgb(144, 151, 247);
+    color: white;
+    font-size: 15px;
+    font-family: inherit;
+}

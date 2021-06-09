@@ -13,7 +13,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Resource
     private QuizService quizService;
 
-    public Boolean saveMultipleChoiceQuiz(Integer userId, Integer quizId, Integer status){
+    public Boolean saveQuiz(Integer userId, Integer quizId, Integer status){
         quizService.saveMultipleChoiceAnswer(userId,quizId,status);
 
         return true;
