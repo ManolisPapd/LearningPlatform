@@ -10,7 +10,7 @@ https://docs.spring.io/spring-security/site/docs/current/reference/html5/
 https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
 https://grafana.com/grafana/
 https://prometheus.io/docs/introduction/overview/
-https://graphql.org/learn/
+
 https://reactjs.org/docs/getting-started.html
 CDC https://en.wikipedia.org/wiki/Change_data_capture
 https://dev.mysql.com/doc/refman/8.0/en/
