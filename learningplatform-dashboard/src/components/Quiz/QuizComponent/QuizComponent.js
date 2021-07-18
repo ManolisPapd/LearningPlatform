@@ -541,7 +541,7 @@ class QuizComponent extends Component {
 
                                         {(!this.state.codeQuizSubmitted && !JSON.parse(localStorage.getItem('answeredQuizzes')).hasOwnProperty(quiz.id)) &&
                                             <React.Fragment>
-                                                <p className="pLabel">Write your SQL query below and submit the answer!</p>
+                                                <p className="pLabel">Write your MySQL query below and submit the answer!</p>
 
                                                 <React.Fragment>
                                                 <ReactAce
